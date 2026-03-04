@@ -1,0 +1,46 @@
+[
+  {
+    "file": "Audit Report - 2023.pdf",
+    "pdfplumber_total_characters": 116,
+    "docling_markdown_characters": 539681,
+    "character_difference": 539565,
+    "character_extraction_ratio": 4652.42,
+    "density_classification_hint": "likely_scanned",
+    "docling_failure_modes": [],
+    "potential_issues": []
+  },
+  {
+    "file": "CBE ANNUAL REPORT 2023-24.pdf",
+    "pdfplumber_total_characters": 319492,
+    "docling_markdown_characters": 520263,
+    "character_difference": 200771,
+    "character_extraction_ratio": 1.63,
+    "density_classification_hint": "layout_complex",
+    "docling_failure_modes": [],
+    "potential_issues": [
+      "potential_hallucination_or_over_segmentation"
+    ]
+  },
+  {
+    "file": "fta_performance_survey_final_report_2022.pdf",
+    "pdfplumber_total_characters": 263370,
+    "docling_markdown_characters": 523519,
+    "character_difference": 260149,
+    "character_extraction_ratio": 1.99,
+    "density_classification_hint": "layout_complex",
+    "docling_failure_modes": [],
+    "potential_issues": [
+      "potential_hallucination_or_over_segmentation"
+    ]
+  },
+  {
+    "file": "tax_expenditure_ethiopia_2021_22.pdf",
+    "pdfplumber_total_characters": 105205,
+    "docling_markdown_characters": 150944,
+    "character_difference": 45739,
+    "character_extraction_ratio": 1.43,
+    "density_classification_hint": "layout_complex",
+    "docling_failure_modes": [],
+    "potential_issues": []
+  }
+]
