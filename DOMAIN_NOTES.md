@@ -144,3 +144,27 @@ Based on the empirical evidence gathered from our internal extraction tests on c
 1.  **pdfplumber excels at structural heuristics:** It is highly performant and accurate for gathering metadata bounding boxes, vector counts, and font diversity. It provides the essential, low-level metrics required to reliably classify a PDF's complexity *before* heavy processing begins.
 2.  **Docling struggles as a generalized fallback for complex layouts:** While Docling produces visually clean Markdown, it is computationally expensive and prone to severe over-segmentation and hallucination on highly complex, natively digital PDFs (e.g., repeating grid lines or duplicate headers as text). Furthermore, its header-detection for embedded tables degrades significantly in non-standard layouts.
 3.  **A dynamic pipeline is required:** A hybrid routing approach (as outlined in Sections 3 and 4) is the only viable path forward. By explicitly calculating document density and variance via pdfplumber first, the system can selectively dispatch documents to the appropriate extraction engine (e.g., lightweight parsing for clean text, or heavy OCR/VLM backends like MinerU for complex unstructured data), avoiding complete failure on edge cases while optimizing for cost and speed.
+
+---
+
+## Phase 2: Extraction Rules Rationale
+
+The file `extraction_rules.yaml` establishes the exact physical constants governing the Multi-Strategy router constraints and the fallback triggers.
+
+### Escalation & Circuit Breaker Logic
+* `MIN_EXTRACTION_CONFIDENCE` (0.85): High standard for pass-through. If the validator evaluates a document's layout fidelity, reading-order coherency, and parsed metadata below an 85% confidence score, we assume data degradation and force an escalation tier retry.
+* `PAGE_CONTINUITY_PENALTY` (0.4): Missing pages during extraction structurally break reading order flows downstream. A multiplier penalty of 0.4 almost mathematically guarantees the document will fail the `0.85` gate (e.g., `0.95 * 0.4 = 0.38 < 0.85`) forcing an escalation.
+* `MAX_STRATEGY_RETRIES` (1): Prevents infinite loops. Each backend engine gets one structural attempt to parse a document per tier.
+
+### Strategy A: Text & Garbage Avoidance
+* `NONSENSE_RATIO_MAX` (0.30): Digital "native" documents frequently carry hidden, corrupted OCR text layers overlaid on scans. Setting the tolerance to 30% allows minor header/footer artifact parsing while aggressively aborting unreadable layers back to Strategy C (Vision).
+
+### Strategy C: Vision Budgets
+Vision language models are cost-prohibitive on massive document batches. Budget limits must be calculated _pre-flight_.
+* `GLOBAL_DOCUMENT_BUDGET_USD` ($0.05): Hard cap per individual document to prevent cost overruns.
+* `AVG_TOKENS_PER_PAGE_IMAGE` (2000): An empirical average token slice for standard high-resolution A4 scans in Gemini/OpenAI multimodal ingestion.
+* `MAX_PAGES_PER_VLM_CALL` (5): Prevents context dilution and hallucination in massive token streams, and allows the pre-flight routine to halt parsing gracefully with a `PartialExtractionResult` before burning through the entire document budget.
+* `PROMPT_TOKENS` (500): Average size of the strict parsing JSON schema prompt instructions.
+
+### Universal Constraints
+* `COORDINATE_SYSTEM` (`normalized_float_0_1`): Eradicates PDF point versus image pixel mismatches by enforcing a uniform `[0.0, 1.0]` grid relative to page bounds, standardizing output for downstream spatial RAG chunking.
