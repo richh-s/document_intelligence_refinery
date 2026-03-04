@@ -9,7 +9,14 @@ class LDUMetadata(BaseModel):
     cross_reference: Optional[str] = None
     cross_reference_type: Optional[str] = None
     dangling_reference: Optional[str] = None
-    relations: List[Dict[str, str]] = Field(default_factory=list)
+    chunk_relationships: List[Dict[str, str]] = Field(default_factory=list, description="Explicit chunk relationships")
+
+class BoundingBox(BaseModel):
+    """Structured sub-model for spatial normalization."""
+    x0: float = Field(..., ge=0.0, le=1.0)
+    y0: float = Field(..., ge=0.0, le=1.0)
+    x1: float = Field(..., ge=0.0, le=1.0)
+    y1: float = Field(..., ge=0.0, le=1.0)
 
 class LogicalDocumentUnit(BaseModel):
     """
@@ -20,7 +27,7 @@ class LogicalDocumentUnit(BaseModel):
     content: str
     chunk_type: Literal["text", "table", "list", "figure", "header"]
     page_refs: List[int]
-    bounding_box: List[float] = Field(..., description="[x0, y0, x1, y1] normalized 0-1")
+    bounding_box: BoundingBox
     parent_section_id: Optional[str] = None
     token_count: int
     content_hash: str

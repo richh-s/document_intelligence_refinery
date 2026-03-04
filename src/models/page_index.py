@@ -15,7 +15,7 @@ class PageIndexNode(BaseModel):
     section_title: str
     summary: str
     embedding: Optional[List[float]] = None
-    child_sections: List[str] = []
+    children: List['PageIndexNode'] = []
 
 
 class PageIndexBuilder:
