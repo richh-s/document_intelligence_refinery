@@ -8,10 +8,20 @@ This report consolidates Phase 0 deliverables (Domain Notes), extraction strateg
 
 An empirical structural analysis of Ethiopian regulatory and financial PDF documents was conducted to determine optimal extraction pathways.
 
-### Document Characteristics & Classification
-The analyzed documents demonstrated significant layout complexity and structural variance:
-- **Scanned vs Native**: Certain reports (e.g., `Audit Report - 2023.pdf`) are heavily scanned, yielding minimal raw characters via standard parsing (116 chars) compared to full OCR recovery (539k chars).
-- **Layout Complexity**: Documents like `CBE ANNUAL REPORT` and `tax_expenditure` possess highly complex native layouts, featuring intense font diversity, variance in line heights, and extensive vector graphics.
+### Document Characteristics & Classification (4 Corpus Classes)
+The analyzed documents were empirically evaluated across 4 distinct document classes from the corpus, demonstrating significant layout complexity and structural variance:
+- **1. Native Financial**: 
+  - *Corpus Example*: `CBE ANNUAL REPORT 2023-24.pdf`
+  - *Characteristics & Failure Modes*: Highly complex native layouts with intense font diversity and repeating vector grid lines. Causes pure-text parsers to fail on column reading order, and occasionally causes Docling to hallucinate structure (returning up to 2.0x raw characters).
+- **2. Scanned Legal / Administrative**:
+  - *Corpus Example*: `Audit Report - 2023.pdf`
+  - *Characteristics & Failure Modes*: Visually dense but structurally empty (high whitespace, ~116 raw chars via `pdfplumber` vs ~539k chars via OCR). Fails natively on all standard text extraction approaches without Vision/OCR pipelines.
+- **3. Table-Heavy Fiscal**:
+  - *Corpus Example*: `tax_expenditure_ethiopia_2021_22.pdf`
+  - *Characteristics & Failure Modes*: High vector density delineating massive financial tables. Frequently causes header-inferencing to drop confidence in layout-aware models (e.g. only 24/29 headers detected natively).
+- **4. Mixed Assessment**:
+  - *Corpus Example*: `fta_performance_survey_final_report_2022.pdf`
+  - *Characteristics & Failure Modes*: Blends standard digital layouts with massive vector infographics. Extremely prone to severe over-segmentation and garbage capture without precise layout-aware parsing logic.
 
 ### Structural Signals Used by the Triage Agent
 The system uses several metrics to classify documents accurately prior to extraction:
@@ -112,41 +122,41 @@ To execute the intelligent routing and chunking, the complete 5-Stage Pipeline a
 
 ```mermaid
 sequenceDiagram
-    participant S as Storage
-    participant T as Stage 1: Triage Agent
-    participant R as Stage 2: Extraction Router
-    participant EX as Stage 3: Extractors (A, B, C)
-    participant C as Stage 4: Semantic Chunking Engine
-    participant I as Stage 5: PageIndex & Vector DB
+    participant S as Storage (Provenance Ledger)
+    participant T as Stage 1: Triage
+    participant EX as Stage 2: Structure Extraction (Router & A, B, C)
+    participant C as Stage 3: Semantic Chunking
+    participant P as Stage 4: PageIndex Builder
+    participant Q as Stage 5: Query Interface
 
     S->>T: Ingest Document
     T->>T: Analyze Origin, Domain, Layout
-    T-->>R: DocumentProfile (Heuristics)
+    T-->>EX: DocumentProfile (Heuristics)
     
-    Note over R, EX: Route to optimal Strategy Tier
+    Note over EX: Route to optimal Strategy Tier
     
     alt is Simple Digital
-        R->>EX: Strategy A (Fast Text)
+        EX->>EX: Strategy A (Fast Text)
     else is Complex Layout
-        R->>EX: Strategy B (Docling)
+        EX->>EX: Strategy B (Docling)
     else is Scanned / Fallback
-        R->>EX: Strategy C (Vision)
+        EX->>EX: Strategy C (Vision)
     end
     
-    EX-->>R: ExtractionResult & Confidence
+    Note over EX: If Confidence < threshold, escalate sequence A -> B -> C
     
-    alt Confidence < threshold
-        R->>EX: Escalate to Next Tier
-    end
-    
-    R->>C: Clean Normalized ExtractedDocument
+    EX->>S: Write Audit/Provenance Ledger
+    EX->>C: Clean Normalized ExtractedDocument
     
     Note over C: Enforce Chunking Constitution rules (context prepending, table integrity)
     
-    C->>I: Validated Logical Document Units (LDUs)
+    C->>P: Validated Logical Document Units (LDUs)
     
-    Note over I: LLM Summarize Sections (PageIndex) + Embed LDUs
-    I->>S: Store to ChromaDB / Disk
+    Note over P: LLM Summarize Sections (PageIndex Builder)
+    P->>Q: Hierarchical Tree + LDU Vectors
+    
+    Note over Q: Query Interface retrieves via Hybrid Search
+    Q->>S: Store to ChromaDB / Disk
 ```
 
 ### Extraction Observability Ledger
@@ -172,13 +182,15 @@ The extraction engine operates on a cascading cost-efficiency model, ensuring ex
 
 ### **Strategy A: Fast Text (pdfplumber)**
 - **Target**: Clean, simple, digital-native text.
-- **Cost Aspect**: Pure standard local CPU compute. Extremely fast, minimal RAM overhead.
+- **Cost Aspect**: Pure standard local CPU compute. Extremely fast (under 2 seconds avg processing time), minimal RAM overhead.
 - **Estimated API / Usage Cost**: **$0.00** per document.
+- **Cost-Quality Connection**: Provides the cheapest and fastest extraction natively, but sacrifices visual and table fidelity which completely breaks down on fiscal reports.
 
 ### **Strategy B: Layout-Aware (Docling)**
 - **Target**: Complex native layouts, heavy multi-column text, multi-page spanning tables.
-- **Cost Aspect**: High CPU/GPU utilization and high RAM footprint. Can take several minutes per 100-page document locally. Infrastructure overhead is required to scale, but no per-token API fees are triggered.
+- **Cost Aspect**: High CPU/GPU utilization and high RAM footprint. Can take several minutes (e.g., ~172 seconds for 95 pages) per document locally. Infrastructure overhead is required to scale, but no per-token API fees are triggered.
 - **Estimated API / Usage Cost**: **$0.00** per document (excluding local cloud compute runtime).
+- **Cost-Quality Connection**: Provides extremely high structural and tabular fidelity compared to Strategy A (restoring grid lines and read-order), but demands massive operational runtime and compute processing time.
 
 ### **Strategy C: Vision-Augmented (VLM via OpenRouter)**
 - **Target**: Heavily scanned documents, corrupted PDFs, unreadable images, or structural router fallbacks.
@@ -191,7 +203,8 @@ The extraction engine operates on a cascading cost-efficiency model, ensuring ex
   - Assuming standard $0.15 / 1M Input Tokens and $0.60 / 1M Output Tokens.
   - A standard 15-page scanned document yields ~30,000 input tokens and ~8,000 output tokens.
   - Calculation: `(30,000/1M * $0.15) + (8,000/1M * $0.60)` = `$0.0045 + $0.0048`
-  - **Estimated Cost**: **~$0.01** per average document.
+  - **Estimated Cost**: **~$0.01** per average document. Corpus variation limits costs strictly linearily based on token volume footprint, halting cleanly at the $0.05 cap for massive documents.
+- **Cost-Quality Connection**: Maximizes text recovery on documents where Strategies A and B mathematically fail (triggering 0.0 confidence). It guarantees the pipeline never crashes on image-heavy scanned pages, but trades significant monetary API cost limitations and higher processing times for that fallback coverage.
 
 ---
 
