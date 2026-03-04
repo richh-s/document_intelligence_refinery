@@ -19,7 +19,7 @@ The analyzed documents demonstrated significant layout complexity and structural
 
 A rigorous cross-tool comparison revealed the following major failure modes in the current extraction pipeline:
 
-### A. Extreme Over-Segmentation / Potential Hallucination
+### A. Extreme Over-Segmentation / Potential Hallucincanation
 In highly complex, natively digital PDFs with many tables and sidebars (e.g., `CBE ANNUAL REPORT`, `fta_performance_survey`), `Docling` returned between **1.6x and 2.0x** the character count extracted by `pdfplumber`. 
 - **Cause**: Docling often aggressively flattens surrounding metadata, duplicate headers, or hallucinates tabular grid structures as text characters in complex financial reports.
 
@@ -144,3 +144,31 @@ Based on the empirical evidence gathered from our internal extraction tests on c
 1.  **pdfplumber excels at structural heuristics:** It is highly performant and accurate for gathering metadata bounding boxes, vector counts, and font diversity. It provides the essential, low-level metrics required to reliably classify a PDF's complexity *before* heavy processing begins.
 2.  **Docling struggles as a generalized fallback for complex layouts:** While Docling produces visually clean Markdown, it is computationally expensive and prone to severe over-segmentation and hallucination on highly complex, natively digital PDFs (e.g., repeating grid lines or duplicate headers as text). Furthermore, its header-detection for embedded tables degrades significantly in non-standard layouts.
 3.  **A dynamic pipeline is required:** A hybrid routing approach (as outlined in Sections 3 and 4) is the only viable path forward. By explicitly calculating document density and variance via pdfplumber first, the system can selectively dispatch documents to the appropriate extraction engine (e.g., lightweight parsing for clean text, or heavy OCR/VLM backends like MinerU for complex unstructured data), avoiding complete failure on edge cases while optimizing for cost and speed.
+
+---
+
+## Phase 2: Extraction Rules Rationale
+
+The file `config/extraction_rules.yaml` establishes the exact physical constants governing the Multi-Strategy router constraints and the fallback triggers.
+
+### Escalation & Circuit Breaker Logic
+* `MIN_EXTRACTION_CONFIDENCE` (0.85): High standard for pass-through. If the validator evaluates a document's layout fidelity, reading-order coherency, and parsed metadata below an 85% confidence score, we assume data degradation and force an escalation tier retry.
+* `PAGE_CONTINUITY_PENALTY` (0.4): Missing pages during extraction structurally break reading order flows downstream. A multiplier penalty of 0.4 almost mathematically guarantees the document will fail the `0.85` gate (e.g., `0.95 * 0.4 = 0.38 < 0.85`) forcing an escalation.
+* `MAX_STRATEGY_RETRIES` (1): Prevents infinite loops. Each backend engine gets one structural attempt to parse a document per tier.
+
+### Strategy A: Text & Garbage Avoidance
+* `NONSENSE_RATIO_MAX` (0.30): Digital "native" documents frequently carry hidden, corrupted OCR text layers overlaid on scans. Setting the tolerance to 30% allows minor header/footer artifact parsing while aggressively aborting unreadable layers back to Strategy C (Vision).
+* `MIN_CHARS_PER_PAGE` (100): Determines valid digital data flow. Prevents blank or heavily damaged sparse pages from passing through the pipeline, punishing page confidence to force an escalation.
+* `MAX_IMAGE_RATIO` (0.50) & `SCANNED_HEURISTIC`: If more than 50% of the page area is consumed by raw graphics or scans, it is overwhelmingly likely to hold un-extractable embedded data. If it also has near-zero characters (<50), structural confidence is set to 0.0 to immediately force an escalation (it's clearly a scanned page). Otherwise, it is slashed by half.
+* `FONT_METADATA_PRESENCE`: Native digital text possesses programmatic font metadata (`fontname`, `size`, etc.). If `pdfplumber` discovers text but cannot extract font dictionaries, the text is likely baked as raw vector paths or is leftover OCR. We apply a 0.5x penalty to force layout/vision validation.
+* `CHAR_DENSITY_MIN` (< 0.0005 chars/area): Even if a page passes the raw character count, text widely distributed across an immense coordinate plane is structurally sparse (often indicating background watermarks or unreadable scattered labels), triggering a 0.8x structural penalty.
+
+### Strategy C: Vision Budgets
+Vision language models are cost-prohibitive on massive document batches. Budget limits must be calculated _pre-flight_.
+* `GLOBAL_DOCUMENT_BUDGET_USD` ($0.05): Hard cap per individual document to prevent cost overruns.
+* `AVG_TOKENS_PER_PAGE_IMAGE` (2000): An empirical average token slice for standard high-resolution A4 scans in Gemini/OpenAI multimodal ingestion.
+* `MAX_PAGES_PER_VLM_CALL` (5): Prevents context dilution and hallucination in massive token streams, and allows the pre-flight routine to halt parsing gracefully with a `PartialExtractionResult` before burning through the entire document budget.
+* `PROMPT_TOKENS` (500): Average size of the strict parsing JSON schema prompt instructions.
+
+### Universal Constraints
+* `COORDINATE_SYSTEM` (`normalized_float_0_1`): Eradicates PDF point versus image pixel mismatches by enforcing a uniform `[0.0, 1.0]` grid relative to page bounds, standardizing output for downstream spatial RAG chunking.

@@ -1,0 +1,79 @@
+{
+  "confidence": {
+    "domain": 0.909091,
+    "language": 0.999996,
+    "layout": 0.066722,
+    "origin": 0.994738
+  },
+  "doc_id": "cafb11ca016fe4870c945fc2f8fe8b5fcc86bf6ee56da5327d4fd446456a7050",
+  "domain_hint": "financial",
+  "extraction_cost": "needs_vision_model",
+  "file_hash": "cafb11ca016fe4870c945fc2f8fe8b5fcc86bf6ee56da5327d4fd446456a7050",
+  "file_name": "CBE ANNUAL REPORT 2023-24.pdf",
+  "is_encrypted": false,
+  "language": "en",
+  "language_confidence": 0.999996,
+  "layout_type": "multi_column",
+  "metadata": {
+    "domain": {
+      "text_sample_length": 2101,
+      "token_count": 336
+    },
+    "layout": {
+      "avg_layout_score": 0.222764,
+      "detected_text_columns": 3,
+      "page_scores": [
+        0.076667,
+        0.066667,
+        0.290488,
+        0.45,
+        0.23
+      ],
+      "per_page_signals_avg": {
+        "column_score": 0.666667,
+        "font_score": 0.12,
+        "graphic_group_score": 0.06,
+        "line_var_score": 0.227155,
+        "table_score": 0.04
+      }
+    },
+    "origin": {
+      "aggregation_method": "mean",
+      "char_density": 0.0010519659367258368,
+      "ink_density": 0.05816402193199627,
+      "page_labels": [
+        "scanned",
+        "scanned",
+        "digital",
+        "digital",
+        "ambiguous"
+      ],
+      "page_scores": [
+        0.289994,
+        0.269994,
+        0.791163,
+        0.698647,
+        0.437047
+      ],
+      "whitespace_ratio": 0.34218169367070733
+    },
+    "sampling": {
+      "sampled_pages": [
+        1,
+        2,
+        81,
+        160,
+        161
+      ],
+      "strategy": "stratified"
+    }
+  },
+  "origin_type": "mixed",
+  "page_count": 161,
+  "processing_metadata": {
+    "detector_version": "1.0.0",
+    "pdfplumber_version": "0.11.9",
+    "triage_config_version": "1.0.0"
+  },
+  "warnings": []
+}

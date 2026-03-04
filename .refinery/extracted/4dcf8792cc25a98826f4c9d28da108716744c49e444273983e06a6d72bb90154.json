@@ -1,0 +1,74 @@
+{
+  "file_hash": "4dcf8792cc25a98826f4c9d28da108716744c49e444273983e06a6d72bb90154",
+  "pages": [
+    {
+      "page_number": 1,
+      "source_strategy": "VisionExtractor",
+      "text_blocks": [
+        {
+          "text": "Assessment of Financial Transparency and Accountability (FTA) Implementation in Ethiopia\n\nFinal Report\n\nRFP No: ET-NCB-MOFEC-COPCU-129904-CS-QCBS\n\nSUBMITTED TO:\nMinistry of Finance (MoF)\nAddis Ababa, Ethiopia\n\nSUBMITTED BY:\nTAK-Innovative Research and Development Institute PLC (TAK-IRDI)\nAddis Ababa, Ethiopia\n\nAugust 2022",
+          "bbox": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "page_number": 1,
+          "source_strategy": "VisionExtractor",
+          "reading_order": 1
+        }
+      ],
+      "tables": [],
+      "figures": [],
+      "metadata": {
+        "batch_cost": 0.02866365
+      }
+    },
+    {
+      "page_number": 2,
+      "source_strategy": "VisionExtractor",
+      "text_blocks": [
+        {
+          "text": "Contents\nList of Figures .................................................................................................................... iii\nList of Tables .................................................................................................................... v\nAcknowledgements ............................................................................................................ vi\nAcronyms ............................................................................................................................ vii\nExecutive Summary .............................................................................................................. i\n1. Introduction .................................................................................................................... 1\n1.1. Background .......................................................................................................... 1\n1.2. Objective of the assessment ............................................................................. 4\n1.3. Scope of the study ............................................................................................... 5\n1.4. Brief overview of FTA Program in Ethiopia ..................................................... 6\n1.4.1. Context ..................................................................................................... 6\n1.4.2. The FTA initiative .................................................................................. 7\n1.4.3. Logical framework of FTA .................................................................... 8\n1.4.4. Implementation status of FTA initiative so far ..................................... 9\n2. Methodology ................................................................................................................ 10\n2.1. Study design ......................................................................................................... 11\n2.2. Study coverage .................................................................................................... 11\n2.3. Sampling technique ............................................................................................. 11\n2.4. Data collection technique .................................................................................... 12\n2.5. Limitations ........................................................................................................... 14\n2.6. Organization of the report ................................................................................... 15\n3. Achievement against expectations ............................................................................ 16\n3.1 Achievements at Sub-national level ........................................................................ 16\n3.2 Achievement at Federal budgetary institutions ....................................................... 30\n4. Effectiveness and impact of FTA initiatives .............................................................. 36\n5. Determinants of local government transparency ......................................................... 68\n6. Gender and FTA ........................................................................................................ 73\n7. Linkage and coordination .......................................................................................... 79\n8. Project management ................................................................................................... 83\n9. Lesson learned ............................................................................................................. 86\n10. Conclusions and Recommendations ........................................................................ 89\n10.1. Conclusion .......................................................................................................... 89\n10.2. Recommendations ............................................................................................ 91\nAnnexes ......................................................................................................................... 95",
+          "bbox": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "page_number": 2,
+          "source_strategy": "VisionExtractor",
+          "reading_order": 1
+        }
+      ],
+      "tables": [],
+      "figures": [],
+      "metadata": {
+        "batch_cost": 0.02866365
+      }
+    },
+    {
+      "page_number": 3,
+      "source_strategy": "VisionExtractor",
+      "text_blocks": [
+        {
+          "text": "List of Figures\nFigure 1: Logical framework of FTA initiatives ................................................................. 9\nFigure 2: Proportion of woredas that conducted awareness raising training to their citizens .......... 17\nFigure 3: Proportion of woredas that received BLT training of trainer (ToT) ................................ 18\nFigure 4: Provision of BLT to the community as compared to the 2014 budget year plan .......... 19\nFigure 5: Participants of BLT training by sex .......................................................................... 19\nFigure 6: Educational level of BLT training participants ......................................................... 20\nFigure 7: The topics covered during the BLT ......................................................................... 21\nFigure 8: Proportion of visited woredas that posted budget information ................................... 22\nFigure 9: Type of information provided to the community. ..................................................... 22\nFigure 10: Medium of communication used to disseminate budget information ........................ 23\nFigure 11: The format used to communicate budget information .............................................. 23\nFigure 12: Timeliness of budget information dissemination ...................................................... 24\nFigure 13: Media disclosure approaches ................................................................................ 25\nFigure 14: Composition participants during pre-budget discussion by sex ............................ 26\nFigure 15: Approaches to the pre-budget discussion .............................................................. 27\nFigure 16: Topics of the pre-budget discussion .................................................................... 27\nFigure 17: Element of the accountability and its performance ................................................... 29\nFigure 18: Awareness about FTA initiative ............................................................................. 30\nFigure 19: How is the FTA activities handled by the sampled federal institutions ................... 31\nFigure 20: Budgetary information provision by federal institutions ........................................... 32\nFigure 21: Access to budgetary information and whether there is dedicated FTA focal person or not 33\nFigure 22: Proportion federal institutions that engage their stakeholder in the budgeting process ...... 34\nFigure 23: Level of engagement in the budgeting process ......................................................... 35\nFigure 24: Sex of respondents .................................................................................................. 36\nFigure 25: Literacy status of respondent by place of residence ................................................ 37\nFigure 26: Martial status of respondents ................................................................................ 37\nFigure 27: Housing ownership .................................................................................................. 38\nFigure 28: Poverty status of the respondents ............................................................................ 38\nFigure 29: Household size by poverty status and place of residence ....................................... 39\nFigure 30: Proportion of respondents that report that they understand the budget process. ........ 40\nFigure 31: Understand the budget process by key socio-demographic ...................................... 40\nFigure 32: Understanding level of the budget process over time .............................................. 41\nFigure 33: Changes in citizens\u2019 understanding of the budget process .................................... 41\nFigure 34: Citizens understanding of the budget processes ..................................................... 42\nFigure 35: Citizens\u2019 awareness level of FTA initiative by region/city administration ................. 43\nFigure 36: Citizens\u2019 understanding of FTA initiative in their areas ........................................... 43\nFigure 37: Changes in citizens\u2019 understanding of the FTA initiative ....................................... 44\nFigure 38: Citizen understands local government budget .......................................................... 45\nFigure 39: Proportion of respondents who reported that they know the budget and expenditure by region .............................................................................................................. 46\nFigure 40: Knowledge of the local budget by key socio-demographic characteristics .............. 46\nFigure 41: Source of budget and expenditure information .......................................................... 47\nFigure 42: Citizens who ever participated in BLT .................................................................... 48\nFigure 43: Participation in BLT by key socio-demographic variables ...................................... 48\nFigure 44: Composition BLT training participants by age ........................................................... 49\nFigure 45: When was the training taken .................................................................................. 50\nFigure 46: The effect of the BLT training ................................................................................ 50\nFigure 47: The ease of accessing budget information .............................................................. 51\nFigure 48: Meeting with local government representative (trends over time 2009-2022) .......... 52\nFigure 49: Proportion of citizen that met with their representatives by region/city administration .... 53\nFigure 50: Extent of community participation in budget planning in the last 12 months ............ 54\nFigure 51: Participation in budget planning by socio-demographic characteristics ....................... 54\nFigure 52: Extent of participation in local governance ............................................................. 55",
+          "bbox": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "page_number": 3,
+          "source_strategy": "VisionExtractor",
+          "reading_order": 1
+        }
+      ],
+      "tables": [],
+      "figures": [],
+      "metadata": {
+        "batch_cost": 0.02866365
+      }
+    }
+  ]
+}

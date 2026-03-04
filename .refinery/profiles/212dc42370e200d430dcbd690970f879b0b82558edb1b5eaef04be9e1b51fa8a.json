@@ -1,0 +1,79 @@
+{
+  "confidence": {
+    "domain": 0.347826,
+    "language": 0.999995,
+    "layout": 0.296667,
+    "origin": 0.761487
+  },
+  "doc_id": "212dc42370e200d430dcbd690970f879b0b82558edb1b5eaef04be9e1b51fa8a",
+  "domain_hint": "governmental",
+  "extraction_cost": "needs_layout_model",
+  "file_hash": "212dc42370e200d430dcbd690970f879b0b82558edb1b5eaef04be9e1b51fa8a",
+  "file_name": "tax_expenditure_ethiopia_2021_22.pdf",
+  "is_encrypted": false,
+  "language": "en",
+  "language_confidence": 0.999995,
+  "layout_type": "multi_column",
+  "metadata": {
+    "domain": {
+      "text_sample_length": 4897,
+      "token_count": 592
+    },
+    "layout": {
+      "avg_layout_score": 0.472513,
+      "detected_text_columns": 3,
+      "page_scores": [
+        0.48,
+        0.366667,
+        0.382566,
+        0.603333,
+        0.53
+      ],
+      "per_page_signals_avg": {
+        "column_score": 0.666667,
+        "font_score": 0.36,
+        "graphic_group_score": 0.33,
+        "line_var_score": 0.9659,
+        "table_score": 0.04
+      }
+    },
+    "origin": {
+      "aggregation_method": "mean",
+      "char_density": 0.0019685411931109477,
+      "ink_density": 0.09047923642248903,
+      "page_labels": [
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital"
+      ],
+      "page_scores": [
+        0.745657,
+        0.757643,
+        0.769931,
+        0.784204,
+        0.75
+      ],
+      "whitespace_ratio": 0.9009008945619665
+    },
+    "sampling": {
+      "sampled_pages": [
+        1,
+        2,
+        31,
+        59,
+        60
+      ],
+      "strategy": "stratified"
+    }
+  },
+  "origin_type": "digital_native",
+  "page_count": 60,
+  "processing_metadata": {
+    "detector_version": "1.0.0",
+    "pdfplumber_version": "0.11.9",
+    "triage_config_version": "1.0.0"
+  },
+  "warnings": []
+}
