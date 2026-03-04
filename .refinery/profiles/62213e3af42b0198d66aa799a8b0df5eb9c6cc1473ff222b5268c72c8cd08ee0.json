@@ -1,0 +1,61 @@
+{
+  "confidence": {
+    "domain": 0.0,
+    "language": 0.0,
+    "layout": 0.336575,
+    "origin": 0.424504
+  },
+  "domain_hint": "general",
+  "extraction_cost": "needs_vision_model",
+  "file_hash": "62213e3af42b0198d66aa799a8b0df5eb9c6cc1473ff222b5268c72c8cd08ee0",
+  "file_name": "Audit Report - 2023.pdf",
+  "is_encrypted": false,
+  "language": "unknown",
+  "layout_type": "figure_heavy",
+  "metadata": {
+    "domain": {
+      "text_sample_length": 125,
+      "token_count": 16
+    },
+    "layout": {
+      "avg_layout_score": 0.155334,
+      "page_scores": [
+        0.51,
+        0.066667,
+        0.066667,
+        0.066667,
+        0.066667
+      ],
+      "per_page_signals_avg": {
+        "column_score": 0.466667,
+        "font_score": 0.1,
+        "graphic_group_score": 0.01,
+        "line_var_score": 0.2,
+        "table_score": 0.0
+      }
+    },
+    "origin": {
+      "page_labels": [
+        "digital",
+        "scanned",
+        "scanned",
+        "scanned",
+        "scanned"
+      ],
+      "page_scores": [
+        0.702519,
+        0.02,
+        0.02,
+        0.02,
+        0.02
+      ]
+    }
+  },
+  "origin_type": "mixed",
+  "page_count": 95,
+  "processing_metadata": {
+    "pdfplumber_version": "0.11.9",
+    "triage_config_version": "1.0.0"
+  },
+  "warnings": []
+}

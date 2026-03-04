@@ -1,0 +1,61 @@
+{
+  "confidence": {
+    "domain": 0.111486,
+    "language": 0.999995,
+    "layout": 0.296667,
+    "origin": 0.260405
+  },
+  "domain_hint": "governmental",
+  "extraction_cost": "needs_layout_model",
+  "file_hash": "212dc42370e200d430dcbd690970f879b0b82558edb1b5eaef04be9e1b51fa8a",
+  "file_name": "tax_expenditure_ethiopia_2021_22.pdf",
+  "is_encrypted": false,
+  "language": "en",
+  "layout_type": "multi_column",
+  "metadata": {
+    "domain": {
+      "text_sample_length": 4897,
+      "token_count": 592
+    },
+    "layout": {
+      "avg_layout_score": 0.472513,
+      "page_scores": [
+        0.48,
+        0.366667,
+        0.382566,
+        0.603333,
+        0.53
+      ],
+      "per_page_signals_avg": {
+        "column_score": 0.666667,
+        "font_score": 0.36,
+        "graphic_group_score": 0.33,
+        "line_var_score": 0.9659,
+        "table_score": 0.04
+      }
+    },
+    "origin": {
+      "page_labels": [
+        "digital",
+        "digital",
+        "digital",
+        "digital",
+        "digital"
+      ],
+      "page_scores": [
+        0.744973,
+        0.752915,
+        0.769931,
+        0.784204,
+        0.75
+      ]
+    }
+  },
+  "origin_type": "digital_native",
+  "page_count": 60,
+  "processing_metadata": {
+    "pdfplumber_version": "0.11.9",
+    "triage_config_version": "1.0.0"
+  },
+  "warnings": []
+}
