@@ -136,3 +136,11 @@ flowchart TD
     style Q fill:#01579b,color:#ffffff
     style R fill:#01579b,color:#ffffff
 ```
+
+## 6. Conclusion 
+
+Based on the empirical evidence gathered from our internal extraction tests on complex regulatory documents:
+
+1.  **pdfplumber excels at structural heuristics:** It is highly performant and accurate for gathering metadata bounding boxes, vector counts, and font diversity. It provides the essential, low-level metrics required to reliably classify a PDF's complexity *before* heavy processing begins.
+2.  **Docling struggles as a generalized fallback for complex layouts:** While Docling produces visually clean Markdown, it is computationally expensive and prone to severe over-segmentation and hallucination on highly complex, natively digital PDFs (e.g., repeating grid lines or duplicate headers as text). Furthermore, its header-detection for embedded tables degrades significantly in non-standard layouts.
+3.  **A dynamic pipeline is required:** A hybrid routing approach (as outlined in Sections 3 and 4) is the only viable path forward. By explicitly calculating document density and variance via pdfplumber first, the system can selectively dispatch documents to the appropriate extraction engine (e.g., lightweight parsing for clean text, or heavy OCR/VLM backends like MinerU for complex unstructured data), avoiding complete failure on edge cases while optimizing for cost and speed.
