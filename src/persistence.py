@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from document_intelligence_refinery.models import DocumentProfile
+from models.document_profile import DocumentProfile
 
 
 class ProfileStore:

@@ -12,8 +12,8 @@ from typing import Any, Protocol, runtime_checkable
 
 import structlog
 
-from document_intelligence_refinery.config import TriageConfig
-from document_intelligence_refinery.models import DomainHint
+from config import TriageConfig
+from models.document_profile import DomainHint
 
 logger = structlog.get_logger()
 

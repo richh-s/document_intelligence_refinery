@@ -13,10 +13,10 @@ import logging
 import argparse
 from typing import List, Dict, Any
 
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit, LDUMetadata
-from document_intelligence_refinery.indexing.page_index import PageIndexNode
-from document_intelligence_refinery.indexing.vector_store import RefineryVectorStore
-from document_intelligence_refinery.indexing.query import HybridRetriever
+from models.ldu import LogicalDocumentUnit, LDUMetadata
+from models.page_index import PageIndexNode
+from indexing.vector_store import RefineryVectorStore
+from indexing.query import HybridRetriever
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)

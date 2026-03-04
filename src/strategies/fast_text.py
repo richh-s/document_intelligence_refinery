@@ -5,14 +5,14 @@ import time
 from pathlib import Path
 from typing import Any
 
-from document_intelligence_refinery.models import DocumentProfile
-from document_intelligence_refinery.schema import (
+from models.document_profile import DocumentProfile
+from models.extracted_document import (
     ExtractedDocument,
     ExtractedPage,
     TextBlock,
     normalize_coordinates,
 )
-from document_intelligence_refinery.extractors.base import BaseExtractor, ExtractionResult
+from strategies.base import BaseExtractor, ExtractionResult
 
 
 class FastTextExtractor(BaseExtractor):

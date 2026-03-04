@@ -1,8 +1,8 @@
 """Validation layer to enforce quality and structure post-extraction."""
 
 from typing import Any
-from document_intelligence_refinery.schema import ExtractedDocument
-from document_intelligence_refinery.models import DocumentProfile
+from models.extracted_document import ExtractedDocument
+from models.document_profile import DocumentProfile
 
 
 class ExtractionValidator:

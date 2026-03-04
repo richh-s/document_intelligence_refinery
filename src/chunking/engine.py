@@ -3,9 +3,9 @@
 import re
 import logging
 from typing import Callable, List, Optional, Tuple, Dict, Literal
-from document_intelligence_refinery.schema import ExtractedDocument
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit, LDUMetadata
-from document_intelligence_refinery.chunking.hasher import generate_ldu_hash
+from models.extracted_document import ExtractedDocument
+from models.ldu import LogicalDocumentUnit, LDUMetadata
+from chunking.hasher import generate_ldu_hash
 
 logger = logging.getLogger(__name__)
 

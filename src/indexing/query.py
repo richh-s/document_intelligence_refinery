@@ -2,7 +2,7 @@
 
 import logging
 from typing import List, Dict, Any
-from document_intelligence_refinery.indexing.vector_store import RefineryVectorStore
+from indexing.vector_store import RefineryVectorStore
 
 logger = logging.getLogger(__name__)
 

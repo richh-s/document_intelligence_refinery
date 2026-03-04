@@ -2,7 +2,7 @@
 
 import pytest
 from pathlib import Path
-from document_intelligence_refinery.extractors.vision import VisionExtractor, BudgetExceededError
+from strategies.vision import VisionExtractor, BudgetExceededError
 
 def test_vision_budget_preflight_guard():
     """Verify the Pre-flight cost estimation correctly blocks expensive extractions."""
@@ -38,7 +38,7 @@ def test_vision_budget_preflight_guard():
 
 def test_strip_markdown_json():
     """Verify regex sanitization to strip VLM conversational filler."""
-    from document_intelligence_refinery.extractors.vision import strip_markdown_json
+    from strategies.vision import strip_markdown_json
     
     raw = '''Here is your data:
 ```json

@@ -6,15 +6,15 @@ Includes adversarial edge cases.
 
 import pytest
 
-from document_intelligence_refinery.config import TriageConfig
-from document_intelligence_refinery.detectors.domain import (
+from config import TriageConfig
+from detectors.domain import (
     DomainClassificationStrategy,
     DomainHintClassifier,
     KeywordDomainStrategy,
 )
-from document_intelligence_refinery.detectors.layout import LayoutComplexityDetector
-from document_intelligence_refinery.detectors.origin import OriginTypeDetector
-from document_intelligence_refinery.models import (
+from detectors.layout import LayoutComplexityDetector
+from detectors.origin import OriginTypeDetector
+from models.document_profile import (
     DomainHint,
     LayoutType,
     OriginType,

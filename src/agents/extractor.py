@@ -4,13 +4,13 @@ from pathlib import Path
 import logging
 from typing import Any
 
-from document_intelligence_refinery.models import DocumentProfile, OriginType, LayoutType
-from document_intelligence_refinery.extractors.base import ExtractionResult, PartialExtractionResult
-from document_intelligence_refinery.extractors.validator import ExtractionValidator
-from document_intelligence_refinery.extractors.ledger import ExtractionLedger
-from document_intelligence_refinery.extractors.fast_text import FastTextExtractor
-from document_intelligence_refinery.extractors.layout import LayoutAwareExtractor
-from document_intelligence_refinery.extractors.vision import VisionExtractor, BudgetExceededError
+from models.document_profile import DocumentProfile, OriginType, LayoutType
+from strategies.base import ExtractionResult, PartialExtractionResult
+from extractors.validator import ExtractionValidator
+from extractors.ledger import ExtractionLedger
+from strategies.fast_text import FastTextExtractor
+from strategies.layout import LayoutAwareExtractor
+from strategies.vision import VisionExtractor, BudgetExceededError
 
 logger = logging.getLogger(__name__)
 

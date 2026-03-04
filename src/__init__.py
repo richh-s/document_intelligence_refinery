@@ -1,7 +1,7 @@
 """Document Intelligence Refinery — triage layer public API."""
 
-from document_intelligence_refinery.config import TriageConfig
-from document_intelligence_refinery.models import (
+from config import TriageConfig
+from models.document_profile import (
     ConfidenceScores,
     DomainHint,
     DocumentProfile,
@@ -9,7 +9,7 @@ from document_intelligence_refinery.models import (
     LayoutType,
     OriginType,
 )
-from document_intelligence_refinery.triage import TriageAgent
+from agents.triage import TriageAgent
 
 __all__ = [
     "ConfidenceScores",

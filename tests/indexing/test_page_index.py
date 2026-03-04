@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from document_intelligence_refinery.indexing.page_index import PageIndexBuilder
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit, LDUMetadata
+from models.page_index import PageIndexBuilder
+from models.ldu import LogicalDocumentUnit, LDUMetadata
 
-@patch("document_intelligence_refinery.indexing.page_index.httpx.Client")
+@patch("models.page_index.httpx.Client")
 def test_page_index_builder(mock_client_class):
     # Setup mock
     mock_client = mock_client_class.return_value.__enter__.return_value

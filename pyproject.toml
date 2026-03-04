@@ -35,10 +35,19 @@ dev = [
 ]
 
 [project.scripts]
-document-intelligence-refinery = "document_intelligence_refinery.main:main"
+document-intelligence-refinery = "main:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/document_intelligence_refinery"]
+packages = [
+    "src/agents",
+    "src/chunking",
+    "src/core",
+    "src/detectors",
+    "src/extractors",
+    "src/indexing",
+    "src/models",
+    "src/strategies",
+]
 
 [tool.ruff]
 line-length = 88

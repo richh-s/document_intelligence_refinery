@@ -1,6 +1,6 @@
 """Unit tests for SmartSampler."""
 
-from document_intelligence_refinery.sampling import SmartSampler
+from sampling import SmartSampler
 
 
 class TestSmartSampler:

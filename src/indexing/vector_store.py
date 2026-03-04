@@ -4,8 +4,8 @@ import logging
 import chromadb
 from chromadb.utils import embedding_functions
 from typing import List, Dict, Any, Optional
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit
-from document_intelligence_refinery.indexing.page_index import PageIndexNode
+from models.ldu import LogicalDocumentUnit
+from models.page_index import PageIndexNode
 
 logger = logging.getLogger(__name__)
 

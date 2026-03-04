@@ -2,7 +2,7 @@
 
 import logging
 from typing import Callable, List
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit
+from models.ldu import LogicalDocumentUnit
 
 logger = logging.getLogger(__name__)
 

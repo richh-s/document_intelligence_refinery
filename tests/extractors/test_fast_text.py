@@ -4,8 +4,8 @@ import pytest
 from pathlib import Path
 from pypdf import PdfWriter
 
-from document_intelligence_refinery.models import DocumentProfile, OriginType, LayoutType, ConfidenceScores
-from document_intelligence_refinery.extractors.fast_text import FastTextExtractor
+from models.document_profile import DocumentProfile, OriginType, LayoutType, ConfidenceScores
+from strategies.fast_text import FastTextExtractor
 
 
 @pytest.fixture

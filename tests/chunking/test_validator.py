@@ -1,7 +1,7 @@
 import pytest
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit, LDUMetadata
-from document_intelligence_refinery.chunking.validator import ChunkValidator, ChunkValidationError
-from document_intelligence_refinery.chunking.hasher import generate_ldu_hash
+from models.ldu import LogicalDocumentUnit, LDUMetadata
+from chunking.validator import ChunkValidator, ChunkValidationError
+from chunking.hasher import generate_ldu_hash
 
 def dummy_tokenizer(text: str) -> int:
     # simple split by space for testing

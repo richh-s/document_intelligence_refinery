@@ -1,6 +1,6 @@
 import pytest
-from document_intelligence_refinery.schema import ExtractedDocument, ExtractedPage, TextBlock, StructuredTable
-from document_intelligence_refinery.chunking.engine import ChunkingEngine
+from models.extracted_document import ExtractedDocument, ExtractedPage, TextBlock, StructuredTable
+from chunking.engine import ChunkingEngine
 
 def dummy_tokenizer(text: str) -> int:
     return len(text.split())

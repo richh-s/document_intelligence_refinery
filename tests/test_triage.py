@@ -8,13 +8,13 @@ from pathlib import Path
 
 import pytest
 
-from document_intelligence_refinery.models import (
+from models.document_profile import (
     DomainHint,
     ExtractionCostEstimate,
     LayoutType,
     OriginType,
 )
-from document_intelligence_refinery.triage import TriageAgent
+from agents.triage import TriageAgent
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 

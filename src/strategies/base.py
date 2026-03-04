@@ -6,8 +6,8 @@ from typing import Any
 from pathlib import Path
 from pydantic import BaseModel, Field
 
-from document_intelligence_refinery.models import DocumentProfile
-from document_intelligence_refinery.schema import ExtractedDocument
+from models.document_profile import DocumentProfile
+from models.extracted_document import ExtractedDocument
 
 
 class ExtractionResult(BaseModel):

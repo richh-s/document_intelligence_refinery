@@ -4,7 +4,7 @@ import logging
 import httpx
 from typing import List, Dict, Optional, Any
 from pydantic import BaseModel
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit
+from models.ldu import LogicalDocumentUnit
 
 logger = logging.getLogger(__name__)
 

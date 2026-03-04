@@ -20,16 +20,16 @@ import pypdf
 import pdfplumber
 import structlog
 
-from document_intelligence_refinery.config import TriageConfig
-from document_intelligence_refinery.detectors.domain import (
+from config import TriageConfig
+from detectors.domain import (
     DomainClassificationStrategy,
     DomainHintClassifier,
     KeywordDomainStrategy,
 )
-from document_intelligence_refinery.detectors.language import LanguageDetector
-from document_intelligence_refinery.detectors.layout import LayoutComplexityDetector
-from document_intelligence_refinery.detectors.origin import OriginTypeDetector
-from document_intelligence_refinery.models import (
+from detectors.language import LanguageDetector
+from detectors.layout import LayoutComplexityDetector
+from detectors.origin import OriginTypeDetector
+from models.document_profile import (
     ConfidenceScores,
     DomainHint,
     DocumentProfile,
@@ -37,8 +37,8 @@ from document_intelligence_refinery.models import (
     LayoutType,
     OriginType,
 )
-from document_intelligence_refinery.persistence import ProfileStore
-from document_intelligence_refinery.sampling import SmartSampler
+from persistence import ProfileStore
+from sampling import SmartSampler
 
 logger = structlog.get_logger()
 

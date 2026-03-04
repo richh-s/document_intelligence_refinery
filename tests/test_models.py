@@ -2,7 +2,7 @@
 
 import pytest
 
-from document_intelligence_refinery.models import (
+from models.document_profile import (
     ConfidenceScores,
     DocumentProfile,
     DomainHint,

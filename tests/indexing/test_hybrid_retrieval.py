@@ -1,10 +1,10 @@
 import pytest
 import chromadb
 from unittest.mock import patch, MagicMock
-from document_intelligence_refinery.chunking.models import LogicalDocumentUnit, LDUMetadata
-from document_intelligence_refinery.indexing.page_index import PageIndexNode
-from document_intelligence_refinery.indexing.vector_store import RefineryVectorStore
-from document_intelligence_refinery.indexing.query import HybridRetriever
+from models.ldu import LogicalDocumentUnit, LDUMetadata
+from models.page_index import PageIndexNode
+from indexing.vector_store import RefineryVectorStore
+from indexing.query import HybridRetriever
 
 @pytest.fixture
 def mock_vector_store(tmp_path):

@@ -10,15 +10,15 @@ from docling.datamodel.pipeline_options import PdfPipelineOptions
 from docling_core.types.doc.document import DoclingDocument
 from docling_core.types.doc.labels import DocItemLabel
 
-from document_intelligence_refinery.models import DocumentProfile
-from document_intelligence_refinery.schema import (
+from models.document_profile import DocumentProfile
+from models.extracted_document import (
     ExtractedDocument,
     ExtractedPage,
     TextBlock,
     StructuredTable,
     normalize_coordinates,
 )
-from document_intelligence_refinery.extractors.base import BaseExtractor, ExtractionResult
+from strategies.base import BaseExtractor, ExtractionResult
 
 
 logger = logging.getLogger(__name__)

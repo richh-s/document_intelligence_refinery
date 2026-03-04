@@ -11,8 +11,8 @@ from typing import Any
 
 import structlog
 
-from document_intelligence_refinery.config import TriageConfig
-from document_intelligence_refinery.models import LayoutType
+from config import TriageConfig
+from models.document_profile import LayoutType
 
 logger = structlog.get_logger()
 
