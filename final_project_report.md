@@ -208,7 +208,21 @@ The extraction engine operates on a cascading cost-efficiency model, ensuring ex
 
 ---
 
-## 6. Preparation for Semantic Retrieval
+## 6. Preparation for Semantic Retrieval (Phase 3 Schemas)
 
 Extracted content from the pipeline is normalized into strict `ExtractedDocument` schemas. 
-These objects will later be converted into Logical Document Units (LDUs) during Phase 3 semantic chunking, paving the way for seamless ingestion into the vector store and optimal hierarchical Retrieval-Augmented Generation (RAG).
+These objects will later be converted into **Logical Document Units (LDUs)** during Phase 3 semantic chunking, paving the way for seamless ingestion into the vector store and optimal hierarchical Retrieval-Augmented Generation (RAG).
+
+### Core Pydantic Schema Design
+To guarantee semantic fidelity and spatial traceability, the pipeline enforces rigid typing across all data transitions using Pydantic:
+- **`LogicalDocumentUnit` (LDU)**: A semantically coherent chunk. It carries a strict `BoundingBox` sub-model (preventing raw lists/dicts), a deterministic `content_hash`, and explicit `chunk_relationships` mapping back to parent sections.
+- **`PageIndexNode`**: A fully recursive hierarchical tree model (`children: List['PageIndexNode']`) that stores LLM-generated section summaries for fast semantic routing before touching the dense vector base.
+- **`ProvenanceChain`**: A dedicated schema linking any chunk back to the exact `document_name`, `page_number`, `BoundingBox`, and `content_hash` to prove mathematical traceability against hallucinations.
+
+### Externalized Chunking Constitution
+All semantic chunking mechanics have been completely decoupled from the codebase into `config/extraction_rules.yaml`. This ensures a new domain can be boarded by modifying only the YAML file:
+- `CHUNK_MAX_TOKENS`: Size limits for chunk expansion.
+- `CHUNK_OVERLAP`: Shared token buffers across borders.
+- `CHUNK_CONTEXT_PREPEND`: Boolean flag to inject section headers into split fragments.
+- `CHUNK_ENFORCE_TABLE_INTEGRITY`: Boolean flag preventing table cell fragmentation.
+- `CHUNK_CROSS_REFERENCE_RESOLUTION`: Flag to natively link references (e.g., "See Figure 2").
