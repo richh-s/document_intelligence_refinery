@@ -144,6 +144,3 @@ cython_debug/
 
 # PyCharm
 .idea/
-
-# Refinery
-.refinery/
