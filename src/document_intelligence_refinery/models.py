@@ -46,7 +46,8 @@ class DomainHint(str, Enum):
 
     FINANCIAL = "financial"
     LEGAL = "legal"
-    SCIENTIFIC = "scientific"
+    TECHNICAL = "technical"
+    MEDICAL = "medical"
     GOVERNMENTAL = "governmental"
     GENERAL = "general"
 
@@ -85,11 +86,13 @@ class DocumentProfile(BaseModel):
     """
 
     file_name: str
+    doc_id: str
     file_hash: str  # SHA-256 hex digest
     origin_type: OriginType
     layout_type: LayoutType
     domain_hint: DomainHint
     language: str = "unknown"
+    language_confidence: float = 0.0
     extraction_cost: ExtractionCostEstimate
     confidence: ConfidenceScores
     page_count: int = Field(ge=0)

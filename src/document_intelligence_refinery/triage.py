@@ -84,6 +84,7 @@ class TriageAgent:
             logger.warning("encrypted_pdf", file=pdf_path.name)
             return DocumentProfile(
                 file_name=pdf_path.name,
+                doc_id=file_hash,
                 file_hash=file_hash,
                 origin_type=OriginType.MIXED,
                 layout_type=LayoutType.SINGLE_COLUMN,
@@ -153,17 +154,23 @@ class TriageAgent:
         # ── Language detection ────────────────────────────────────────
         language, lang_conf = self._language_detector.detect(combined_text)
 
+        metadata["sampling"] = {
+            "strategy": "stratified",
+            "sampled_pages": [idx + 1 for idx in sample_indices],
+        }
+
         # ── Cost Estimation ───────────────────────────────────────────
         cost_estimate = self._estimate_cost(origin_type, layout_type)
 
-        # ── Assemble profile ──────────────────────────────────────────
         profile = DocumentProfile(
             file_name=pdf_path.name,
+            doc_id=file_hash,
             file_hash=file_hash,
             origin_type=origin_type,
             layout_type=layout_type,
             domain_hint=domain_hint,
             language=language,
+            language_confidence=round(lang_conf, 6),
             extraction_cost=cost_estimate,
             confidence=ConfidenceScores(
                 origin=origin_conf,
@@ -223,6 +230,9 @@ class TriageAgent:
                 for c in chars
             )
             ink_density = char_area / page_area if page_area > 0 else 0.0
+            
+            # Explicit Character Density
+            char_density = len(chars) / page_area if page_area > 0 else 0.0
 
             image_area = sum(
                 float(img.get("width", 0)) * float(img.get("height", 0))
@@ -236,10 +246,13 @@ class TriageAgent:
             vectors_raw = list(page.rects) + list(page.lines) + list(page.curves)
             vector_count = len(vectors_raw) + len(page.images)
 
-            ws_ratio = 1.0 - (char_area / page_area) if page_area > 0 else 1.0
+            # Explicit Whitespace Analysis
+            whitespace_area = max(0.0, page_area - char_area - image_area)
+            ws_ratio = whitespace_area / page_area if page_area > 0 else 1.0
 
             origin_stats.append({
                 "ink_density": ink_density,
+                "char_density": char_density,
                 "whitespace_ratio": ws_ratio,
                 "image_ratio": image_ratio,
                 "font_count": font_count,
@@ -352,4 +365,5 @@ class TriageAgent:
         return {
             "pdfplumber_version": getattr(_pp, "__version__", "unknown"),
             "triage_config_version": "1.0.0",
+            "detector_version": "1.0.0",
         }

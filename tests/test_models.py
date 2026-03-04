@@ -47,11 +47,13 @@ class TestDocumentProfile:
     def _make_profile(self, **overrides: object) -> DocumentProfile:
         defaults = {
             "file_name": "test.pdf",
+            "doc_id": "abc123",
             "file_hash": "abc123",
             "origin_type": OriginType.DIGITAL_NATIVE,
             "layout_type": LayoutType.SINGLE_COLUMN,
             "domain_hint": DomainHint.GENERAL,
             "language": "en",
+            "language_confidence": 1.0,
             "extraction_cost": ExtractionCostEstimate.FAST_TEXT_SUFFICIENT,
             "confidence": ConfidenceScores(origin=0.8, layout=0.5, domain=0.3, language=1.0),
             "page_count": 10,

@@ -88,7 +88,7 @@ class KeywordDomainStrategy:
             "penal",
             "constitut",
         ],
-        DomainHint.SCIENTIFIC: [
+        DomainHint.TECHNICAL: [
             "methodolog",
             "hypothes",
             "experiment",
@@ -98,31 +98,37 @@ class KeywordDomainStrategy:
             "peer review",
             "abstract",
             "observat",
+            "algorithm",
+            "architecture",
+            "engineering",
+            "infrastructure"
+        ],
+        DomainHint.MEDICAL: [
+            "patient",
+            "clinical",
+            "diagnos",
+            "prescription",
+            "symptom",
+            "therap",
+            "physician",
+            "hospital",
+            "treatment",
+            "disease",
+            "health",
+            "syndrome",
+            "vaccin"
         ],
         DomainHint.GOVERNMENTAL: [
-            "proclamat",
-            "directiv",
-            "ministr",
+            "ministry",
             "government",
-            "public sector",
-            "public service",
-            "polic",
-            "administrat",
+            "administration",
+            "agency",
             "bureau",
-            "commission",
-            "parliament",
-            "gazette",
-            "decree",
-            "sovereign",
-            "survey",
-            "reform",
-            "public",
             "federal",
-            "nation",
-            "expenditure",
-            "budget",
-            "tax",
-            "fiscal",
+            "public sector",
+            "policy",
+            "governance",
+            "accountability",
         ],
     }
 
@@ -158,11 +164,19 @@ class KeywordDomainStrategy:
         raw_hits: dict[DomainHint, int] = {}
 
         for domain, patterns in self._patterns.items():
-            hits = sum(
+            raw_hits[domain] = sum(
                 len(pattern.findall(text_lower)) for pattern in patterns
             )
-            raw_hits[domain] = hits
-            scores[domain] = hits / total_tokens
+
+        # Government lexicons take precedence over financial
+        if raw_hits.get(DomainHint.GOVERNMENTAL, 0) > 0:
+            raw_hits[DomainHint.GOVERNMENTAL] = int(raw_hits[DomainHint.GOVERNMENTAL] * 2.0)
+
+        total_hits = sum(raw_hits.values())
+        if total_hits > 0:
+            scores = {domain: (hits / total_hits) for domain, hits in raw_hits.items()}
+        else:
+            scores = {domain: 0.0 for domain in self._patterns.keys()}
 
         logger.info(
             "domain_scores",

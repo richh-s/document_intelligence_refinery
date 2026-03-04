@@ -13,8 +13,8 @@ class ProfileStore:
 
     @staticmethod
     def save(profile: DocumentProfile, base_dir: Path = Path(".refinery")) -> Path:
-        """Serialize and save profile to `.refinery/profiles/{file_hash}.json`."""
-        out = base_dir / "profiles" / f"{profile.file_hash}.json"
+        """Serialize and save profile to `.refinery/profiles/{doc_id}.json`."""
+        out = base_dir / "profiles" / f"{profile.doc_id}.json"
         out.parent.mkdir(parents=True, exist_ok=True)
         
         # Serialize with complete determinism: sorted keys, UTF-8, no exclude_none

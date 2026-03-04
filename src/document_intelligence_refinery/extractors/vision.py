@@ -201,14 +201,17 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
                         for p_data in parsed_data.get("pages", []):
                             page_num = p_data.get("page_number", batch_start + 1)
                             
-                            t_blocks = [
-                                TextBlock(
-                                    text=b.get("text", ""),
-                                    bbox=tuple(b.get("bbox", [0.0, 0.0, 1.0, 1.0])),
-                                    page_number=page_num,
-                                    source_strategy="VisionExtractor"
-                                ) for b in p_data.get("text_blocks", [])
-                            ]
+                            t_blocks = []
+                            for i, b in enumerate(p_data.get("text_blocks", [])):
+                                t_blocks.append(
+                                    TextBlock(
+                                        text=b.get("text", ""),
+                                        bbox=tuple(b.get("bbox", [0.0, 0.0, 1.0, 1.0])),
+                                        page_number=page_num,
+                                        source_strategy="VisionExtractor",
+                                        reading_order=i + 1
+                                    )
+                                )
                             
                             tables = [
                                 StructuredTable(

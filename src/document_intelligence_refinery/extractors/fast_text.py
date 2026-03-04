@@ -100,7 +100,8 @@ class FastTextExtractor(BaseExtractor):
                         text=text,
                         bbox=bbox,
                         page_number=page_num,
-                        source_strategy="FastTextExtractor"
+                        source_strategy="FastTextExtractor",
+                        reading_order=len(text_blocks) + 1
                     ))
                 
                 # Compute Confidence Signals for this page

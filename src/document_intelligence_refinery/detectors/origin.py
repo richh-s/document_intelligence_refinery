@@ -37,7 +37,7 @@ class OriginTypeDetector:
         ----------
         page_stats:
             One dict per sampled page, each containing keys:
-            ``ink_density``, ``whitespace_ratio``, ``image_ratio``,
+            ``ink_density``, ``char_density``, ``whitespace_ratio``, ``image_ratio``,
             ``font_count``, ``vector_count``.
         """
         if not page_stats:
@@ -56,6 +56,7 @@ class OriginTypeDetector:
                 "origin_signals",
                 page=i,
                 ink_density=stats.get("ink_density"),
+                char_density=stats.get("char_density"),
                 whitespace_ratio=stats.get("whitespace_ratio"),
                 image_ratio=stats.get("image_ratio"),
                 font_count=stats.get("font_count"),
@@ -65,11 +66,15 @@ class OriginTypeDetector:
             )
 
         origin_type = self._aggregate(page_labels)
-        confidence = self._compute_confidence(page_scores)
+        confidence = self._compute_confidence(page_scores, origin_type)
 
         metadata = {
             "page_scores": page_scores,
             "page_labels": page_labels,
+            "char_density": sum(s.get("char_density", 0.0) for s in page_stats) / len(page_stats),
+            "whitespace_ratio": sum(s.get("whitespace_ratio", 0.0) for s in page_stats) / len(page_stats),
+            "ink_density": sum(s.get("ink_density", 0.0) for s in page_stats) / len(page_stats),
+            "aggregation_method": "mean",
         }
 
         return origin_type, round(confidence, 6), metadata
@@ -88,6 +93,10 @@ class OriginTypeDetector:
         ink_min = self._cfg.INK_DENSITY_DIGITAL_MIN
         # Smooth ramp: anything above ink_min scores well
         ink_signal = min(ink / max(ink_min, 1e-9), 1.0)
+        
+        # explicit char_density signal: > 0 characters per unit area supports digital/mixed
+        char_density = float(stats.get("char_density", 0.0))
+        char_signal = 1.0 if char_density > 0.001 else 0.0
 
         # whitespace_ratio signal: scanned pages → near 1.0
         ws = float(stats.get("whitespace_ratio", 1.0))
@@ -109,6 +118,7 @@ class OriginTypeDetector:
 
         score = (
             w.get("ink_density", 0.0) * ink_signal
+            + w.get("char_density", 0.0) * char_signal
             + w.get("whitespace_ratio", 0.0) * ws_signal
             + w.get("image_ratio", 0.0) * img_signal
             + w.get("font_presence", 0.0) * font_signal
@@ -139,8 +149,13 @@ class OriginTypeDetector:
         return OriginType.DIGITAL_NATIVE
 
     @staticmethod
-    def _compute_confidence(scores: list[float]) -> float:
-        """Mean distance from 0.5 boundary across pages."""
+    def _compute_confidence(scores: list[float], origin_type: OriginType) -> float:
+        """Origin confidence derived deterministically from mean page_scores."""
         if not scores:
             return 0.0
-        return sum(abs(s - 0.5) for s in scores) / len(scores)
+        mean_score = sum(scores) / len(scores)
+        if origin_type == OriginType.SCANNED:
+            return 1.0 - mean_score
+        if origin_type == OriginType.MIXED:
+            return 1.0 - abs(mean_score - 0.5) * 2.0
+        return mean_score

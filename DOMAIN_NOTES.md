@@ -19,7 +19,7 @@ The analyzed documents demonstrated significant layout complexity and structural
 
 A rigorous cross-tool comparison revealed the following major failure modes in the current extraction pipeline:
 
-### A. Extreme Over-Segmentation / Potential Hallucination
+### A. Extreme Over-Segmentation / Potential Hallucincanation
 In highly complex, natively digital PDFs with many tables and sidebars (e.g., `CBE ANNUAL REPORT`, `fta_performance_survey`), `Docling` returned between **1.6x and 2.0x** the character count extracted by `pdfplumber`. 
 - **Cause**: Docling often aggressively flattens surrounding metadata, duplicate headers, or hallucinates tabular grid structures as text characters in complex financial reports.
 
@@ -158,6 +158,8 @@ The file `extraction_rules.yaml` establishes the exact physical constants govern
 
 ### Strategy A: Text & Garbage Avoidance
 * `NONSENSE_RATIO_MAX` (0.30): Digital "native" documents frequently carry hidden, corrupted OCR text layers overlaid on scans. Setting the tolerance to 30% allows minor header/footer artifact parsing while aggressively aborting unreadable layers back to Strategy C (Vision).
+* `MIN_CHARS_PER_PAGE` (100): Determines valid digital data flow. Prevents blank or heavily damaged sparse pages from passing through the pipeline, punishing page confidence to force an escalation.
+* `MAX_IMAGE_RATIO` (0.50): If more than 50% of the page area is consumed by raw graphics or scans, it is overwhelmingly likely to hold un-extractable embedded data. Structural confidence is slashed by half to route it toward heavier layout-aware or vision engines.
 
 ### Strategy C: Vision Budgets
 Vision language models are cost-prohibitive on massive document batches. Budget limits must be calculated _pre-flight_.

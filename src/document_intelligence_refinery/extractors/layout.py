@@ -61,7 +61,8 @@ class DoclingDocumentAdapter:
                         text=data.text,
                         bbox=normalized_bbox,
                         page_number=page_no,
-                        source_strategy="LayoutAwareExtractor"
+                        source_strategy="LayoutAwareExtractor",
+                        reading_order=len(pages_dict[page_no].text_blocks) + 1
                     )
                 )
             elif data.label == DocItemLabel.TABLE:

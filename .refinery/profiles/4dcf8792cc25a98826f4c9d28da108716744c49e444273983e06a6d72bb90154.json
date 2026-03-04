@@ -1,16 +1,18 @@
 {
   "confidence": {
-    "domain": 0.013013,
+    "domain": 0.674419,
     "language": 0.999996,
-    "layout": 0.466667,
-    "origin": 0.234135
+    "layout": 0.483333,
+    "origin": 0.734517
   },
+  "doc_id": "4dcf8792cc25a98826f4c9d28da108716744c49e444273983e06a6d72bb90154",
   "domain_hint": "governmental",
   "extraction_cost": "needs_layout_model",
   "file_hash": "4dcf8792cc25a98826f4c9d28da108716744c49e444273983e06a6d72bb90154",
   "file_name": "fta_performance_survey_final_report_2022.pdf",
   "is_encrypted": false,
   "language": "en",
+  "language_confidence": 0.999996,
   "layout_type": "multi_column",
   "metadata": {
     "domain": {
@@ -19,6 +21,7 @@
     },
     "layout": {
       "avg_layout_score": 0.387191,
+      "detected_text_columns": 3,
       "page_scores": [
         0.71,
         0.26005,
@@ -35,6 +38,9 @@
       }
     },
     "origin": {
+      "aggregation_method": "mean",
+      "char_density": 0.004245709975028075,
+      "ink_density": 0.2144798948100784,
       "page_labels": [
         "digital",
         "digital",
@@ -43,17 +49,29 @@
         "digital"
       ],
       "page_scores": [
-        0.768006,
+        0.769916,
         0.732596,
         0.824817,
         0.695255,
         0.65
-      ]
+      ],
+      "whitespace_ratio": 0.7840685033339858
+    },
+    "sampling": {
+      "sampled_pages": [
+        1,
+        2,
+        78,
+        154,
+        155
+      ],
+      "strategy": "stratified"
     }
   },
   "origin_type": "digital_native",
   "page_count": 155,
   "processing_metadata": {
+    "detector_version": "1.0.0",
     "pdfplumber_version": "0.11.9",
     "triage_config_version": "1.0.0"
   },

@@ -41,10 +41,12 @@ def test_sparse_text_confidence_penalty(empty_pdf: Path):
     profile = DocumentProfile(
         file_hash="dummy_hash",
         file_name="empty_test.pdf",
+        doc_id="dummy_hash",
         file_path=str(empty_pdf),
         origin_type=OriginType.DIGITAL_NATIVE,
         layout_type=LayoutType.SINGLE_COLUMN,
         language="en",
+        language_confidence=1.0,
         domain_hint="general",
         extraction_cost="fast_text_sufficient",
         confidence=ConfidenceScores(origin=1.0, layout=1.0, language=1.0, domain=1.0),

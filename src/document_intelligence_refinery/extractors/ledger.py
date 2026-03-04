@@ -20,6 +20,10 @@ class ExtractionLedger:
 
     def append(self, record: dict[str, Any]) -> None:
         """Atomically append a record to the ledger using file locking."""
+        required = {"strategy_used", "confidence_score", "cost_estimate", "processing_time"}
+        if not required.issubset(record.keys()):
+            raise ValueError(f"Ledger record missing mandatory fields. Required: {required}")
+
         record["timestamp"] = datetime.utcnow().isoformat()
         
         json_line = json.dumps(record) + "\n"

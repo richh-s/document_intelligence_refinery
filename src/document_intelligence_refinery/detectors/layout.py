@@ -72,7 +72,11 @@ class LayoutComplexityDetector:
         
         layout_type, confidence = self._classify(signals_avg, image_ratio)
 
+        columns_estimated = [self._estimate_columns(s.get("words", [])) for s in page_stats]
+        detected_text_columns = max(columns_estimated) if columns_estimated else 1
+
         metadata = {
+            "detected_text_columns": detected_text_columns,
             "avg_layout_score": round(avg_score, 6),
             "page_scores": page_layout_scores,
             "per_page_signals_avg": {k: round(v, 6) for k, v in signals_avg.items()},
@@ -204,8 +208,8 @@ class LayoutComplexityDetector:
             if x_positions[k] - x_positions[k - 1] > gap_threshold:
                 columns += 1
 
-        # Cap at a reasonable max to avoid noise
-        return min(columns, 5)
+        # Cap at a reasonable max to avoid noise (e.g. max 3 text columns)
+        return min(columns, 3)
 
     # ── Classification ────────────────────────────────────────────────
 
@@ -225,8 +229,15 @@ class LayoutComplexityDetector:
         }
         ranked = sorted(category_scores.items(), key=lambda x: x[1], reverse=True)
         top_type, top_score = ranked[0]
-        second_score = ranked[1][1] if len(ranked) > 1 else 0.0
-        confidence = top_score - second_score
+        
+        if top_type == LayoutType.SINGLE_COLUMN:
+            second_score = ranked[1][1] if len(ranked) > 1 else 0.0
+            confidence = top_score - second_score
+        else:
+            # The margin for structured layouts shouldn't be deflated by the null hypothesis.
+            structured_candidates = [s for t, s in ranked if t != LayoutType.SINGLE_COLUMN]
+            second_structured = structured_candidates[1] if len(structured_candidates) > 1 else 0.0
+            confidence = top_score - second_structured
 
         # Check MIXED: sum only across explicit normalized signal keys
         signal_keys = ["font_score", "graphic_group_score", "line_var_score", "column_score", "table_score"]

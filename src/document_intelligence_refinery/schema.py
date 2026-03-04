@@ -14,6 +14,7 @@ class TextBlock(BaseModel):
     bbox: tuple[float, float, float, float]
     page_number: int  # 1-indexed
     source_strategy: str
+    reading_order: int
 
     @model_validator(mode="after")
     def validate_bounds(self) -> "TextBlock":

@@ -55,7 +55,7 @@ class TestAuditReport:
     def test_domain_financial_or_governmental(self, agent: TriageAgent) -> None:
         p = agent.profile(self.PDF)
         assert p.domain_hint in (
-            DomainHint.FINANCIAL, DomainHint.GOVERNMENTAL, DomainHint.GENERAL,
+            DomainHint.FINANCIAL, DomainHint.GENERAL,
         )
 
 
@@ -79,7 +79,7 @@ class TestCBEAnnualReport:
 
     def test_domain_financial(self, agent: TriageAgent) -> None:
         p = agent.profile(self.PDF)
-        assert p.domain_hint in (DomainHint.FINANCIAL, DomainHint.GOVERNMENTAL)
+        assert p.domain_hint in (DomainHint.FINANCIAL, DomainHint.GENERAL)
 
 
 @skip_no_data
@@ -100,7 +100,7 @@ class TestFTAPerformance:
 
     def test_domain_governmental(self, agent: TriageAgent) -> None:
         p = agent.profile(self.PDF)
-        assert p.domain_hint in (DomainHint.GOVERNMENTAL, DomainHint.FINANCIAL)
+        assert p.domain_hint == DomainHint.GOVERNMENTAL
 
 
 @skip_no_data
