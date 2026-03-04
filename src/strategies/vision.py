@@ -119,11 +119,11 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
             
         total_pages = profile.page_count
         
-        # Pre-flight Budget Guard
-        estimated_total_cost = self._estimate_cost(total_pages)
-        if estimated_total_cost > self.budget_cap_usd:
-            logger.error(f"BudgetExceededError: Est limit ${estimated_total_cost:.4f} > Cap ${self.budget_cap_usd:.4f}")
-            raise BudgetExceededError(f"Estimated cost ${estimated_total_cost:.4f} exceeds budget cap of ${self.budget_cap_usd:.2f}")
+        # Pre-flight Budget Guard - checks if even a single batch exceeds the global budget
+        estimated_first_batch = self._estimate_cost(min(self.max_pages_per_call, total_pages))
+        if estimated_first_batch > self.budget_cap_usd:
+            logger.error(f"BudgetExceededError: Est limit ${estimated_first_batch:.4f} > Cap ${self.budget_cap_usd:.4f}")
+            raise BudgetExceededError(f"Estimated single batch cost ${estimated_first_batch:.4f} exceeds actual cap of ${self.budget_cap_usd:.2f}")
 
         # Render PDF to Images using pypdfium2 (fastest)
         pdf_images = []
@@ -151,6 +151,14 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
         # Context Window Batching loop
         for batch_start in range(0, total_pages, self.max_pages_per_call):
             batch_end = min(batch_start + self.max_pages_per_call, total_pages)
+            batch_size = batch_end - batch_start
+            
+            # Incremental Budget Check limit
+            estimated_next_batch_cost = self._estimate_cost(batch_size)
+            if accumulated_cost + estimated_next_batch_cost > self.budget_cap_usd:
+                logger.warning(f"Mid-flight cap hit. Accumulated ${accumulated_cost:.4f} + Est Next ${estimated_next_batch_cost:.4f} > ${self.budget_cap_usd:.4f}. Preserving parsed data.")
+                break
+                
             batch_images = pdf_images[batch_start:batch_end]
             
             # Encode images to base64 payload
@@ -199,7 +207,8 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
                         parsed_data = json.loads(clean_json)
                         
                         for p_data in parsed_data.get("pages", []):
-                            page_num = p_data.get("page_number", batch_start + 1)
+                            local_page_num = p_data.get("page_number", 1)
+                            page_num = batch_start + local_page_num
                             
                             t_blocks = []
                             for i, b in enumerate(p_data.get("text_blocks", [])):
@@ -240,8 +249,9 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
                                 figures=figures,
                                 metadata={"batch_cost": batch_cost}
                             ))
-                            pages_processed += 1
                             
+                        pages_processed += batch_size
+                        
                     except json.JSONDecodeError as e:
                         logger.error(f"VLM JSON parsing failed for batch {batch_start}-{batch_end}: {e}")
                         # On hard JSON failure, we break and trigger Partial Success
@@ -262,12 +272,23 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
             pages=all_extracted_pages
         )
         
-        # Calculate Vision Confidence (JSON Structural validation penalty)
-        confidence = 1.0
-        # If we didn't parse all pages, apply a heavy continuity penalty 
-        if pages_processed < total_pages:
+        # Calculate Vision Confidence 
+        total_blocks = sum(len(p.text_blocks) for p in all_extracted_pages)
+        total_text_len = sum(len(b.text) for p in all_extracted_pages for b in p.text_blocks)
+        
+        confidence = 0.0
+        if pages_processed > 0:
+            confidence = 0.5  # Base confidence for successful API response and valid JSON
+            if total_blocks > (pages_processed * 2):
+                confidence += 0.2
+            if total_text_len > (pages_processed * 100):
+                confidence += 0.2
+                
+            # If we didn't parse all pages, apply a heavy continuity penalty 
             penalty = pages_processed / max(1, total_pages)
             confidence *= penalty
+            
+        confidence = max(0.0, min(1.0, confidence))
             
         kwargs = {
             "document": doc,

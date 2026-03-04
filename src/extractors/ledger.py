@@ -18,9 +18,28 @@ class ExtractionLedger:
         if not self.ledger_path.exists():
             self.ledger_path.touch()
 
+    def get_attempt_count(self, file_hash: str, strategy: str) -> int:
+        """Read the ledger and count instances of strategy use for a specific file hash."""
+        if not self.ledger_path.exists():
+            return 0
+        count = 0
+        with open(self.ledger_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if not line.strip(): continue
+                try:
+                    record = json.loads(line)
+                    if record.get("file_hash") == file_hash and record.get("strategy_used") == strategy:
+                        count += 1
+                except json.JSONDecodeError:
+                    pass
+        return count
+
     def append(self, record: dict[str, Any]) -> None:
         """Atomically append a record to the ledger using file locking."""
-        required = {"strategy_used", "confidence_score", "cost_estimate", "processing_time"}
+        required = {
+            "strategy_used", "confidence_score", "cost_estimate", "processing_time",
+            "tokens_in", "tokens_out", "page_count"
+        }
         if not required.issubset(record.keys()):
             raise ValueError(f"Ledger record missing mandatory fields. Required: {required}")
 

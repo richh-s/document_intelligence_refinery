@@ -7,7 +7,8 @@ This document details the architectural structure and implementation details of 
 ```text
 document_intelligence_refinery/
 ├── pyproject.toml              # Dependency and project configuration (uv)
-├── extraction_rules.yaml       # Empirical rules, thresholds, and budget caps
+├── config/
+│   ├── extraction_rules.yaml   # Empirical rules, thresholds, and budget caps
 ├── DOMAIN_NOTES.md             # Threshold justifications and experimental findings
 ├── README.md                   # Quickstart and overview
 ├── .refinery/                  # Local persistence directory

@@ -104,6 +104,10 @@ class FastTextExtractor(BaseExtractor):
                         reading_order=len(text_blocks) + 1
                     ))
                 
+                # Gather signal metrics
+                char_density = total_chars / page_area if page_area > 0 else 0.0
+                has_fonts = any(w.get("fontname") is not None for w in words) if words else False
+                
                 # Compute Confidence Signals for this page
                 nonsense_ratio = (junk_tokens / total_tokens) if total_tokens > 0 else 1.0
                 quality_score = max(0.0, 1.0 - nonsense_ratio)
@@ -112,8 +116,20 @@ class FastTextExtractor(BaseExtractor):
                 structural_conf = 1.0
                 if total_chars < self.min_chars_per_page:
                     structural_conf *= 0.1 # Severely penalize sparse pages
-                if image_ratio > 0.5:
+                    
+                if image_ratio > 0.5 and total_chars < 50:
+                    # A page with high image area but near-zero character count is likely scanned
+                    structural_conf = 0.0 
+                elif image_ratio > 0.5:
                     structural_conf *= 0.5 # Penalize image-dominated pages
+                    
+                if not has_fonts and total_chars > 0:
+                    # Lack of programmatic font metadata in a "digital" pdf hints at raw paths or OCR
+                    structural_conf *= 0.5
+                    
+                if char_density < 0.0005 and total_chars > 0:
+                    # Very sparse text spread across a large page area (often just noise or watermarks)
+                    structural_conf *= 0.8
                     
                 # If nonsense ratio blows past MAX, force deep penalty
                 if nonsense_ratio > self.nonsense_ratio_max:
@@ -131,7 +147,9 @@ class FastTextExtractor(BaseExtractor):
                     metadata={
                         "nonsense_ratio": round(nonsense_ratio, 4),
                         "char_count": total_chars,
-                        "image_ratio": round(image_ratio, 4)
+                        "image_ratio": round(image_ratio, 4),
+                        "char_density": round(char_density, 6),
+                        "has_fonts": has_fonts
                     }
                 ))
 

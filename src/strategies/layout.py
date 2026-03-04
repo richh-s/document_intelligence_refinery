@@ -33,46 +33,57 @@ class DoclingDocumentAdapter:
                       for i in range(1, profile.page_count + 1)}
         
         # Docling stores nodes in a flat list mapped to pages
-        for node, data in docling_doc.iterate_items():
-            if not getattr(data, "prov", None):
+        for item, level in docling_doc.iterate_items():
+            if not hasattr(item, "label"):
                 continue
                 
-            prov = data.prov[0]
-            page_no = prov.page_no
-            if page_no not in pages_dict:
-                continue
+            if not getattr(item, "prov", None):
+                page_no = 1
+                normalized_bbox = (0.0, 0.0, 1.0, 1.0)
+            else:
+                prov = item.prov[0]
+                page_no = prov.page_no
+                if page_no not in pages_dict:
+                    continue
 
-            # Docling origin is Bottom-Left. We must normalize and apply Y-Inversion
-            page_dimensions = docling_doc.pages[page_no].size
-            page_width = page_dimensions.width
-            page_height = page_dimensions.height
-            bbox_raw = (prov.bbox.l, prov.bbox.b, prov.bbox.r, prov.bbox.t)
+                # Docling origin is Bottom-Left. We must normalize and apply Y-Inversion
+                page_dimensions = docling_doc.pages[page_no].size
+                page_width = page_dimensions.width
+                page_height = page_dimensions.height
+                bbox_raw = (prov.bbox.l, prov.bbox.b, prov.bbox.r, prov.bbox.t)
 
-            normalized_bbox = normalize_coordinates(
-                bbox_raw, 
-                page_width, 
-                page_height, 
-                source_origin="bottom_left"
-            )
+                normalized_bbox = normalize_coordinates(
+                    bbox_raw, 
+                    page_width, 
+                    page_height, 
+                    source_origin="bottom_left"
+                )
 
-            if data.label in (DocItemLabel.TEXT, DocItemLabel.TITLE, DocItemLabel.SECTION_HEADER, DocItemLabel.LIST_ITEM):
+            if item.label in (DocItemLabel.TEXT, DocItemLabel.TITLE, DocItemLabel.SECTION_HEADER, DocItemLabel.LIST_ITEM):
                 pages_dict[page_no].text_blocks.append(
                     TextBlock(
-                        text=data.text,
+                        text=item.text,
                         bbox=normalized_bbox,
                         page_number=page_no,
                         source_strategy="LayoutAwareExtractor",
                         reading_order=len(pages_dict[page_no].text_blocks) + 1
                     )
                 )
-            elif data.label == DocItemLabel.TABLE:
-                has_headers = any(cell.column_header for cell in data.data.grid_cells) if data.data else False
+            elif item.label == DocItemLabel.TABLE:
+                has_headers = False
+                try:
+                    if item.data:
+                        cells = getattr(item.data, 'table_cells', getattr(item.data, 'grid_cells', []))
+                        has_headers = any(getattr(cell, 'column_header', False) for cell in cells)
+                except Exception as e:
+                    logger.warning(f"Failed to parse table headers on page {page_no}: {e}")
+                    
                 pages_dict[page_no].tables.append(
                     StructuredTable(
                         bbox=normalized_bbox,
                         page_number=page_no,
                         source_strategy="LayoutAwareExtractor",
-                        markdown=data.export_to_markdown(),
+                        markdown=item.export_to_markdown(),
                         has_headers=has_headers
                     )
                 )
@@ -89,16 +100,7 @@ class LayoutAwareExtractor(BaseExtractor):
 
     def __init__(self, config: dict[str, Any] | None = None):
         super().__init__(config)
-        pipeline_options = PdfPipelineOptions()
-        pipeline_options.do_ocr = False
-        pipeline_options.do_table_structure = True
-        
-        self.converter = DocumentConverter(
-            allowed_formats=[InputFormat.PDF],
-            format_options={
-                InputFormat.PDF: pipeline_options
-            }
-        )
+        self.converter = DocumentConverter(allowed_formats=[InputFormat.PDF])
 
     def extract(self, pdf_path: Path, profile: DocumentProfile) -> ExtractionResult:
         start_time = self._timer_start()
@@ -128,15 +130,22 @@ class LayoutAwareExtractor(BaseExtractor):
                 if table.has_headers:
                     tables_with_headers += 1
                     
-        confidence = 1.0
-        if total_blocks == 0:
-            confidence = 0.0 # Total failure to parse
-        elif total_tables > 0:
+        confidence = 0.0
+        if total_blocks > 0:
+            # Baseline structural confidence scales by volume (cap at +0.8)
+            confidence = min(1.0, 0.5 + (total_blocks / (profile.page_count * 50)) * 0.4)
+            
+        if total_tables > 0:
             header_ratio = tables_with_headers / total_tables
-            if header_ratio < 0.5:
-                # If Docling found tables but failed to parse grid headers for most of them,
-                # it's likely hallucinating or failing layout boundaries.
-                confidence *= 0.7 
+            if header_ratio > 0.5:
+                confidence = min(1.0, confidence + 0.1)
+            else:
+                confidence = max(0.0, confidence - 0.1)
+                
+        if total_blocks == 0 and total_tables > 0:
+            confidence = 0.8  # Edge case: Valid page of pure tables
+            
+        confidence = max(0.0, min(1.0, confidence))
                 
         return ExtractionResult(
             document=normalized_doc,

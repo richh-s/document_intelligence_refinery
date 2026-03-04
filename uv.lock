@@ -658,6 +658,7 @@ dependencies = [
     { name = "pypdf" },
     { name = "pypdfium2" },
     { name = "python-dotenv" },
+    { name = "pyyaml" },
     { name = "sentence-transformers" },
     { name = "structlog" },
 ]
@@ -683,6 +684,7 @@ requires-dist = [
     { name = "pypdfium2", specifier = ">=4.30.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.4.0" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.1.0" },
     { name = "sentence-transformers", specifier = ">=5.2.3" },
     { name = "structlog", specifier = ">=23.1.0" },

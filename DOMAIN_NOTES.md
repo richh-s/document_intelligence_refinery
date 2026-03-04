@@ -149,7 +149,7 @@ Based on the empirical evidence gathered from our internal extraction tests on c
 
 ## Phase 2: Extraction Rules Rationale
 
-The file `extraction_rules.yaml` establishes the exact physical constants governing the Multi-Strategy router constraints and the fallback triggers.
+The file `config/extraction_rules.yaml` establishes the exact physical constants governing the Multi-Strategy router constraints and the fallback triggers.
 
 ### Escalation & Circuit Breaker Logic
 * `MIN_EXTRACTION_CONFIDENCE` (0.85): High standard for pass-through. If the validator evaluates a document's layout fidelity, reading-order coherency, and parsed metadata below an 85% confidence score, we assume data degradation and force an escalation tier retry.
@@ -159,7 +159,9 @@ The file `extraction_rules.yaml` establishes the exact physical constants govern
 ### Strategy A: Text & Garbage Avoidance
 * `NONSENSE_RATIO_MAX` (0.30): Digital "native" documents frequently carry hidden, corrupted OCR text layers overlaid on scans. Setting the tolerance to 30% allows minor header/footer artifact parsing while aggressively aborting unreadable layers back to Strategy C (Vision).
 * `MIN_CHARS_PER_PAGE` (100): Determines valid digital data flow. Prevents blank or heavily damaged sparse pages from passing through the pipeline, punishing page confidence to force an escalation.
-* `MAX_IMAGE_RATIO` (0.50): If more than 50% of the page area is consumed by raw graphics or scans, it is overwhelmingly likely to hold un-extractable embedded data. Structural confidence is slashed by half to route it toward heavier layout-aware or vision engines.
+* `MAX_IMAGE_RATIO` (0.50) & `SCANNED_HEURISTIC`: If more than 50% of the page area is consumed by raw graphics or scans, it is overwhelmingly likely to hold un-extractable embedded data. If it also has near-zero characters (<50), structural confidence is set to 0.0 to immediately force an escalation (it's clearly a scanned page). Otherwise, it is slashed by half.
+* `FONT_METADATA_PRESENCE`: Native digital text possesses programmatic font metadata (`fontname`, `size`, etc.). If `pdfplumber` discovers text but cannot extract font dictionaries, the text is likely baked as raw vector paths or is leftover OCR. We apply a 0.5x penalty to force layout/vision validation.
+* `CHAR_DENSITY_MIN` (< 0.0005 chars/area): Even if a page passes the raw character count, text widely distributed across an immense coordinate plane is structurally sparse (often indicating background watermarks or unreadable scattered labels), triggering a 0.8x structural penalty.
 
 ### Strategy C: Vision Budgets
 Vision language models are cost-prohibitive on massive document batches. Budget limits must be calculated _pre-flight_.
