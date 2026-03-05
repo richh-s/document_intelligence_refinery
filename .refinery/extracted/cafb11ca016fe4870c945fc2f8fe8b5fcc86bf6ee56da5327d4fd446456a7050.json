@@ -1,19 +1,1390 @@
 {
   "document": {
     "file_hash": "cafb11ca016fe4870c945fc2f8fe8b5fcc86bf6ee56da5327d4fd446456a7050",
-    "pages": []
+    "pages": [
+      {
+        "page_number": 1,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "Commercial Bank of Ethiopia",
+            "bbox": [
+              0.133,
+              0.473,
+              0.868,
+              0.543
+            ],
+            "page_number": 1,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "ANNUAL REPORT",
+            "bbox": [
+              0.017,
+              0.632,
+              0.537,
+              0.706
+            ],
+            "page_number": 1,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "2023/24",
+            "bbox": [
+              0.015,
+              0.706,
+              0.301,
+              0.747
+            ],
+            "page_number": 1,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.029540249999999997
+        }
+      },
+      {
+        "page_number": 2,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "DIGITAL BANKING",
+            "bbox": [
+              0.121,
+              0.053,
+              0.804,
+              0.145
+            ],
+            "page_number": 2,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "MOVING FORWARD!",
+            "bbox": [
+              0.158,
+              0.121,
+              0.778,
+              0.165
+            ],
+            "page_number": 2,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "CBE/BIRR",
+            "bbox": [
+              0.731,
+              0.767,
+              0.842,
+              0.786
+            ],
+            "page_number": 2,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "INTERNET BANKING",
+            "bbox": [
+              0.551,
+              0.715,
+              0.786,
+              0.757
+            ],
+            "page_number": 2,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          },
+          {
+            "text": "CARD BANKING",
+            "bbox": [
+              0.036,
+              0.548,
+              0.308,
+              0.575
+            ],
+            "page_number": 2,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 5
+          },
+          {
+            "text": "MOBILE BANKING",
+            "bbox": [
+              0.727,
+              0.548,
+              0.943,
+              0.575
+            ],
+            "page_number": 2,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 6
+          },
+          {
+            "text": "POS",
+            "bbox": [
+              0.249,
+              0.415,
+              0.316,
+              0.445
+            ],
+            "page_number": 2,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 7
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.029540249999999997
+        }
+      },
+      {
+        "page_number": 3,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "CONTENTS",
+            "bbox": [
+              0.023,
+              0.048,
+              0.194,
+              0.085
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "PROFILE",
+            "bbox": [
+              0.024,
+              0.085,
+              0.139,
+              0.117
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "VISION",
+            "bbox": [
+              0.024,
+              0.117,
+              0.086,
+              0.146
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "MISSION",
+            "bbox": [
+              0.025,
+              0.146,
+              0.089,
+              0.176
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          },
+          {
+            "text": "MOTTO",
+            "bbox": [
+              0.024,
+              0.176,
+              0.083,
+              0.205
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 5
+          },
+          {
+            "text": "VALUES",
+            "bbox": [
+              0.026,
+              0.205,
+              0.091,
+              0.235
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 6
+          },
+          {
+            "text": "PERFORMANCE HIGHLIGHTS",
+            "bbox": [
+              0.024,
+              0.235,
+              0.317,
+              0.264
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 7
+          },
+          {
+            "text": "BOARD OF DIRECTORS",
+            "bbox": [
+              0.025,
+              0.264,
+              0.315,
+              0.294
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 8
+          },
+          {
+            "text": "CBE NOORSHA'RI'AH ADVISORY COMMITTEE",
+            "bbox": [
+              0.026,
+              0.294,
+              0.42,
+              0.322
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 9
+          },
+          {
+            "text": "EXECUTIVE MANAGEMENT",
+            "bbox": [
+              0.027,
+              0.322,
+              0.298,
+              0.352
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 10
+          },
+          {
+            "text": "PRESIDENT\u2019S MESSAGE",
+            "bbox": [
+              0.027,
+              0.352,
+              0.315,
+              0.38
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 11
+          },
+          {
+            "text": "SHARI'A ADVISORY COMMITTEE (SAC) STATEMENT FOR THE FISCAL YEAR ENDED JUNE 30 2022",
+            "bbox": [
+              0.026,
+              0.38,
+              0.668,
+              0.407
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 12
+          },
+          {
+            "text": "1. HIGHLIGHTS OF GLOBAL AND DOMESTIC ECONOMIES",
+            "bbox": [
+              0.027,
+              0.407,
+              0.679,
+              0.435
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 13
+          },
+          {
+            "text": "1.1 The Global Economy",
+            "bbox": [
+              0.027,
+              0.435,
+              0.299,
+              0.459
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 14
+          },
+          {
+            "text": "1.2 The Ethiopian Economy",
+            "bbox": [
+              0.027,
+              0.459,
+              0.385,
+              0.485
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 15
+          },
+          {
+            "text": "2 HIGHLIGHTS OF CBE\u2019S FINANCIAL STATEMENTS",
+            "bbox": [
+              0.027,
+              0.485,
+              0.562,
+              0.51
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 16
+          },
+          {
+            "text": "2.1 Income Statement",
+            "bbox": [
+              0.027,
+              0.51,
+              0.293,
+              0.535
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 17
+          },
+          {
+            "text": "2.1.1 Income",
+            "bbox": [
+              0.028,
+              0.535,
+              0.233,
+              0.558
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 18
+          },
+          {
+            "text": "2.1.2 Expense",
+            "bbox": [
+              0.028,
+              0.558,
+              0.229,
+              0.581
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 19
+          },
+          {
+            "text": "2.1.3 Profit",
+            "bbox": [
+              0.028,
+              0.581,
+              0.197,
+              0.604
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 20
+          },
+          {
+            "text": "2.2 Balance Sheet",
+            "bbox": [
+              0.027,
+              0.604,
+              0.305,
+              0.626
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 21
+          },
+          {
+            "text": "2.2.1 Assets",
+            "bbox": [
+              0.027,
+              0.626,
+              0.244,
+              0.648
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 22
+          },
+          {
+            "text": "2.2.2 Liabilities",
+            "bbox": [
+              0.028,
+              0.648,
+              0.286,
+              0.671
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 23
+          },
+          {
+            "text": "2.2.3 Capital and Reserves",
+            "bbox": [
+              0.028,
+              0.671,
+              0.374,
+              0.694
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 24
+          },
+          {
+            "text": "3 HIGHLIGHTS OF NON-FINANCIAL DEVELOPMENTS",
+            "bbox": [
+              0.026,
+              0.694,
+              0.571,
+              0.717
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 25
+          },
+          {
+            "text": "3.1 Customer Base Expansion and Use of Digital Channels",
+            "bbox": [
+              0.027,
+              0.717,
+              0.649,
+              0.741
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 26
+          },
+          {
+            "text": "3.2 Accessibility",
+            "bbox": [
+              0.027,
+              0.741,
+              0.206,
+              0.765
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 27
+          },
+          {
+            "text": "3.3 Human Resource Development",
+            "bbox": [
+              0.027,
+              0.765,
+              0.335,
+              0.788
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 28
+          },
+          {
+            "text": "ANNEX: 2022/23 AUDITOR\u2019S REPORT AND FINANCIAL STATEMENTS",
+            "bbox": [
+              0.027,
+              0.788,
+              0.649,
+              0.812
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 29
+          },
+          {
+            "text": "CONTENTS OF THE ANNEX",
+            "bbox": [
+              0.027,
+              0.812,
+              0.461,
+              0.834
+            ],
+            "page_number": 3,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 30
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.029540249999999997
+        }
+      },
+      {
+        "page_number": 4,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "PROFILE",
+            "bbox": [
+              0.025,
+              0.036,
+              0.117,
+              0.067
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "\u205e Has been serving Ethiopia since 1942.",
+            "bbox": [
+              0.026,
+              0.067,
+              0.661,
+              0.082
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "\u205e Pioneered ATM services in Ethiopia.",
+            "bbox": [
+              0.026,
+              0.082,
+              0.35,
+              0.097
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "\u205e Introduced Western Union Money Transfer Services to Ethiopia.",
+            "bbox": [
+              0.026,
+              0.097,
+              0.669,
+              0.113
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          },
+          {
+            "text": "\u205e Is the first Ethiopian bank to offer interest-free banking services.",
+            "bbox": [
+              0.026,
+              0.113,
+              0.668,
+              0.128
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 5
+          },
+          {
+            "text": "\u205e Has been playing a catalytic role in the socio-economic development of the nation.",
+            "bbox": [
+              0.026,
+              0.128,
+              0.755,
+              0.143
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 6
+          },
+          {
+            "text": "\u205e Had 1,942 branches across the country as of 30 June 2024.",
+            "bbox": [
+              0.026,
+              0.143,
+              0.867,
+              0.157
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 7
+          },
+          {
+            "text": "\u205e Has strong correspondent relationships with about 38 renowned foreign banks and SWIFT bilateral key arrangements with over 750 banks.",
+            "bbox": [
+              0.026,
+              0.157,
+              0.926,
+              0.176
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 8
+          },
+          {
+            "text": "\u205e Achieved a strong asset position of Birr 1.4 trillion as of 30 June 2024.",
+            "bbox": [
+              0.026,
+              0.176,
+              0.783,
+              0.192
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 9
+          },
+          {
+            "text": "\u205e Combines a wide capital base with above 48 thousand permanent and 33 thousand temporary employees.",
+            "bbox": [
+              0.026,
+              0.192,
+              0.765,
+              0.207
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 10
+          },
+          {
+            "text": "\u205e Is headquartered in a modern skyscraper (4B+G+48) that is the tallest in East Africa.",
+            "bbox": [
+              0.026,
+              0.207,
+              0.726,
+              0.224
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 11
+          },
+          {
+            "text": "VISION",
+            "bbox": [
+              0.026,
+              0.249,
+              0.159,
+              0.279
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 12
+          },
+          {
+            "text": "To become a world-class commercial bank financially driving Ethiopia\u2019s future.",
+            "bbox": [
+              0.026,
+              0.279,
+              0.695,
+              0.295
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 13
+          },
+          {
+            "text": "MISSION",
+            "bbox": [
+              0.026,
+              0.295,
+              0.094,
+              0.319
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 14
+          },
+          {
+            "text": "We are committed to realizing stakeholders\u2019 values through enhanced financial intermediation globally, deploying highly motivated and skilled employees.",
+            "bbox": [
+              0.026,
+              0.319,
+              0.949,
+              0.344
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 15
+          },
+          {
+            "text": "MOTTO",
+            "bbox": [
+              0.026,
+              0.344,
+              0.086,
+              0.374
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 16
+          },
+          {
+            "text": "The Bank You Can Always Rely on!",
+            "bbox": [
+              0.026,
+              0.374,
+              0.343,
+              0.393
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 17
+          },
+          {
+            "text": "VALUES",
+            "bbox": [
+              0.027,
+              0.393,
+              0.086,
+              0.423
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 18
+          },
+          {
+            "text": "i) Integrity",
+            "bbox": [
+              0.027,
+              0.423,
+              0.172,
+              0.446
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 19
+          },
+          {
+            "text": "\u205e We are committed to the highest ideals of honor and integrity.",
+            "bbox": [
+              0.026,
+              0.446,
+              0.738,
+              0.462
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 20
+          },
+          {
+            "text": "\u205e We are committed to acting in an honest and trustworthy manner.",
+            "bbox": [
+              0.026,
+              0.462,
+              0.669,
+              0.477
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 21
+          },
+          {
+            "text": "\u205e We are committed to firmly adhering to ethical principles and standards.",
+            "bbox": [
+              0.026,
+              0.477,
+              0.689,
+              0.493
+            ],
+            "page_number": 4,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 22
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.029540249999999997
+        }
+      },
+      {
+        "page_number": 5,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "ii) Service Excellence",
+            "bbox": [
+              0.027,
+              0.024,
+              0.227,
+              0.052
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "\u205e We are committed to maintaining the highest operating standards.",
+            "bbox": [
+              0.027,
+              0.052,
+              0.774,
+              0.067
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "\u205e We are committed to being a preferred brand in service quality in the minds of customers and the general public.",
+            "bbox": [
+              0.027,
+              0.067,
+              0.824,
+              0.089
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "\u205e We strive to build long lasting relationships with our customers.",
+            "bbox": [
+              0.027,
+              0.089,
+              0.565,
+              0.104
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          },
+          {
+            "text": "iii) Professionalism",
+            "bbox": [
+              0.027,
+              0.104,
+              0.245,
+              0.131
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 5
+          },
+          {
+            "text": "\u205e We take ownership and personal responsibility for all what we do.",
+            "bbox": [
+              0.027,
+              0.131,
+              0.703,
+              0.145
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 6
+          },
+          {
+            "text": "\u205e We are professionals in conduct and treat customers with the utmost respect.",
+            "bbox": [
+              0.027,
+              0.145,
+              0.649,
+              0.159
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 7
+          },
+          {
+            "text": "\u205e We are responsive to the needs and interests of our customers.",
+            "bbox": [
+              0.027,
+              0.159,
+              0.635,
+              0.174
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 8
+          },
+          {
+            "text": "\u205e We maintain the confidentiality and privacy of all customers.",
+            "bbox": [
+              0.027,
+              0.174,
+              0.661,
+              0.189
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 9
+          },
+          {
+            "text": "\u205e We continually develop ourselves to maintain leading-edge capabilities.",
+            "bbox": [
+              0.027,
+              0.189,
+              0.76,
+              0.204
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 10
+          },
+          {
+            "text": "\u205e We apply our knowledge and competence to our competitive advantage.",
+            "bbox": [
+              0.027,
+              0.204,
+              0.709,
+              0.22
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 11
+          },
+          {
+            "text": "iv) Empowerment",
+            "bbox": [
+              0.026,
+              0.22,
+              0.186,
+              0.247
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 12
+          },
+          {
+            "text": "\u205e We distinguish employees as valuable organizational resources.",
+            "bbox": [
+              0.026,
+              0.247,
+              0.745,
+              0.261
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 13
+          },
+          {
+            "text": "\u205e We promote delegation of duties and responsibilities.",
+            "bbox": [
+              0.027,
+              0.261,
+              0.669,
+              0.275
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 14
+          },
+          {
+            "text": "\u205e We maintain an atmosphere that inspires confidence and take ownership.",
+            "bbox": [
+              0.027,
+              0.275,
+              0.887,
+              0.291
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 15
+          },
+          {
+            "text": "\u205e We take responsibility, support each other and serve customers in a courteous and respectful manner.",
+            "bbox": [
+              0.027,
+              0.291,
+              0.9,
+              0.308
+            ],
+            "page_number": 5,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 16
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.029540249999999997
+        }
+      },
+      {
+        "page_number": 6,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "Performance Highlights",
+            "bbox": [
+              0.05,
+              0.04,
+              0.95,
+              0.08
+            ],
+            "page_number": 6,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "Total Asset\n(Billion Birr)",
+            "bbox": [
+              0.05,
+              0.08,
+              0.3,
+              0.2
+            ],
+            "page_number": 6,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "Outstanding Loans &\nSecurities\n(Billion Birr)",
+            "bbox": [
+              0.05,
+              0.24,
+              0.3,
+              0.36
+            ],
+            "page_number": 6,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "Net Profit Before Tax\n(Billion Birr)",
+            "bbox": [
+              0.05,
+              0.4,
+              0.3,
+              0.52
+            ],
+            "page_number": 6,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.02846325
+        }
+      },
+      {
+        "page_number": 7,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "Performance Highlights - (Continued)",
+            "bbox": [
+              0.05,
+              0.04,
+              0.95,
+              0.08
+            ],
+            "page_number": 7,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "Capital & Reserve\n(Billion Birr)",
+            "bbox": [
+              0.05,
+              0.08,
+              0.3,
+              0.2
+            ],
+            "page_number": 7,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "Deposit\n(Billion Birr)",
+            "bbox": [
+              0.05,
+              0.24,
+              0.3,
+              0.36
+            ],
+            "page_number": 7,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "No. of Branches",
+            "bbox": [
+              0.05,
+              0.4,
+              0.3,
+              0.52
+            ],
+            "page_number": 7,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.02846325
+        }
+      },
+      {
+        "page_number": 8,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "Board of Directors",
+            "bbox": [
+              0.05,
+              0.04,
+              0.95,
+              0.08
+            ],
+            "page_number": 8,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "Ato Ahmed Shide\nChairperson",
+            "bbox": [
+              0.1,
+              0.1,
+              0.3,
+              0.2
+            ],
+            "page_number": 8,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "Woy. Aynalem Nigussie\nMember",
+            "bbox": [
+              0.35,
+              0.1,
+              0.55,
+              0.2
+            ],
+            "page_number": 8,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "Ato Moges Balcha\nMember",
+            "bbox": [
+              0.6,
+              0.1,
+              0.8,
+              0.2
+            ],
+            "page_number": 8,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          },
+          {
+            "text": "Woy. Tigist Hamid\nMember",
+            "bbox": [
+              0.1,
+              0.3,
+              0.3,
+              0.4
+            ],
+            "page_number": 8,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 5
+          },
+          {
+            "text": "Ato Wondimagegnehu Negera\nMember",
+            "bbox": [
+              0.35,
+              0.3,
+              0.55,
+              0.4
+            ],
+            "page_number": 8,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 6
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.02846325
+        }
+      },
+      {
+        "page_number": 9,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "Board of Directors - (Continued)",
+            "bbox": [
+              0.05,
+              0.04,
+              0.95,
+              0.08
+            ],
+            "page_number": 9,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "Ato Ahmed Tusa\nMember",
+            "bbox": [
+              0.1,
+              0.1,
+              0.3,
+              0.2
+            ],
+            "page_number": 9,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "Ato Getachew Negera\nMember",
+            "bbox": [
+              0.35,
+              0.1,
+              0.55,
+              0.2
+            ],
+            "page_number": 9,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "Ato Addisu Habba\nMember",
+            "bbox": [
+              0.6,
+              0.1,
+              0.8,
+              0.2
+            ],
+            "page_number": 9,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          },
+          {
+            "text": "Eyob Tesfaye (Ph.D)\nMember",
+            "bbox": [
+              0.1,
+              0.3,
+              0.3,
+              0.4
+            ],
+            "page_number": 9,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 5
+          },
+          {
+            "text": "Ato Bereket Fesehatsion\nMember",
+            "bbox": [
+              0.35,
+              0.3,
+              0.55,
+              0.4
+            ],
+            "page_number": 9,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 6
+          },
+          {
+            "text": "Ato Olani Sekata\nMember",
+            "bbox": [
+              0.6,
+              0.3,
+              0.8,
+              0.4
+            ],
+            "page_number": 9,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 7
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.02846325
+        }
+      },
+      {
+        "page_number": 10,
+        "source_strategy": "VisionExtractor",
+        "text_blocks": [
+          {
+            "text": "CBE NOOR SHARI\u2019AH ADVISORY COMMITTEE",
+            "bbox": [
+              0.05,
+              0.04,
+              0.95,
+              0.08
+            ],
+            "page_number": 10,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 1
+          },
+          {
+            "text": "Sheikh Mohammed Hamidin Abdulsemed (Ph.D)\nChairperson",
+            "bbox": [
+              0.1,
+              0.1,
+              0.3,
+              0.2
+            ],
+            "page_number": 10,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 2
+          },
+          {
+            "text": "Jeilan Geleta Mame (Ph.D)\nMember",
+            "bbox": [
+              0.35,
+              0.1,
+              0.55,
+              0.2
+            ],
+            "page_number": 10,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 3
+          },
+          {
+            "text": "Nur Abdi Gudle (Asso. Professor)\nMember",
+            "bbox": [
+              0.6,
+              0.1,
+              0.8,
+              0.2
+            ],
+            "page_number": 10,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 4
+          },
+          {
+            "text": "Mahamedzen Nur Hussen (Ph.D)\nMember",
+            "bbox": [
+              0.1,
+              0.3,
+              0.3,
+              0.4
+            ],
+            "page_number": 10,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 5
+          },
+          {
+            "text": "Mohammed Habib Mohammed (Asst. Professor)\nMember",
+            "bbox": [
+              0.35,
+              0.3,
+              0.55,
+              0.4
+            ],
+            "page_number": 10,
+            "source_strategy": "VisionExtractor",
+            "reading_order": 6
+          }
+        ],
+        "tables": [],
+        "figures": [],
+        "metadata": {
+          "batch_cost": 0.02846325
+        }
+      }
+    ]
   },
-  "confidence": 0.0,
-  "cost": 0.0,
-  "time_ms": 2540,
+  "confidence": 0.055901,
+  "cost": 0.058003,
+  "time_ms": 95261,
   "model_name": "openai/gpt-4o-mini",
-  "tokens_in": 0,
-  "tokens_out": 0,
-  "pages_sent": 0,
+  "tokens_in": 368894,
+  "tokens_out": 4449,
+  "pages_sent": 10,
   "escalation_occurred": true,
   "strategies_attempted": [
     "StrategyB(0.69)",
-    "StrategyC(0.00)"
+    "StrategyC(Partial)"
   ],
   "requires_human_review": true
 }

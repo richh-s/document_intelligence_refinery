@@ -18311,7 +18311,7 @@
   },
   "confidence": 0.712505,
   "cost": 0.0,
-  "time_ms": 179082,
+  "time_ms": 137206,
   "model_name": "docling (cpu)",
   "tokens_in": 0,
   "tokens_out": 0,
