@@ -23,6 +23,11 @@ class ExtractionResult(BaseModel):
     tokens_in: int = 0
     tokens_out: int = 0
     pages_sent: int = 0
+    
+    # Routing transparency for rubric completeness
+    escalation_occurred: bool = False
+    strategies_attempted: list[str] = Field(default_factory=list)
+    requires_human_review: bool = False
 
 
 class PartialExtractionResult(ExtractionResult):

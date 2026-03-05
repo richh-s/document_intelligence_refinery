@@ -62,6 +62,10 @@ class ExtractionRouter:
         origin = profile.origin_type
         layout = profile.layout_type
         
+        # Track the specific path this document took through the router
+        strategies_attempted = []
+        escalation_occurred = False
+        
         # Check retries via Ledger 
         attempts_a = self.ledger.get_attempt_count(profile.file_hash, "StrategyA")
         attempts_b = self.ledger.get_attempt_count(profile.file_hash, "StrategyB")
@@ -79,15 +83,23 @@ class ExtractionRouter:
                     final_a = res_a.confidence * val_conf_a
                     
                     if final_a >= self.min_confidence_fast_text:
+                        res_a.escalation_occurred = escalation_occurred
+                        res_a.strategies_attempted = strategies_attempted + ["StrategyA"]
                         self._log_attempt(profile, "StrategyA", res_a, val_conf_a, "SUCCESS")
                         return res_a
                     else:
+                        escalation_occurred = True
+                        strategies_attempted.append(f"StrategyA({final_a:.2f})")
                         self._log_attempt(profile, "StrategyA", res_a, val_conf_a, "ESCALATED", "LOW_CONFIDENCE_ESCALATION", f"Confidence {final_a} < {self.min_confidence_fast_text}")
                         
                 except Exception as e:
+                    escalation_occurred = True
+                    strategies_attempted.append("StrategyA(Exception)")
                     self._log_attempt(profile, "StrategyA", None, 0.0, "ESCALATED", "EXTRACTOR_EXCEPTION", str(e))
                     logger.error(f"Strategy A Failed: {e}. Escalating...")
             else:
+                escalation_occurred = True
+                strategies_attempted.append("StrategyA(MaxRetries)")
                 logger.info("Strategy A max retries exceeded. Escalating...")
 
         # ==========================================
@@ -104,19 +116,29 @@ class ExtractionRouter:
                     final_b = res_b.confidence * val_conf_b
                     
                     if final_b >= self.min_confidence_layout:
+                        res_b.escalation_occurred = escalation_occurred
+                        res_b.strategies_attempted = strategies_attempted + ["StrategyB"]
                         self._log_attempt(profile, "StrategyB", res_b, val_conf_b, "SUCCESS")
                         return res_b
                     else:
+                        escalation_occurred = True
+                        strategies_attempted.append(f"StrategyB({final_b:.2f})")
                         self._log_attempt(profile, "StrategyB", res_b, val_conf_b, "ESCALATED", "LOW_CONFIDENCE_ESCALATION", f"Confidence {final_b} < {self.min_confidence_layout}")
                         
                 except MemoryError as e:
                     # Explicit Memory Circuit Breaker
+                    escalation_occurred = True
+                    strategies_attempted.append("StrategyB(MemoryError)")
                     self._log_attempt(profile, "StrategyB", None, 0.0, "ESCALATED", "MEMORY_CIRCUIT_BREAKER", str(e))
                     logger.error("Strategy B hit MemoryError (OOM). Escalating to Vision...")
                 except Exception as e:
+                    escalation_occurred = True
+                    strategies_attempted.append("StrategyB(Exception)")
                     self._log_attempt(profile, "StrategyB", None, 0.0, "ESCALATED", "EXTRACTOR_EXCEPTION", str(e))
                     logger.error(f"Strategy B Failed: {e}. Escalating to Vision...")
             else:
+                escalation_occurred = True
+                strategies_attempted.append("StrategyB(MaxRetries)")
                 logger.info("Strategy B max retries exceeded. Escalating to Vision...")
 
         # ==========================================
@@ -131,12 +153,21 @@ class ExtractionRouter:
                 
                 # Did it hit the budget ceiling mid-way?
                 if isinstance(res_c, PartialExtractionResult):
+                    res_c.escalation_occurred = escalation_occurred
+                    res_c.strategies_attempted = strategies_attempted + ["StrategyC(Partial)"]
+                    res_c.requires_human_review = True # Always flag partials
                     self._log_attempt(profile, "StrategyC", res_c, val_conf_c, "PARTIAL_SUCCESS", "BUDGET_CAP_HIT", "Document exceeded global token budget.")
                     return res_c
                     
                 final_c = res_c.confidence * val_conf_c
-                # Strategy C is final tier. Return whatever we got. 
-                # If it's terrible, we note the failure in the ledger but still return the object.
+                
+                # Graceful Degradation flag 
+                if final_c < self.min_confidence_vision:
+                    res_c.requires_human_review = True
+                    
+                res_c.escalation_occurred = escalation_occurred
+                res_c.strategies_attempted = strategies_attempted + [f"StrategyC({final_c:.2f})"]
+                
                 status = "SUCCESS" if final_c >= self.min_confidence_vision else "COMPLETED_WITH_LOW_CONFIDENCE"
                 self._log_attempt(profile, "StrategyC", res_c, val_conf_c, status)
                 return res_c
