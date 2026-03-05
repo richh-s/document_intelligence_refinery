@@ -154,14 +154,14 @@ sequenceDiagram
     EX->>S: Write Audit/Provenance Ledger
     EX->>C: Clean Normalized ExtractedDocument
     
-    Note over C: Enforce Chunking Constitution rules (context prepending, table integrity)
+    Note over C: Enforce Chunking Constitution rules
     
     C->>P: Validated Logical Document Units (LDUs)
     
-    Note over P: LLM Summarize Sections (PageIndex Builder)
+    Note over P: LLM Summarize Sections
     P->>Q: Hierarchical Tree + LDU Vectors
     
-    Note over Q: Query Interface retrieves via Hybrid Search
+    Note over Q: Hybrid Search Retrieval
     Q->>S: Store to ChromaDB / Disk
 ```
 
