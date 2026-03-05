@@ -58,8 +58,8 @@ def main():
             logger.info(f"Extraction Completed via {result.model_name}. Final Confidence: {result.confidence:.3f}")
             out_file = out_dir / f"{profile.file_hash}.json"
             
-            # Serialize
-            doc_data = result.document.model_dump()
+            # Serialize the entire ExtractionResult to preserve routing/escalation flags
+            doc_data = result.model_dump()
             with open(out_file, "w") as f:
                 json.dump(doc_data, f, indent=2)
             logger.info(f"Saved extracted output to: {out_file.name}")
