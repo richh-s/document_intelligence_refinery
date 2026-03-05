@@ -114,6 +114,12 @@ The escalation sequence proceeds as follows:
 
 This prevents garbage extraction, hallucinated tables, and broken OCR text from corrupting the index.
 
+**Routing Transparency & Graceful Degradation**
+To ensure complete system observability, the router strictly surfaces its decisions directly within the normalized `ExtractionResult` JSON payload:
+- `escalation_occurred` (boolean)
+- `strategies_attempted` (array of strategy paths, e.g., `["StrategyA(0.12)", "StrategyB(0.65)", "StrategyC(0.9)"]`)
+- `requires_human_review` (A dedicated Graceful Degradation block triggered if even the final Strategy C fails to meet the minimum confidence threshold).
+
 ---
 
 ## 4. Full 5-Stage Document Intelligence Pipeline
