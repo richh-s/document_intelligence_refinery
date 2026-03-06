@@ -9,7 +9,7 @@ import httpx
 from pydantic import BaseModel
 
 from models.ldu import LogicalDocumentUnit
-from models.page_index import PageIndexNode
+from agents.indexer import PageIndexNode
 
 logger = logging.getLogger(__name__)
 

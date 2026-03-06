@@ -1,0 +1,50 @@
+{
+  "document_name": "Financial_Doc_1.pdf",
+  "nodes": [
+    {
+      "section_id": "sec_01",
+      "section_title": "Executive Summary",
+      "summary": "This section provides an overview of the key metrics and primary objectives.",
+      "page_start": 1,
+      "page_end": 2,
+      "key_entities": [
+        "Acme Corp",
+        "Global Metrics"
+      ],
+      "data_types_present": [],
+      "children": []
+    },
+    {
+      "section_id": "sec_02",
+      "section_title": "Detailed Analysis",
+      "summary": "In-depth breakdown of the variables and core data structures.",
+      "page_start": 3,
+      "page_end": 5,
+      "key_entities": [
+        "Q3 Revenue",
+        "Risk Models"
+      ],
+      "data_types_present": [
+        "tables",
+        "figures"
+      ],
+      "children": [
+        {
+          "section_id": "sec_02_a",
+          "section_title": "Financial Breakdown",
+          "summary": "Tabular mapping of revenue and costs.",
+          "page_start": 4,
+          "page_end": 5,
+          "key_entities": [
+            "OPEX",
+            "CAPEX"
+          ],
+          "data_types_present": [
+            "tables"
+          ],
+          "children": []
+        }
+      ]
+    }
+  ]
+}

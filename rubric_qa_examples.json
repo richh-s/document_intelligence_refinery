@@ -1,0 +1,254 @@
+[
+  {
+    "document_class": "Financial",
+    "document_name": "Financial_Doc_1.pdf",
+    "query": "What are the primary findings in Financial_Doc_1.pdf?",
+    "answer": "The primary findings in Financial_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Financial_Doc_1.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_financial_1_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Financial",
+    "document_name": "Financial_Doc_2.pdf",
+    "query": "What are the primary findings in Financial_Doc_2.pdf?",
+    "answer": "The primary findings in Financial_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Financial_Doc_2.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_financial_2_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Financial",
+    "document_name": "Financial_Doc_3.pdf",
+    "query": "What are the primary findings in Financial_Doc_3.pdf?",
+    "answer": "The primary findings in Financial_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Financial_Doc_3.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_financial_3_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Legal",
+    "document_name": "Legal_Doc_1.pdf",
+    "query": "What are the primary findings in Legal_Doc_1.pdf?",
+    "answer": "The primary findings in Legal_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Legal_Doc_1.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_legal_1_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Legal",
+    "document_name": "Legal_Doc_2.pdf",
+    "query": "What are the primary findings in Legal_Doc_2.pdf?",
+    "answer": "The primary findings in Legal_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Legal_Doc_2.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_legal_2_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Legal",
+    "document_name": "Legal_Doc_3.pdf",
+    "query": "What are the primary findings in Legal_Doc_3.pdf?",
+    "answer": "The primary findings in Legal_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Legal_Doc_3.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_legal_3_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Operational",
+    "document_name": "Operational_Doc_1.pdf",
+    "query": "What are the primary findings in Operational_Doc_1.pdf?",
+    "answer": "The primary findings in Operational_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Operational_Doc_1.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_operational_1_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Operational",
+    "document_name": "Operational_Doc_2.pdf",
+    "query": "What are the primary findings in Operational_Doc_2.pdf?",
+    "answer": "The primary findings in Operational_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Operational_Doc_2.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_operational_2_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Operational",
+    "document_name": "Operational_Doc_3.pdf",
+    "query": "What are the primary findings in Operational_Doc_3.pdf?",
+    "answer": "The primary findings in Operational_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Operational_Doc_3.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_operational_3_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Technical",
+    "document_name": "Technical_Doc_1.pdf",
+    "query": "What are the primary findings in Technical_Doc_1.pdf?",
+    "answer": "The primary findings in Technical_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Technical_Doc_1.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_technical_1_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Technical",
+    "document_name": "Technical_Doc_2.pdf",
+    "query": "What are the primary findings in Technical_Doc_2.pdf?",
+    "answer": "The primary findings in Technical_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Technical_Doc_2.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_technical_2_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  },
+  {
+    "document_class": "Technical",
+    "document_name": "Technical_Doc_3.pdf",
+    "query": "What are the primary findings in Technical_Doc_3.pdf?",
+    "answer": "The primary findings in Technical_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
+    "provenance": [
+      {
+        "document_name": "Technical_Doc_3.pdf",
+        "page_number": 4,
+        "bbox": [
+          0.1,
+          0.2,
+          0.8,
+          0.3
+        ],
+        "content_hash": "hash_technical_3_alpha",
+        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+      }
+    ],
+    "audit_status": "Verified"
+  }
+]

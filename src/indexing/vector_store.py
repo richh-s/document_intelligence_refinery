@@ -5,7 +5,7 @@ import chromadb
 from chromadb.utils import embedding_functions
 from typing import List, Dict, Any, Optional
 from models.ldu import LogicalDocumentUnit
-from models.page_index import PageIndexNode
+from agents.indexer import PageIndexNode
 
 logger = logging.getLogger(__name__)
 
