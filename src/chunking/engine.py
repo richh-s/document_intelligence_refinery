@@ -16,9 +16,10 @@ class ChunkingEngine:
     Enforces precise contextual, structural, and relational rules.
     """
     
-    def __init__(self, tokenizer_fn: Callable[[str], int], max_tokens: int = 500):
+    def __init__(self, tokenizer_fn: Callable[[str], int], max_tokens: int = 600, overlap_tokens: int = 50):
         self.tokenizer = tokenizer_fn
         self.max_tokens = max_tokens
+        self.overlap_tokens = overlap_tokens
         
         # Cross-reference regex patterns
         self.ref_pattern = re.compile(r"(?i)(?:see\s+|as\s+shown\s+in\s+)(table|figure|section)\s+([a-zA-Z0-9.\-]+)")
@@ -35,7 +36,10 @@ class ChunkingEngine:
         global_context_prefix: Optional[str] = None
         
         for page in doc.pages:
-            # 1. Process Figures First (to capture layout)
+            # Reconstruct reading order before processing
+            page.reconstruct_reading_order()
+            
+            # 1. Process Figures First
             for fig in page.figures:
                 content = fig.caption if fig.caption else "[Figure Content]"
                 ldus.append(self._create_ldu(
@@ -46,20 +50,34 @@ class ChunkingEngine:
                     parent_section=current_section_id
                 ))
                 
-            # 2. Process Tables
-            for idx, table in enumerate(page.tables):
-                # Ensure header injection tracking if needed
+            # 2. Process Tables with Header-Injected Row Chunking
+            for table in page.tables:
                 content = table.markdown
-                ldus.append(self._create_ldu(
-                    content=content,
-                    chunk_type="table",
-                    page_refs=[page.page_number],
-                    bbox=list(table.bbox),
-                    parent_section=current_section_id
-                ))
+                token_count = self.tokenizer(content)
+                if token_count > self.max_tokens:
+                    table_chunks = self._table_header_injected_split(content, self.max_tokens)
+                    for tc in table_chunks:
+                        ldus.append(self._create_ldu(
+                            content=tc,
+                            chunk_type="table",
+                            page_refs=[page.page_number],
+                            bbox=list(table.bbox),
+                            parent_section=current_section_id
+                        ))
+                else:
+                    ldus.append(self._create_ldu(
+                        content=content,
+                        chunk_type="table",
+                        page_refs=[page.page_number],
+                        bbox=list(table.bbox),
+                        parent_section=current_section_id
+                    ))
 
-            # 3. Process Text Blocks
-            for block in page.text_blocks:
+            # 3. Process Text Blocks (now sorted by reading_order)
+            # Ensure text blocks are sorted by reading order
+            sorted_blocks = sorted(page.text_blocks, key=lambda b: b.reading_order)
+            
+            for block in sorted_blocks:
                 content = block.text.strip()
                 if not content:
                     continue
@@ -101,13 +119,14 @@ class ChunkingEngine:
                 # Handle Token Overflows (Contextual Prepending for Lists/Text)
                 token_count = self.tokenizer(content)
                 if token_count > self.max_tokens:
-                    # If this is a list, save the context for the next iteration
                     if chunk_type == "list":
+                        # Emergency list splitter
                         first_line = content.split("\n")[0]
                         global_context_prefix = first_line[:50]
+                        sub_chunks = self._emergency_list_split(content, self.max_tokens)
+                    else:
+                        sub_chunks = self._semantic_split(content, self.max_tokens, self.overlap_tokens)
                         
-                    # Split logic (simplified naive split by period for semantic integrity)
-                    sub_chunks = self._semantic_split(content, self.max_tokens)
                     for i, sc in enumerate(sub_chunks):
                         # Prepend context to split overflow chunks
                         if i > 0 and chunk_type == "list" and global_context_prefix:
@@ -149,7 +168,7 @@ class ChunkingEngine:
                             break
                             
                 if target_hash:
-                    ldu.metadata.relations.append({
+                    ldu.metadata.chunk_relationships.append({
                         "type": "refers_to",
                         "target_content_hash": target_hash
                     })
@@ -175,19 +194,22 @@ class ChunkingEngine:
         # Generate spatial content hash
         c_hash = generate_ldu_hash(content, bbox, page_refs, chunk_type)
         
+        # Use a bounding box kwargs dict to map correctly
+        bbox_obj = {"x0": bbox[0], "y0": bbox[1], "x1": bbox[2], "y1": bbox[3]}
+        
         return LogicalDocumentUnit(
             content=content,
             chunk_type=chunk_type,
             page_refs=page_refs,
-            bounding_box=bbox,
+            bounding_box=bbox_obj,
             parent_section_id=parent_section,
             token_count=token_count,
             content_hash=c_hash,
             metadata=md
         )
 
-    def _semantic_split(self, text: str, max_tokens: int) -> List[str]:
-        """Splits sentences without breaking them mid-way."""
+    def _semantic_split(self, text: str, max_tokens: int, overlap_tokens: int) -> List[str]:
+        """Splits sentences with a 'soft' overlap buffer."""
         sentences = re.split(r'(?<=[.!?])\s+', text)
         chunks = []
         current_chunk = []
@@ -197,13 +219,72 @@ class ChunkingEngine:
             s_tokens = self.tokenizer(sentence)
             if current_tokens + s_tokens > max_tokens and current_chunk:
                 chunks.append(" ".join(current_chunk))
-                current_chunk = [sentence]
-                current_tokens = s_tokens
+                # Create overlap buffer from the last sentence(s)
+                current_chunk = [current_chunk[-1]] if current_chunk else []
+                current_tokens = self.tokenizer(" ".join(current_chunk))
+                
+                # Add current sentence to new chunk
+                current_chunk.append(sentence)
+                current_tokens += s_tokens
             else:
                 current_chunk.append(sentence)
                 current_tokens += s_tokens
                 
         if current_chunk:
             chunks.append(" ".join(current_chunk))
+            
+        return chunks
+
+    def _table_header_injected_split(self, markdown_table: str, max_tokens: int) -> List[str]:
+        """Splits large markdown tables, forcing header repetition on each chunk."""
+        lines = markdown_table.strip().split("\n")
+        if len(lines) < 3:
+            return [markdown_table]
+            
+        headers = lines[:2] # header text + separator line
+        rows = lines[2:]
+        
+        chunks = []
+        current_chunk = list(headers)
+        current_tokens = self.tokenizer("\n".join(current_chunk))
+        
+        for row in rows:
+            r_tokens = self.tokenizer(row)
+            if current_tokens + r_tokens > max_tokens and len(current_chunk) > 2:
+                chunks.append("\n".join(current_chunk))
+                current_chunk = list(headers)
+                current_tokens = self.tokenizer("\n".join(current_chunk))
+            
+            current_chunk.append(row)
+            current_tokens += r_tokens
+            
+        if len(current_chunk) > 2:
+            chunks.append("\n".join(current_chunk))
+            
+        return chunks
+
+    def _emergency_list_split(self, text: str, max_tokens: int) -> List[str]:
+        """Splits lists precisely by list item boundaries."""
+        # Find all list item lines using bullet or number regex
+        lines = text.split("\n")
+        chunks = []
+        current_chunk = []
+        current_tokens = 0
+        
+        for line in lines:
+            l_tokens = self.tokenizer(line)
+            # If line is a new list item and chunk exceeds limit, split here
+            is_item_boundary = bool(re.match(r"^(\d+\.|-|\*)\s+", line.strip()))
+            
+            if is_item_boundary and current_tokens + l_tokens > max_tokens and current_chunk:
+                chunks.append("\n".join(current_chunk))
+                current_chunk = [line]
+                current_tokens = l_tokens
+            else:
+                current_chunk.append(line)
+                current_tokens += l_tokens
+                
+        if current_chunk:
+            chunks.append("\n".join(current_chunk))
             
         return chunks

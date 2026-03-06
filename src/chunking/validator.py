@@ -2,7 +2,8 @@
 
 import logging
 from typing import Callable, List
-from models.ldu import LogicalDocumentUnit
+from models.ldu import LogicalDocumentUnit, BoundingBox
+from chunking.hasher import generate_ldu_hash
 
 logger = logging.getLogger(__name__)
 
@@ -39,17 +40,12 @@ class ChunkValidator:
         for ldu in ldus:
             self.validate_ldu(ldu)
 
-    def _validate_bounding_box(self, bbox: List[float]) -> None:
-        if len(bbox) != 4:
-            raise ChunkValidationError(f"Bounding box must have 4 float values, got {len(bbox)}: {bbox}")
+    def _validate_bounding_box(self, bbox: BoundingBox) -> None:
+        if not (0.0 <= bbox.x0 <= bbox.x1 <= 1.0):
+            raise ChunkValidationError(f"Invalid X coordinates. Must satisfy 0.0 <= x0 < x1 <= 1.0. Got x0={bbox.x0}, x1={bbox.x1}")
             
-        x0, y0, x1, y1 = bbox
-        
-        if not (0.0 <= x0 < x1 <= 1.0):
-            raise ChunkValidationError(f"Invalid X coordinates. Must satisfy 0.0 <= x0 < x1 <= 1.0. Got x0={x0}, x1={x1}")
-            
-        if not (0.0 <= y0 < y1 <= 1.0):
-            raise ChunkValidationError(f"Invalid Y coordinates. Must satisfy 0.0 <= y0 < y1 <= 1.0. Got y0={y0}, y1={y1}")
+        if not (0.0 <= bbox.y0 <= bbox.y1 <= 1.0):
+            raise ChunkValidationError(f"Invalid Y coordinates. Must satisfy 0.0 <= y0 < y1 <= 1.0. Got y0={bbox.y0}, y1={bbox.y1}")
 
     def _validate_token_count(self, content: str, declared_count: int) -> None:
         """Ensure chunk metadata strictly aligns with the tokenizer logic."""
@@ -68,4 +64,23 @@ class ChunkValidator:
         if ldu.chunk_type == "table" and is_spanning_table and not has_headers:
             raise ChunkValidationError(
                 f"Table Integrity Violation: Spanning table chunk {ldu.content_hash} is missing injected headers."
+            )
+
+    def verify_post_transformation_hash(self, original_hash: str, transformed_ldu: LogicalDocumentUnit) -> None:
+        """
+        Re-asserts the content_hash post-transformation to guarantee text cleaning 
+        (e.g., removing extra whitespace or special chars) does not invisibly destroy 
+        core semantic data by dropping a 'not' or a decimal point.
+        """
+        bbox_list = [transformed_ldu.bounding_box.x0, transformed_ldu.bounding_box.y0, transformed_ldu.bounding_box.x1, transformed_ldu.bounding_box.y1]
+        new_hash = generate_ldu_hash(
+            content=transformed_ldu.content,
+            bounding_box=bbox_list,
+            page_refs=transformed_ldu.page_refs,
+            chunk_type=transformed_ldu.chunk_type
+        )
+        if new_hash != original_hash:
+            raise ChunkValidationError(
+                f"Post-Transformation Hash Verification failed! Original hash {original_hash} "
+                f"does not match new hash {new_hash} after text cleaning. Semantic data may be compromised."
             )
