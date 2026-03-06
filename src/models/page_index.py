@@ -15,6 +15,10 @@ class PageIndexNode(BaseModel):
     section_id: str
     section_title: str
     summary: str
+    page_start: Optional[int] = None
+    page_end: Optional[int] = None
+    key_entities: List[str] = Field(default_factory=list, description="Canonicalized named entities")
+    data_types_present: List[str] = Field(default_factory=list, description="List of 'tables', 'figures', etc.")
     embedding: Optional[List[float]] = None
     children: List['PageIndexNode'] = []
 
@@ -26,13 +30,18 @@ class PageIndexBuilder:
     """
     
     SYSTEM_PROMPT = """You are a highly capable document analyst. 
-Provided with a JSON mapping of section IDs to their extracted text content, generate a concise but highly descriptive summary (under 2 sentences) for EACH section. 
-Capture the main topics, key metrics, and core arguments to enable precise semantic search queries. 
+Provided with a JSON mapping of section IDs to their extracted text content, analyze EACH section and generate:
+1. summary: A concise, highly descriptive summary (under 2 sentences) capturing main topics, key metrics, and core arguments.
+2. key_entities: A normalized, canonical list of the most important entities (e.g., standardizing "Apple" and "Apple Inc." to "Apple Corporation").
+3. data_types_present: A list of string indicators (e.g. "tables", "figures", "equations") if they are present or strongly referenced in the text.
 
-You MUST return ONLY a valid JSON object mapping the section IDs to their summaries, like this:
+You MUST return ONLY a valid JSON object mapping the section IDs to their analysis, like this:
 {
-  "section_0": "Summary text...",
-  "section_1": "Summary text..."
+  "section_0": {
+      "summary": "Summary text...",
+      "key_entities": ["Entity A", "Entity B"],
+      "data_types_present": ["tables"]
+  }
 }
 Do not include any markdown formatting or extra text outside the JSON object."""
     
@@ -95,14 +104,41 @@ Do not include any markdown formatting or extra text outside the JSON object."""
             logger.error("Both primary and fallback models failed to generate PageIndex summaries.")
             summaries = {}
             
+        # Track page spans across chunks
+        section_pages: Dict[str, set] = {}
+        for ldu in ldus:
+            s_id = ldu.parent_section_id
+            if s_id:
+                if s_id not in section_pages:
+                    section_pages[s_id] = set()
+                for p in ldu.page_refs:
+                    section_pages[s_id].add(p)
+                    
         # Build Nodes
         nodes = []
         for s_id, s_data in sections.items():
-            summary = summaries.get(s_id, "Summary unavailable.")
+            analysis = summaries.get(s_id, {})
+            # Handle fallback if primary model returned strings directly before prompt update
+            if isinstance(analysis, str):
+                analysis = {"summary": analysis, "key_entities": [], "data_types_present": []}
+                
+            summary = analysis.get("summary", "Summary unavailable.")
+            entities = analysis.get("key_entities", [])
+            data_types = analysis.get("data_types_present", [])
+            
+            # Calculate page spans
+            pages = section_pages.get(s_id, set())
+            p_start = min(pages) if pages else None
+            p_end = max(pages) if pages else None
+            
             nodes.append(PageIndexNode(
                 section_id=s_id,
                 section_title=s_data["title"],
-                summary=summary
+                summary=summary,
+                page_start=p_start,
+                page_end=p_end,
+                key_entities=entities,
+                data_types_present=data_types
             ))
             
         return nodes
