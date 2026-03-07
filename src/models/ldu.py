@@ -10,6 +10,7 @@ class LDUMetadata(BaseModel):
     cross_reference_type: Optional[str] = None
     dangling_reference: Optional[str] = None
     chunk_relationships: List[Dict[str, str]] = Field(default_factory=list, description="Explicit chunk relationships")
+    document_name: Optional[str] = None
     
     # Figure Metadata
     image_bbox: Optional[List[float]] = None

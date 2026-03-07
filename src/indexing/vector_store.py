@@ -72,7 +72,7 @@ class RefineryVectorStore:
             metadatas.append(self._sanitize_metadata(meta))
             
         # Chroma handles embedding automatically via the configured EF
-        self.chunks_collection.add(
+        self.chunks_collection.upsert(
             ids=ids,
             documents=documents,
             metadatas=metadatas
@@ -97,7 +97,7 @@ class RefineryVectorStore:
                 "title": node.title
             })
             
-        self.page_index_collection.add(
+        self.page_index_collection.upsert(
             ids=ids,
             documents=documents,
             metadatas=metadatas

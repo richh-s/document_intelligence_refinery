@@ -40,7 +40,7 @@ Return ONLY a JSON array of these objects:
 ]
 If there are no clear financial or numerical data points, return an empty array []."""
 
-    def __init__(self, api_key: str, model: str = "google/gemini-1.5-flash", timeout: float = 60.0):
+    def __init__(self, api_key: str, model: str = "openai/gpt-4o-mini", timeout: float = 60.0):
         self.api_key = api_key
         self.model = model
         self.timeout = timeout

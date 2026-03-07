@@ -48,7 +48,7 @@ Do not include any markdown formatting or extra text outside the JSON object."""
     def __init__(
         self, 
         api_key: str, 
-        primary_model: str = "google/gemini-1.5-flash", 
+        primary_model: str = "openai/gpt-4o-mini", 
         fallback_model: str = "openai/gpt-4o-mini",
         timeout: float = 120.0
     ):
