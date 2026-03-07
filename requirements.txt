@@ -114,3 +114,5 @@ typing_extensions==4.15.0
 tzdata==2025.3
 urllib3==2.6.3
 xlsxwriter==3.2.9
+langchain-core>=0.1.27
+langgraph>=0.0.30
