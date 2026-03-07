@@ -10,33 +10,39 @@ The refinery follows a tiered, agentic approach to document processing, prioriti
 
 ```mermaid
 graph TD
-    A[PDF Document] --> B[Phase 1: Triage Agent]
-    B -->|Digital Native| C[Strategy A: FastText]
-    B -->|Complex/Scanned| D[Strategy B: MinerU]
-    C -->|Low Conf < 0.85| D
-    D -->|Fail/OOM/Low Conf < 0.70| E[Strategy C: Vision]
+    A[Raw PDF Ingest] --> B[Phase 1: Triage Agent]
+    B -- DocumentProfile --> C{Strategy Router}
     
-    subgraph "Extraction Strategy B (MinerU Layout)"
-        D1[YOLO Layout Detection] --> D2[PaddleOCR Recognition]
-        D2 --> D3[StructEqTable / Layout Parser]
-        D3 --> D4[Structured Content Blocks]
+    C -- Strategy A --> D[FastText / pdfplumber]
+    C -- Strategy B --> E[MinerU Layout/OCR]
+    C -- Strategy C --> F[Vision / GPT-4o]
+    
+    D -- "Conf < 0.85" --> E
+    E -- "Conf < 0.70" --> F
+    
+    D & E & F -- ExtractedDocument --> G[Phase 3 & 5: Chunking & Mastery]
+    
+    subgraph "Semantic Validation (5 Rules)"
+        G --> G1[Table & List Integrity]
+        G --> G2[Header Propagation]
+        G --> G3[Spatial Provenance]
     end
     
-    D4 --> F[Phase 3 & 5: Semantic Chunking & Mastery]
-    F --> G[Logical Document Units (LDUs)]
+    G1 & G2 & G3 -- Validated LDUs --> H((Indexing Layer))
     
-    subgraph "Indexing layer"
-        G --> H[FactExtractor]
-        H --> I[facts.db (SQLite)]
-        G --> J[VectorStore (ChromaDB)]
-        G --> K[Hierarchical PageIndex Tree]
-    end
+    H --> I[SQLite FactTable]
+    H --> J[ChromaDB VectorStore]
+    H --> K[Hierarchical PageIndex Tree]
     
-    K --> L[Phase 4: Query Agent]
-    I --> L
-    J --> L
-    L --> M[Reasoner & Auditor]
-    M --> N[Final Cited Answer]
+    L[User Query] --> M[Phase 4: Query Agent]
+    M --> N{Query Classifier}
+    
+    N -- Quantitative --> I
+    N -- Conceptual --> K
+    K --> J
+    
+    I & J -- Raw Context --> O[Reasoner & Auditor]
+    O -- "Provenance + Citations" --> P[Final Verified Answer]
 ```
 
 ---

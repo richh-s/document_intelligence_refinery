@@ -27,17 +27,23 @@ class RefineryVectorStore:
         self.ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name=self.embedding_model)
         
         # Collections
-        self.chunks_collection = self.client.get_or_create_collection(
-            name="document_chunks",
-            embedding_function=self.ef,
-            metadata={"description": "Stores RAG-ready Logical Document Units (LDUs)"}
-        )
+        try:
+            self.chunks_collection = self.client.get_collection(name="document_chunks", embedding_function=self.ef)
+        except:
+            self.chunks_collection = self.client.create_collection(
+                name="document_chunks",
+                embedding_function=self.ef,
+                metadata={"description": "Stores RAG-ready Logical Document Units (LDUs)"}
+            )
         
-        self.page_index_collection = self.client.get_or_create_collection(
-            name="page_index",
-            embedding_function=self.ef,
-            metadata={"description": "Stores high-level semantic summaries of document sections"}
-        )
+        try:
+            self.page_index_collection = self.client.get_collection(name="page_index", embedding_function=self.ef)
+        except:
+            self.page_index_collection = self.client.create_collection(
+                name="page_index",
+                embedding_function=self.ef,
+                metadata={"description": "Stores high-level semantic summaries of document sections"}
+            )
 
     def _sanitize_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """ChromaDB metadata only accepts int, float, str, or bool."""

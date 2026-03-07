@@ -1,254 +1,218 @@
 [
   {
-    "document_class": "Financial",
-    "document_name": "Financial_Doc_1.pdf",
-    "query": "What are the primary findings in Financial_Doc_1.pdf?",
-    "answer": "The primary findings in Financial_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Native Financial",
+    "Question": "What is discussed on page 22 of CBE ANNUAL REPORT 2023-24.pdf?",
+    "Answer": "...",
+    "ProvenanceChain": [
       {
-        "document_name": "Financial_Doc_1.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_financial_1_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "CBE ANNUAL REPORT 2023-24.pdf",
+        "page_number": 22,
+        "content_hash": "99e9ccfaabf6b198edd8c06ea9c7c6344633a581fd0fd1bf1662f28b97a98e4c",
+        "bounding_box": [
+          0.07223539993122118,
+          0.08908527087272682,
+          0.9273009479542812,
+          0.22568268621090792
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Financial",
-    "document_name": "Financial_Doc_2.pdf",
-    "query": "What are the primary findings in Financial_Doc_2.pdf?",
-    "answer": "The primary findings in Financial_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Native Financial",
+    "Question": "What is discussed on page 73 of CBE ANNUAL REPORT 2023-24.pdf?",
+    "Answer": "As can be seen from the above table, the value of collateral held by CBE as a security for loan granted are  measured when the loans are initially granted. The overall collateral coverage ratio to the outstanding  principal loan and bond is estimated about 109%, (2023: 97%)....",
+    "ProvenanceChain": [
       {
-        "document_name": "Financial_Doc_2.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_financial_2_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "CBE ANNUAL REPORT 2023-24.pdf",
+        "page_number": 73,
+        "content_hash": "574a4daf5377d770a00b33f1955697fba69880f3cec535cf79cf80d4885ab678",
+        "bounding_box": [
+          0.058796255757970727,
+          0.7732601511752687,
+          0.9424199851491879,
+          0.8243357064756321
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Financial",
-    "document_name": "Financial_Doc_3.pdf",
-    "query": "What are the primary findings in Financial_Doc_3.pdf?",
-    "answer": "The primary findings in Financial_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Native Financial",
+    "Question": "What is discussed on page 147 of CBE ANNUAL REPORT 2023-24.pdf?",
+    "Answer": "...",
+    "ProvenanceChain": [
       {
-        "document_name": "Financial_Doc_3.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_financial_3_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "CBE ANNUAL REPORT 2023-24.pdf",
+        "page_number": 147,
+        "content_hash": "d0047b67abee10efa82df240dddced48e26b8306636a81a05e2ee39f51ca67ac",
+        "bounding_box": [
+          0.06215604180128334,
+          0.6948651128072691,
+          0.9424199851491879,
+          0.8207722956407231
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Legal",
-    "document_name": "Legal_Doc_1.pdf",
-    "query": "What are the primary findings in Legal_Doc_1.pdf?",
-    "answer": "The primary findings in Legal_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Scanned Audit",
+    "Question": "What is discussed on page 17 of Audit Report - 2023.pdf?",
+    "Answer": "Apaeithsaeiefa changes to a floating interest rate, equivalent to a movement in a market rate ofinterest. Peraesuieeoeatisntawitige being discontinued. Provideentiaaennst as a hedge of a risk component....",
+    "ProvenanceChain": [
       {
-        "document_name": "Legal_Doc_1.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_legal_1_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "Audit Report - 2023.pdf",
+        "page_number": 17,
+        "content_hash": "dedd2675cc0112358e807920dbde1de5b7aa5c27bf1680a693efaa051fe23e87",
+        "bounding_box": [
+          0.21505375903029578,
+          0.34098470023933863,
+          0.8921370784772427,
+          0.4098945002877067
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Legal",
-    "document_name": "Legal_Doc_2.pdf",
-    "query": "What are the primary findings in Legal_Doc_2.pdf?",
-    "answer": "The primary findings in Legal_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Scanned Audit",
+    "Question": "What is discussed on page 44 of Audit Report - 2023.pdf?",
+    "Answer": "Notes to the consolidated and separate financial statements For the year ended 3o June 2023...",
+    "ProvenanceChain": [
       {
-        "document_name": "Legal_Doc_2.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_legal_2_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "Audit Report - 2023.pdf",
+        "page_number": 44,
+        "content_hash": "47219e70382de26b2dcb5187169092a411a212d8db1d7db4e0ed5c499ca1f5a8",
+        "bounding_box": [
+          0.15120967431817672,
+          0.0950480000667146,
+          0.6418010621060389,
+          0.12593860008839686
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Legal",
-    "document_name": "Legal_Doc_3.pdf",
-    "query": "What are the primary findings in Legal_Doc_3.pdf?",
-    "answer": "The primary findings in Legal_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Scanned Audit",
+    "Question": "What is discussed on page 87 of Audit Report - 2023.pdf?",
+    "Answer": "The sample mortality rates are shown in the table below:...",
+    "ProvenanceChain": [
       {
-        "document_name": "Legal_Doc_3.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_legal_3_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "Audit Report - 2023.pdf",
+        "page_number": 87,
+        "content_hash": "25f8e436efe66e6d1e8ad929a0ec3c6574358d799fc21f8acee1776690aecb5f",
+        "bounding_box": [
+          0.21505375903029578,
+          0.2376200001667865,
+          0.47883063534089293,
+          0.24593670017262403
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Operational",
-    "document_name": "Operational_Doc_1.pdf",
-    "query": "What are the primary findings in Operational_Doc_1.pdf?",
-    "answer": "The primary findings in Operational_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Table-Heavy Fiscal",
+    "Question": "What is discussed on page 5 of tax_expenditure_ethiopia_2021_22.pdf?",
+    "Answer": "Tax exemptions for capital and investment goods and \u2018second schedule\u2019 preferential customs and surtax rates respectively only account for 2.3% and 1.0% of tax expenditures. This is primarily because only a very small share of imports by value are eligible for them: 0.5% for capital goods exemptions ...",
+    "ProvenanceChain": [
       {
-        "document_name": "Operational_Doc_1.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_operational_1_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "tax_expenditure_ethiopia_2021_22.pdf",
+        "page_number": 5,
+        "content_hash": "008558ec5c76838fd51740e80abb6cbcbd8ffdb09d2fcacff0914fb97531f8cd",
+        "bounding_box": [
+          0.13446281606409635,
+          0.33490096356308935,
+          0.8572004524086142,
+          0.49285070878965276
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Operational",
-    "document_name": "Operational_Doc_2.pdf",
-    "query": "What are the primary findings in Operational_Doc_2.pdf?",
-    "answer": "The primary findings in Operational_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Table-Heavy Fiscal",
+    "Question": "What is discussed on page 23 of tax_expenditure_ethiopia_2021_22.pdf?",
+    "Answer": "Customs duty tax expenditures represented 0.9% of GDP, 6.9% of imports and 32.2% of  all import tax expenditures in FY 2020/21. Relative to GDP, customs duty tax expenditures were lower in FY 2019/20 (0.7%) but potentially higher in FY 2018/19 (up to 1.1%). They...",
+    "ProvenanceChain": [
       {
-        "document_name": "Operational_Doc_2.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_operational_2_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "tax_expenditure_ethiopia_2021_22.pdf",
+        "page_number": 23,
+        "content_hash": "e1e012e293a6dd3dd7e15f9d4fc7a8ee686b4ce03f22373469439025b8fee073",
+        "bounding_box": [
+          0.13446281606409635,
+          0.8408151851158413,
+          0.8420733856014034,
+          0.8990071965151015
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Operational",
-    "document_name": "Operational_Doc_3.pdf",
-    "query": "What are the primary findings in Operational_Doc_3.pdf?",
-    "answer": "The primary findings in Operational_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Table-Heavy Fiscal",
+    "Question": "What is discussed on page 53 of tax_expenditure_ethiopia_2021_22.pdf?",
+    "Answer": "Source: Authors\u2019 calculations using data from the Ethiopian Customs Commission....",
+    "ProvenanceChain": [
       {
-        "document_name": "Operational_Doc_3.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_operational_3_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "tax_expenditure_ethiopia_2021_22.pdf",
+        "page_number": 53,
+        "content_hash": "b9153fc064adc5ed53af90af06352e21560644010786d6dc8e0bab61eec2fc46",
+        "bounding_box": [
+          0.13614360126489755,
+          0.2470191504295127,
+          0.6891219323284938,
+          0.2612702552619846
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Technical",
-    "document_name": "Technical_Doc_1.pdf",
-    "query": "What are the primary findings in Technical_Doc_1.pdf?",
-    "answer": "The primary findings in Technical_Doc_1.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Mixed Assessment",
+    "Question": "What is discussed on page 15 of fta_performance_survey_final_report_2022.pdf?",
+    "Answer": "Overall satisfaction with the quality of life is increasing...",
+    "ProvenanceChain": [
       {
-        "document_name": "Technical_Doc_1.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_technical_1_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "fta_performance_survey_final_report_2022.pdf",
+        "page_number": 15,
+        "content_hash": "e57d83c6e10565ce474925cbba4614240101b57dbcc2d18a947aad4890cf8a41",
+        "bounding_box": [
+          0.1478196581961575,
+          0.08433105454342996,
+          0.6332728538630839,
+          0.10214747451739403
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Technical",
-    "document_name": "Technical_Doc_2.pdf",
-    "query": "What are the primary findings in Technical_Doc_2.pdf?",
-    "answer": "The primary findings in Technical_Doc_2.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Mixed Assessment",
+    "Question": "What is discussed on page 63 of fta_performance_survey_final_report_2022.pdf?",
+    "Answer": "A little more than half of the respondents (52%) reported that they have participated in  budget literacy training. This shows a modest improvement compared to the situation in 2016  (52% as compared to 47%). The figure represents the proportion of respondents who partook  in the training at least o...",
+    "ProvenanceChain": [
       {
-        "document_name": "Technical_Doc_2.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_technical_2_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "fta_performance_survey_final_report_2022.pdf",
+        "page_number": 63,
+        "content_hash": "19de319544107a0d1c297df50fe2d21ee862500431b20ae20441bdbf0e790479",
+        "bounding_box": [
+          0.11590405017653259,
+          0.46679020331785875,
+          0.8852381803338069,
+          0.6342645510731211
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   },
   {
-    "document_class": "Technical",
-    "document_name": "Technical_Doc_3.pdf",
-    "query": "What are the primary findings in Technical_Doc_3.pdf?",
-    "answer": "The primary findings in Technical_Doc_3.pdf indicate a 15% growth trajectory aligned with the risk models, scaling OPEX accordingly.",
-    "provenance": [
+    "class": "Mixed Assessment",
+    "Question": "What is discussed on page 133 of fta_performance_survey_final_report_2022.pdf?",
+    "Answer": "...",
+    "ProvenanceChain": [
       {
-        "document_name": "Technical_Doc_3.pdf",
-        "page_number": 4,
-        "bbox": [
-          0.1,
-          0.2,
-          0.8,
-          0.3
-        ],
-        "content_hash": "hash_technical_3_alpha",
-        "text_snippet": "The tabular mapping shows a 15% growth trajectory explicitly tied to the scaled OPEX bounds within the risk models."
+        "document_name": "fta_performance_survey_final_report_2022.pdf",
+        "page_number": 133,
+        "content_hash": "4201e2f06c9586c13f2f4873a8422b5ce581f8a584cc079935f8b406d5e5682e",
+        "bounding_box": [
+          0.10918497480397998,
+          0.8254941254603354,
+          0.9154740195102936,
+          0.9062618960089726
+        ]
       }
-    ],
-    "audit_status": "Verified"
+    ]
   }
 ]
