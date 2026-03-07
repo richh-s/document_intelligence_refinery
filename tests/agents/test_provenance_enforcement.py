@@ -21,7 +21,7 @@ def test_provenance_enforcement():
     state_valid = AgentState(
         query="What is the revenue?",
         original_query="What is the revenue?",
-        provenance_links=[{"content_hash": "hash123", "document_name": "Doc1"}]
+        provenance_links=[{"content_hash": "hash123", "document_name": "Doc1", "page_number": 1}]
     )
     
     result = synthesize_answer(state_valid)

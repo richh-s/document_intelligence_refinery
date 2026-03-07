@@ -20,7 +20,8 @@ def test_rule_1_table_header_integrity(validator):
         bounding_box=BoundingBox(x0=0.1, y0=0.1, x1=0.9, y1=0.9),
         token_count=6,
         content_hash="h1",
-        metadata=LDUMetadata()
+        metadata=LDUMetadata(),
+        parent_section=None
     )
     with pytest.raises(ChunkValidationError, match="Table Integrity Violation"):
         validator.validate_batch([ldu])

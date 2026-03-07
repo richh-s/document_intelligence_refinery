@@ -13,14 +13,14 @@ logger = logging.getLogger(__name__)
 class PageIndexNode(BaseModel):
     """A hierarchical semantic index node storing section abstracts."""
     section_id: str
-    section_title: str
+    title: str
     summary: str
     page_start: Optional[int] = None
     page_end: Optional[int] = None
     key_entities: List[str] = Field(default_factory=list, description="Canonicalized named entities")
     data_types_present: List[str] = Field(default_factory=list, description="List of 'tables', 'figures', etc.")
     embedding: Optional[List[float]] = None
-    children: List['PageIndexNode'] = []
+    child_sections: List['PageIndexNode'] = []
 
 
 class PageIndexBuilder:
@@ -66,7 +66,7 @@ Do not include any markdown formatting or extra text outside the JSON object."""
         # Group content by section_id
         sections: Dict[str, Dict[str, Any]] = {}
         for ldu in ldus:
-            s_id = ldu.parent_section_id
+            s_id = ldu.parent_section
             if not s_id:
                 continue
                 
@@ -107,7 +107,7 @@ Do not include any markdown formatting or extra text outside the JSON object."""
         # Track page spans across chunks
         section_pages: Dict[str, set] = {}
         for ldu in ldus:
-            s_id = ldu.parent_section_id
+            s_id = ldu.parent_section
             if s_id:
                 if s_id not in section_pages:
                     section_pages[s_id] = set()
@@ -133,7 +133,7 @@ Do not include any markdown formatting or extra text outside the JSON object."""
             
             nodes.append(PageIndexNode(
                 section_id=s_id,
-                section_title=s_data["title"],
+                title=s_data["title"],
                 summary=summary,
                 page_start=p_start,
                 page_end=p_end,
@@ -142,6 +142,32 @@ Do not include any markdown formatting or extra text outside the JSON object."""
             ))
             
         return nodes
+
+    def navigate(self, nodes: List[PageIndexNode], query: str, k: int = 3) -> List[PageIndexNode]:
+        """
+        Traversal method that accepts a topic/query and returns the top-k relevant sections.
+        In production, this would use the 'embedding' field for semantic similarity.
+        """
+        # Fallback to keyword-based relevance if embeddings are absent
+        query_words = set(query.lower().split())
+        
+        def score_node(node: PageIndexNode) -> float:
+            score = 0.0
+            # Matches in title are high weight
+            title_words = set(node.title.lower().split())
+            score += 2.0 * len(query_words.intersection(title_words))
+            
+            # Matches in summary or entities
+            summary_words = set(node.summary.lower().split())
+            score += 1.0 * len(query_words.intersection(summary_words))
+            
+            entity_words = set(" ".join(node.key_entities).lower().split())
+            score += 1.5 * len(query_words.intersection(entity_words))
+            return score
+
+        # Flatten tree for ranking or recurse if deep hierarchy (here we rank sections)
+        scored_nodes = sorted(nodes, key=score_node, reverse=True)
+        return scored_nodes[:k]
         
     def _generate_batched_summaries(self, section_map: Dict[str, str], model: str) -> Optional[Dict[str, str]]:
         """Invoke the OpenRouter VLM to generate a batched JSON summary response."""

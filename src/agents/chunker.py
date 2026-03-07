@@ -209,7 +209,7 @@ class ChunkingEngine:
             chunk_type=chunk_type,
             page_refs=page_refs,
             bounding_box=bbox_obj,
-            parent_section_id=parent_section,
+            parent_section=parent_section,
             token_count=token_count,
             content_hash=c_hash,
             metadata=md

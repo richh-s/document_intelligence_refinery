@@ -33,7 +33,7 @@ class LogicalDocumentUnit(BaseModel):
     chunk_type: Literal["text", "table", "list", "figure", "header"]
     page_refs: List[int]
     bounding_box: BoundingBox
-    parent_section_id: Optional[str] = None
+    parent_section: Optional[str] = None
     token_count: int
     content_hash: str
     metadata: LDUMetadata

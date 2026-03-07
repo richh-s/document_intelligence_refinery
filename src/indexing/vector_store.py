@@ -62,8 +62,10 @@ class RefineryVectorStore:
             meta = {
                 "content_hash": ldu.content_hash,
                 "chunk_type": ldu.chunk_type,
-                "parent_section_id": ldu.parent_section_id if ldu.parent_section_id else "global",
+                "parent_section": ldu.parent_section if ldu.parent_section else "global",
+                "page_refs": str(ldu.page_refs),
                 "token_count": ldu.token_count,
+                "bounding_box": str([ldu.bounding_box.x0, ldu.bounding_box.y0, ldu.bounding_box.x1, ldu.bounding_box.y1])
             }
             # Include optional extracted metadata
             meta.update(ldu.metadata.model_dump(exclude_none=True))
@@ -88,11 +90,11 @@ class RefineryVectorStore:
         
         # We embed a composite of the title and the summary
         for node in nodes:
-            composite_text = f"Section: {node.section_title}\nSummary: {node.summary}"
+            composite_text = f"Section: {node.title}\nSummary: {node.summary}"
             documents.append(composite_text)
             metadatas.append({
                 "section_id": node.section_id,
-                "section_title": node.section_title
+                "title": node.title
             })
             
         self.page_index_collection.add(
@@ -125,9 +127,9 @@ class RefineryVectorStore:
         where_filter = None
         if section_ids:
             if len(section_ids) == 1:
-                where_filter = {"parent_section_id": section_ids[0]}
+                where_filter = {"parent_section": section_ids[0]}
             else:
-                where_filter = {"parent_section_id": {"$in": section_ids}}
+                where_filter = {"parent_section": {"$in": section_ids}}
                 
         results = self.chunks_collection.query(
             query_texts=[query],

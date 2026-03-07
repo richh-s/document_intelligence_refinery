@@ -32,7 +32,7 @@ class ChunkValidator:
         self._validate_token_count(ldu.content, ldu.token_count)
         
         # 3. Section metadata propagation
-        if ldu.parent_section_id is None and ldu.chunk_type not in ["header", "figure"]:
+        if ldu.parent_section is None and ldu.chunk_type not in ["header", "figure"]:
             # Depending on strictness, we warn if at start, but ideally we want tracking.
             pass
             
@@ -59,7 +59,7 @@ class ChunkValidator:
             # 2. List splitting rules
             if ldu.chunk_type == "list" and i > 0 and ldus[i-1].chunk_type == "list":
                 # Ensure context is preserved across splits if they share the same parent section
-                if ldu.parent_section_id == ldus[i-1].parent_section_id:
+                if ldu.parent_section == ldus[i-1].parent_section:
                     # This rule natively enforces the '[Context:' prefix in the chunker.py splitting
                     pass
 
