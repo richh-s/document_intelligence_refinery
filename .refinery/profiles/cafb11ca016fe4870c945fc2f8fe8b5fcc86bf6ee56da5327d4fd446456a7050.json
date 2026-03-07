@@ -7,7 +7,7 @@
   },
   "doc_id": "cafb11ca016fe4870c945fc2f8fe8b5fcc86bf6ee56da5327d4fd446456a7050",
   "domain_hint": "financial",
-  "extraction_cost": "needs_vision_model",
+  "extraction_cost": "needs_layout_model",
   "file_hash": "cafb11ca016fe4870c945fc2f8fe8b5fcc86bf6ee56da5327d4fd446456a7050",
   "file_name": "CBE ANNUAL REPORT 2023-24.pdf",
   "is_encrypted": false,

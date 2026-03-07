@@ -35,7 +35,14 @@ class ExtractionRouter:
         self, profile: DocumentProfile, strategy: str, result: ExtractionResult | None, 
         val_score: float, status: str, val_flag: str = "HEALTHY", error_cat: str = "", error_msg: str = ""
     ):
-        """Append to the Atomic Ledger with flattened signals and weighted confidence."""
+        """Append to the Atomic Ledger with flattened signals and weighted confidence.
+        
+        Formula:
+        confidence = 0.4 * completeness_ratio + 0.3 * layout_consistency + 
+                     0.2 * structural_fidelity + 0.1 * ocr_quality
+        
+        All signals are normalized to [0.0 - 1.0].
+        """
         
         # Weighted Confidence Calculation (v2)
         # Formula: 0.4 * completeness + 0.3 * layout + 0.2 * structural + 0.1 * ocr

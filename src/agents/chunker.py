@@ -7,6 +7,8 @@ from models.extracted_document import ExtractedDocument
 from models.ldu import LogicalDocumentUnit, LDUMetadata
 from chunking.hasher import generate_ldu_hash
 
+from config import PipelineConfig
+
 logger = logging.getLogger(__name__)
 
 
@@ -16,9 +18,10 @@ class ChunkingEngine:
     Enforces precise contextual, structural, and relational rules.
     """
     
-    def __init__(self, tokenizer_fn: Callable[[str], int], max_tokens: int = 600, overlap_tokens: int = 50):
+    def __init__(self, tokenizer_fn: Callable[[str], int], max_tokens: Optional[int] = None, overlap_tokens: int = 50):
         self.tokenizer = tokenizer_fn
-        self.max_tokens = max_tokens
+        cfg = PipelineConfig()
+        self.max_tokens = max_tokens or cfg.MAX_LDU_TOKENS
         self.overlap_tokens = overlap_tokens
         
         # Cross-reference regex patterns

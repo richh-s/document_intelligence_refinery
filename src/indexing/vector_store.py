@@ -7,15 +7,18 @@ from typing import List, Dict, Any, Optional
 from models.ldu import LogicalDocumentUnit
 from agents.indexer import PageIndexNode
 
+from config import PipelineConfig
+
 logger = logging.getLogger(__name__)
 
 
 class RefineryVectorStore:
     """Manages ingestion and retrieval of LDUs and PageIndex nodes via ChromaDB."""
     
-    def __init__(self, db_path: str = "./.chromadb", embedding_model: str = "all-MiniLM-L6-v2"):
-        self.db_path = db_path
-        self.embedding_model = embedding_model
+    def __init__(self, config: Optional[PipelineConfig] = None):
+        cfg = config or PipelineConfig()
+        self.db_path = cfg.VECTOR_DB_PATH
+        self.embedding_model = cfg.EMBEDDING_MODEL
         
         # Initialize persistent client
         self.client = chromadb.PersistentClient(path=self.db_path)
