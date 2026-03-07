@@ -1,6 +1,6 @@
 # Document Intelligence Refinery: System Architecture
 
-This document details the technical architecture, implementation logic, and data flow of the Document Intelligence Refinery (Phase 0 to Phase 4).
+This document details the technical architecture, implementation logic, and data flow of the Document Intelligence Refinery (Phase 0 to Phase 5).
 
 ---
 
@@ -16,27 +16,27 @@ graph TD
     C -->|Low Conf < 0.85| D
     D -->|Fail/OOM/Low Conf < 0.70| E[Strategy C: Vision]
     
-    subgraph "Extraction Strategy B (MinerU)"
-        D1[YOLO Layout Detection] --> D2[PaddleOCR Text Recognition]
-        D2 --> D3[StructEqTable/TableMaster]
-        D3 --> D4[Structured JSON Output]
+    subgraph "Extraction Strategy B (MinerU Layout)"
+        D1[YOLO Layout Detection] --> D2[PaddleOCR Recognition]
+        D2 --> D3[StructEqTable / Layout Parser]
+        D3 --> D4[Structured Content Blocks]
     end
     
-    D4 --> F[Phase 3: Chunking Engine]
+    D4 --> F[Phase 3 & 5: Semantic Chunking & Mastery]
     F --> G[Logical Document Units (LDUs)]
     
     subgraph "Indexing layer"
         G --> H[FactExtractor]
         H --> I[facts.db (SQLite)]
         G --> J[VectorStore (ChromaDB)]
-        G --> K[PageIndex Builder]
+        G --> K[Hierarchical PageIndex Tree]
     end
     
     K --> L[Phase 4: Query Agent]
     I --> L
     J --> L
     L --> M[Reasoner & Auditor]
-    M --> N[Final Citied Answer]
+    M --> N[Final Cited Answer]
 ```
 
 ---
@@ -55,44 +55,43 @@ We employ a 3-tier circuit-breaker strategy to balance cost and fidelity.
 | Strategy | Engine | Trigger | Budget |
 | :--- | :--- | :--- | :--- |
 | **Strategy A** | FastText (pdfplumber) | Default for Digital Docs | $0.00 |
-| **Strategy B** | **MinerU ( magic-pdf )** | Scanned OR A < 0.85 confidence | $0.00 |
+| **Strategy B** | **MinerU (magic-pdf)** | Scanned OR A < 0.85 confidence | $0.00 |
 | **Strategy C** | Vision (GPT-4) | B < 0.70 OR B failure (OOM/Error) | $0.05 cap |
 
 #### 💎 Confidence Scoring
 **Formula**: `0.4 * completeness + 0.3 * layout + 0.2 * structural + 0.1 * ocr`
 - **Signals**: `completeness_ratio`, `layout_consistency`, `structural_fidelity`, `ocr_quality`.
-- **Normalization**: All signals are normalized to a `[0.0 - 1.0]` range.
 
-#### 🚦 Failure Handling
-If Strategy C fails, or its pre-flight budget ($0.05) is exceeded:
-- Document is marked as **FAILED** in the `extraction_ledger.jsonl`.
-- Extraction halts and the document is **flagged for manual review**.
-
-### Phase 3: Semantic Chunking & Indexing
+### Phase 3 & 5: Semantic Chunking & Mastery
 - **LDU Formation**: Converts raw blocks into **Logical Document Units (LDUs)**.
-- **Token Limit**: `MAX_LDU_TOKENS = 800`. Oversized chunks are split at sentence/row boundaries with a contextual overlap buffer.
-- **FactTable (SQL)**: Every LDU is processed by the `FactExtractor` (GPT-4o-mini) to extract entities, values, units, and time periods into **SQLite (`facts.db`)**.
-- **VectorStore (ChromaDB)**: Stores embeddings (`all-MiniLM-L6-v2`) for conceptual retrieval.
-    - **Metadata Keys**: `document_name`, `page_refs`, `bounding_box`, `chunk_type`, `parent_section`, `content_hash`.
+- **5-Rule Validator**: Every emitted LDU must pass the `ChunkValidator` audit:
+    1. **Table Integrity**: Rows never split from headers.
+    2. **Header Propagation**: Section headers propagated for RAG context.
+    3. **List Integrity**: Numbered/bulleted lists stay intact.
+    4. **Context Preservation**: Split fragments carry `[Context: ...]` tags.
+    5. **Spatial Provenance**: Strictly validated BBox and Page metadata.
+- **Hierarchical PageIndex**: Built as a recursive tree using `parent_section` nesting.
+    - Nodes store canonicalized `key_entities` and `data_types_present`.
+    - Supports recursive `navigate()` and `search()` for high-precision retrieval.
 
 ### Phase 4: Query Routing & Provenance
 The **Query Agent** uses a tiered routing approach:
-1.  **QueryClassifier**: Determines if the query is **Quantitative** (e.g., "What is the total?") or **Conceptual**.
+1.  **QueryClassifier**: Determines if the query is **Quantitative** (SQL) or **Conceptual** (Vector).
 2.  **Routing**:
     - **Quantitative** → Structured SQL lookup on `facts.db`.
-    - **Conceptual** → `PageIndex.navigate()` to find the section "map", then restricted Vector Search.
-3.  **Synthesis**: Strictly enforces that every answer contains a **Provenance Chain** (Doc Name, Page, Hash, BBox).
-4.  **Audit**: A second pass by the `ClaimAuditor` verifies the synthesis against the original source text.
+    - **Conceptual** → Hierarchical PageIndex navigation + Restricted Vector Search.
+3.  **Synthesis**: Strictly enforces that every answer contains a **Provenance Chain**.
+4.  **Audit**: A second pass by the `ClaimAuditor` verifies the synthesis against the source.
 
 ---
 
 ## 🖼️ Handling Complex Elements
 
-### 1. Table Extraction (MinerU)
-MinerU uses **YOLO** for detection and **StructEqTable** for recognition to preserve merged cells and headers, outputting clean Markdown/HTML.
+### 1. Table Extraction (MinerU + Mastery)
+MinerU uses **YOLO** for detection. `ChunkValidator` then enforces that the extracted table structure adheres to markdown integrity rules, preventing row/header separation during chunking.
 
 ### 2. Image & Figure Handling
-Figures are extracted with absolute bounding boxes. The `ChunkingEngine` performs contextual linking (e.g., "See Figure 4") to create bidirectional relationships between text and images.
+Figures are extracted with absolute bounding boxes. The `ChunkingEngine` performs contextual linking to create bidirectional relationships between text and images.
 
 ### 3. PageIndex Summarization
-We use **Gemini-1.5-Flash** to create semantic summaries of every section. This results in a "Human-like" Table of Contents that eliminates retrieval noise.
+We use **Gemini-1.5-Flash** (primary) or **GPT-4o-mini** (fallback) to create hierarchical semantic maps. This avoids retrieval noise by "guiding" the search to the correct section first.

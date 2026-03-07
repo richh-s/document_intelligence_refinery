@@ -6,6 +6,7 @@ from typing import Callable, List, Optional, Tuple, Dict, Literal
 from models.extracted_document import ExtractedDocument
 from models.ldu import LogicalDocumentUnit, LDUMetadata
 from chunking.hasher import generate_ldu_hash
+from chunking.validator import ChunkValidator
 
 from config import PipelineConfig
 
@@ -23,6 +24,9 @@ class ChunkingEngine:
         cfg = PipelineConfig()
         self.max_tokens = max_tokens or cfg.MAX_LDU_TOKENS
         self.overlap_tokens = overlap_tokens
+        
+        # Mastery: Validaton Engine
+        self.validator = ChunkValidator(self.tokenizer)
         
         # Cross-reference regex patterns
         self.ref_pattern = re.compile(r"(?i)(?:see\s+|as\s+shown\s+in\s+)(table|figure|section)\s+([a-zA-Z0-9.\-]+)")
@@ -183,6 +187,9 @@ class ChunkingEngine:
                         "target_content_hash": target_hash
                     })
                     ldu.metadata.dangling_reference = None
+
+        # 5. Mastery: Strict Validation Emission
+        self.validator.validate_batch(ldus)
 
         return ldus
 
