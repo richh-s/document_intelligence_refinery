@@ -6,6 +6,11 @@ from langchain_core.tools import tool
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import ToolNode
 
+from models.provenance import ProvenanceChain
+from indexing.vector_store import RefineryVectorStore
+from indexing.fact_table import FactTableStore
+from agents.indexer import PageIndexBuilder, PageIndexNode
+
 from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
@@ -49,35 +54,64 @@ class ProvenanceMissingError(Exception):
     """Raised natively if the system attempts synthesis without explicit citations."""
     pass
 
-# Agent Logic Nodes
+# --- Operational Node Functions (connecting to real backends) ---
+
 def pageindex_navigate_node(state: AgentState) -> AgentState:
     """Traverses PageIndex to locate structural anchors."""
-    # Simulation of traversal logic
-    state.target_sections = ["section_financial", "section_summary"]
+    # In a real run, we'd load the pageindex by doc_id
+    # For now, we simulate the 'navigate' logic from PageIndexBuilder
+    # based on the classification
+    state.target_sections = ["sec_01", "sec_02_a"] # IDs from our generated samples
     return state
 
-def semantic_search_node(state: AgentState) -> AgentState:
-    """Performs vector search over targets."""
-    state.retrieved_context = "The current projection shows $4.2B revenue..."
-    # Populate provenance for synthesis
-    state.provenance_links = [
-        {"document_name": "Annual_Report.pdf", "page_number": 12, "bbox": [0.1, 0.2, 0.8, 0.4], "content_hash": "hash_8822"}
-    ]
+def semantic_search_node(state: AgentState, vector_store: RefineryVectorStore) -> AgentState:
+    """Performs real vector retrieval against LDUs, filtered by sections."""
+    results = vector_store.query_ldus(
+        query=state.query, 
+        section_ids=state.target_sections,
+        top_k=2
+    )
+    
+    context_parts = []
+    links = []
+    for res in results:
+        context_parts.append(res["document"])
+        # Map back to ProvenanceChain
+        meta = res["metadata"]
+        links.append({
+            "document_name": meta.get("document_name", "Unknown"),
+            "page_number": int(eval(meta["page_refs"])[0]) if "page_refs" in meta else 1,
+            "bbox": eval(meta["bounding_box"]) if "bounding_box" in meta else [0,0,0,0],
+            "content_hash": meta["content_hash"]
+        })
+    
+    state.retrieved_context = "\n\n".join(context_parts)
+    state.provenance_links = links
     return state
 
-def structured_query_node(state: AgentState) -> AgentState:
-    """Executes SQL for quantitative facts."""
-    state.retrieved_context = "SQL Table Result: revenue=$4.2B"
-    state.provenance_links = [
-        {"document_name": "Fact_Table.sql", "page_number": 0, "bbox": [0,0,0,0], "content_hash": "sql_record_99"}
-    ]
+def structured_query_node(state: AgentState, fact_table: FactTableStore) -> AgentState:
+    """Executes SQL against the FactTable for quantitative facts."""
+    # Simulation of query translation: strip punctuation and take last word
+    term = state.query.strip("?").split()[-1]
+    sql_query = f"SELECT value FROM facts WHERE entity LIKE '%{term}%'"
+    try:
+        results = fact_table.query(sql_query)
+        if results:
+            state.retrieved_context = f"SQL Result: {str(results[0]['value'])}"
+            state.provenance_links = [{"document_name": "Fact_Table.sql", "page_number": 0, "bbox": [0,0,0,0], "content_hash": "sql_fact"}]
+        else:
+            state.retrieved_context = "Numerical lookup yielded no results."
+    except Exception as e:
+        state.retrieved_context = f"Numerical lookup error: {str(e)}"
     return state
 
 def synthesize_answer(state: AgentState) -> AgentState:
     """Final LangGraph node that strictly enforces the Provenance requirement."""
     if not state.provenance_links:
-        raise ProvenanceMissingError("Agent generated an answer without valid Provenance citations.")
-    
+        # If no provenance was found by either route, we enter failure mode
+        state.final_answer = "I'm sorry, I cannot verify this answer with source citations."
+        return state
+        
     # Construct cited response
     citations = "\n".join([f"[{i+1}] {p['document_name']} (p.{p['page_number']})" for i, p in enumerate(state.provenance_links)])
     state.final_answer = f"{state.retrieved_context}\n\nSources:\n{citations}"

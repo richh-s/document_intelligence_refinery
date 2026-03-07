@@ -61,12 +61,12 @@ provenance_hashes: ONLY the content_hashes of the exact texts that proved the ca
                 data = resp.json()
                 content = data["choices"][0]["message"]["content"].strip()
                 
-                # We assume clean JSON return from prompt constraints, parsing skipped for brevity in mock
+                parsed_json = json.loads(content)
                 return AuditResult(
                     claim=claim,
-                    status="Verified", # Mock return topology
-                    reasoning="The submitted vectors explicitly declare the identical financial bounds.",
-                    provenance_hashes=[retrieved_context[0]["hash"]] if retrieved_context else []
+                    status=parsed_json.get("status", "Not Found / Unverifiable"),
+                    reasoning=parsed_json.get("reasoning", "Failed to parse reasoning."),
+                    provenance_hashes=parsed_json.get("provenance_hashes", [])
                 )
                 
         except Exception as e:
