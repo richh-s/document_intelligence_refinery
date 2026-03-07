@@ -15,6 +15,7 @@ class TextBlock(BaseModel):
     page_number: int  # 1-indexed
     source_strategy: str
     reading_order: int
+    column_id: int | None = None
 
     @model_validator(mode="after")
     def validate_bounds(self) -> "TextBlock":
@@ -43,6 +44,7 @@ class Figure(BaseModel):
     page_number: int
     source_strategy: str
     caption: str | None = None
+    caption_bbox: tuple[float, float, float, float] | None = None
 
 
 class ExtractedPage(BaseModel):
@@ -54,6 +56,41 @@ class ExtractedPage(BaseModel):
     tables: list[StructuredTable] = Field(default_factory=list)
     figures: list[Figure] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
+
+    def reconstruct_reading_order(self, gutter_threshold: float = 0.05) -> None:
+        """
+        Reconstruct reading order using an XY-Cut algorithm derivative.
+        Sorts blocks into Column Containers based on horizontal gutters,
+        then orders them top-to-bottom within each column.
+        """
+        if not self.text_blocks:
+            return
+
+        # Sort by x0 to sweep left-to-right and find column gutters
+        sorted_by_x = sorted(self.text_blocks, key=lambda b: (b.bbox[0], b.bbox[1]))
+        
+        columns = []
+        current_col = [sorted_by_x[0]]
+        
+        for block in sorted_by_x[1:]:
+            # If the gap between current block's x0 and the column's max x1 > gutter_threshold, it's a new column
+            max_x1 = max(b.bbox[2] for b in current_col)
+            if block.bbox[0] - max_x1 > gutter_threshold:
+                columns.append(current_col)
+                current_col = [block]
+            else:
+                current_col.append(block)
+        columns.append(current_col)
+        
+        # Assign reading order and column_id top-to-bottom per column
+        global_order = 1
+        for col_idx, col_blocks in enumerate(columns):
+            # Sort top-to-bottom
+            col_blocks.sort(key=lambda b: b.bbox[1])
+            for block in col_blocks:
+                block.column_id = col_idx
+                block.reading_order = global_order
+                global_order += 1
 
 
 class ExtractedDocument(BaseModel):

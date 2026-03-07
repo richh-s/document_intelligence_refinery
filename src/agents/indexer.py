@@ -1,0 +1,213 @@
+"""PageIndex tree builder for semantic section summaries."""
+
+import json
+import logging
+import httpx
+from typing import List, Dict, Optional, Any
+from pydantic import BaseModel, Field
+from models.ldu import LogicalDocumentUnit
+
+logger = logging.getLogger(__name__)
+
+
+class PageIndexNode(BaseModel):
+    """A hierarchical semantic index node storing section abstracts."""
+    section_id: str
+    title: str
+    summary: str
+    page_start: Optional[int] = None
+    page_end: Optional[int] = None
+    key_entities: List[str] = Field(default_factory=list, description="Canonicalized named entities")
+    data_types_present: List[str] = Field(default_factory=list, description="List of 'tables', 'figures', etc.")
+    embedding: Optional[List[float]] = None
+    child_sections: List['PageIndexNode'] = []
+
+
+class PageIndexBuilder:
+    """
+    Constructs the PageIndex tree by analyzing the LDU hierarchy and using
+    gemini-1.5-flash to generate fast, localized abstracts for each section.
+    """
+    
+    SYSTEM_PROMPT = """You are a highly capable document analyst. 
+Provided with a JSON mapping of section IDs to their extracted text content, analyze EACH section and generate:
+1. summary: A concise, highly descriptive summary (under 2 sentences) capturing main topics, key metrics, and core arguments.
+2. key_entities: A normalized, canonical list of the most important entities (e.g., standardizing "Apple" and "Apple Inc." to "Apple Corporation").
+3. data_types_present: A list of string indicators (e.g. "tables", "figures", "equations") if they are present or strongly referenced in the text.
+
+You MUST return ONLY a valid JSON object mapping the section IDs to their analysis, like this:
+{
+  "section_0": {
+      "summary": "Summary text...",
+      "key_entities": ["Entity A", "Entity B"],
+      "data_types_present": ["tables"]
+  }
+}
+Do not include any markdown formatting or extra text outside the JSON object."""
+    
+    def __init__(
+        self, 
+        api_key: str, 
+        primary_model: str = "openai/gpt-4o-mini", 
+        fallback_model: str = "openai/gpt-4o-mini",
+        timeout: float = 120.0
+    ):
+        self.api_key = api_key
+        self.primary_model = primary_model
+        self.fallback_model = fallback_model
+        self.timeout = timeout
+        
+    def build_index(self, ldus: List[LogicalDocumentUnit]) -> List[PageIndexNode]:
+        """Traverse LDUs, group by section, and generate PageIndexNodes."""
+        if not self.api_key:
+            logger.warning("No OPENROUTER_API_KEY provided; returning empty PageIndex.")
+            return []
+            
+        # Group content by section_id
+        sections: Dict[str, Dict[str, Any]] = {}
+        for ldu in ldus:
+            s_id = ldu.parent_section
+            if not s_id:
+                continue
+                
+            if s_id not in sections:
+                # Naive title extraction (assume the first header chunk observed for this ID is the title)
+                sections[s_id] = {"title": "Unknown Section", "content": []}
+                
+            if ldu.chunk_type == "header" and sections[s_id]["title"] == "Unknown Section":
+                sections[s_id]["title"] = ldu.content
+                
+            sections[s_id]["content"].append(ldu.content)
+            
+        if not sections:
+            return []
+            
+        # Prepare the batched payload
+        batch_payload = {}
+        for s_id, s_data in sections.items():
+            if s_data["title"] == "Unknown Section":
+                s_data["title"] = f"Section: {s_id}"
+            
+            # Truncate section content to prevent overwhelming the context window per section, though Flash is huge
+            full_text = "\n".join(s_data["content"])
+            batch_payload[s_id] = full_text[:10000] 
+            
+        # Attempt Primary Model
+        summaries = self._generate_batched_summaries(batch_payload, self.primary_model)
+        
+        # Fallback to GPT-4o-mini if primary fails or returns invalid JSON
+        if not summaries:
+            logger.warning(f"Primary model {self.primary_model} failed. Falling back to {self.fallback_model}.")
+            summaries = self._generate_batched_summaries(batch_payload, self.fallback_model)
+            
+        if not summaries:
+            logger.error("Both primary and fallback models failed to generate PageIndex summaries.")
+            summaries = {}
+            
+        # Track page spans across chunks
+        section_pages: Dict[str, set] = {}
+        for ldu in ldus:
+            s_id = ldu.parent_section
+            if s_id:
+                if s_id not in section_pages:
+                    section_pages[s_id] = set()
+                for p in ldu.page_refs:
+                    section_pages[s_id].add(p)
+                    
+        # Build Nodes
+        nodes = []
+        for s_id, s_data in sections.items():
+            analysis = summaries.get(s_id, {})
+            # Handle fallback if primary model returned strings directly before prompt update
+            if isinstance(analysis, str):
+                analysis = {"summary": analysis, "key_entities": [], "data_types_present": []}
+                
+            summary = analysis.get("summary", "Summary unavailable.")
+            entities = analysis.get("key_entities", [])
+            data_types = analysis.get("data_types_present", [])
+            
+            # Calculate page spans
+            pages = section_pages.get(s_id, set())
+            p_start = min(pages) if pages else None
+            p_end = max(pages) if pages else None
+            
+            nodes.append(PageIndexNode(
+                section_id=s_id,
+                title=s_data["title"],
+                summary=summary,
+                page_start=p_start,
+                page_end=p_end,
+                key_entities=entities,
+                data_types_present=data_types
+            ))
+            
+        return nodes
+
+    def navigate(self, nodes: List[PageIndexNode], query: str, k: int = 3) -> List[PageIndexNode]:
+        """
+        Traversal method that accepts a topic/query and returns the top-k relevant sections.
+        In production, this would use the 'embedding' field for semantic similarity.
+        """
+        # Fallback to keyword-based relevance if embeddings are absent
+        query_words = set(query.lower().split())
+        
+        def score_node(node: PageIndexNode) -> float:
+            score = 0.0
+            # Matches in title are high weight
+            title_words = set(node.title.lower().split())
+            score += 2.0 * len(query_words.intersection(title_words))
+            
+            # Matches in summary or entities
+            summary_words = set(node.summary.lower().split())
+            score += 1.0 * len(query_words.intersection(summary_words))
+            
+            entity_words = set(" ".join(node.key_entities).lower().split())
+            score += 1.5 * len(query_words.intersection(entity_words))
+            return score
+
+        # Flatten tree for ranking or recurse if deep hierarchy (here we rank sections)
+        scored_nodes = sorted(nodes, key=score_node, reverse=True)
+        return scored_nodes[:k]
+        
+    def _generate_batched_summaries(self, section_map: Dict[str, str], model: str) -> Optional[Dict[str, str]]:
+        """Invoke the OpenRouter VLM to generate a batched JSON summary response."""
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+        
+        # We enforce JSON response format natively where supported
+        payload = {
+            "model": model,
+            "response_format": {"type": "json_object"},
+            "messages": [
+                {"role": "system", "content": self.SYSTEM_PROMPT},
+                {"role": "user", "content": json.dumps(section_map)}
+            ]
+        }
+        
+        try:
+            with httpx.Client(timeout=self.timeout) as client:
+                resp = client.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload)
+                resp.raise_for_status()
+                data = resp.json()
+                content = data["choices"][0]["message"]["content"].strip()
+                
+                # Strip markdown code blocks if the model ignored the system prompt
+                if content.startswith("```json"):
+                    content = content[7:]
+                if content.endswith("```"):
+                    content = content[:-3]
+                    
+                parsed_json = json.loads(content)
+                if not isinstance(parsed_json, dict):
+                    raise ValueError("Response is not a JSON dictionary.")
+                return parsed_json
+                
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse batched JSON summaries from {model}: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"Error generating batched summaries via API ({model}): {e}")
+            return None

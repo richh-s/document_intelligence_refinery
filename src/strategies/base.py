@@ -2,7 +2,7 @@
 
 import time
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Dict, List, Optional
 from pathlib import Path
 from pydantic import BaseModel, Field
 
@@ -23,6 +23,9 @@ class ExtractionResult(BaseModel):
     tokens_in: int = 0
     tokens_out: int = 0
     pages_sent: int = 0
+    
+    # Granular confidence signals (v2)
+    signals: Optional[Dict[str, float]] = None
     
     # Routing transparency for rubric completeness
     escalation_occurred: bool = False

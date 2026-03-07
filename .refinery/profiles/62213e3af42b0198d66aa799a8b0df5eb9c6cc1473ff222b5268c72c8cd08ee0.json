@@ -7,7 +7,7 @@
   },
   "doc_id": "62213e3af42b0198d66aa799a8b0df5eb9c6cc1473ff222b5268c72c8cd08ee0",
   "domain_hint": "general",
-  "extraction_cost": "needs_vision_model",
+  "extraction_cost": "needs_layout_model",
   "file_hash": "62213e3af42b0198d66aa799a8b0df5eb9c6cc1473ff222b5268c72c8cd08ee0",
   "file_name": "Audit Report - 2023.pdf",
   "is_encrypted": false,

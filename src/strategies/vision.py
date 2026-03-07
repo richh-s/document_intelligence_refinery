@@ -148,6 +148,9 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
             "Content-Type": "application/json"
         }
 
+        last_error_cat = ""
+        last_error_msg = ""
+        
         # Context Window Batching loop
         for batch_start in range(0, total_pages, self.max_pages_per_call):
             batch_end = min(batch_start + self.max_pages_per_call, total_pages)
@@ -210,12 +213,16 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
                             local_page_num = p_data.get("page_number", 1)
                             page_num = batch_start + local_page_num
                             
+                            def clip_bbox(bbox):
+                                return [max(0.0, min(1.0, float(x))) for x in bbox]
+
                             t_blocks = []
                             for i, b in enumerate(p_data.get("text_blocks", [])):
+                                raw_bbox = b.get("bbox", [0.0, 0.0, 1.0, 1.0])
                                 t_blocks.append(
                                     TextBlock(
                                         text=b.get("text", ""),
-                                        bbox=tuple(b.get("bbox", [0.0, 0.0, 1.0, 1.0])),
+                                        bbox=tuple(clip_bbox(raw_bbox)),
                                         page_number=page_num,
                                         source_strategy="VisionExtractor",
                                         reading_order=i + 1
@@ -224,7 +231,7 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
                             
                             tables = [
                                 StructuredTable(
-                                    bbox=tuple(t.get("bbox", [0.0, 0.0, 1.0, 1.0])),
+                                    bbox=tuple(clip_bbox(t.get("bbox", [0.0, 0.0, 1.0, 1.0]))),
                                     page_number=page_num,
                                     source_strategy="VisionExtractor",
                                     markdown=t.get("markdown_table", ""),
@@ -234,7 +241,7 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
                             
                             figures = [
                                 Figure(
-                                    bbox=tuple(f.get("bbox", [0.0, 0.0, 1.0, 1.0])),
+                                    bbox=tuple(clip_bbox(f.get("bbox", [0.0, 0.0, 1.0, 1.0]))),
                                     page_number=page_num,
                                     source_strategy="VisionExtractor",
                                     caption=f.get("caption", None)
@@ -254,11 +261,15 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
                         
                     except json.JSONDecodeError as e:
                         logger.error(f"VLM JSON parsing failed for batch {batch_start}-{batch_end}: {e}")
+                        last_error_cat = "API_JSON_PARSE_ERROR"
+                        last_error_msg = str(e)
                         # On hard JSON failure, we break and trigger Partial Success
                         break
                         
             except httpx.HTTPError as e:
                 logger.error(f"HTTP Error calling OpenRouter: {e}")
+                last_error_cat = "API_HTTP_ERROR"
+                last_error_msg = str(e)
                 break
 
             # Check if mid-flight budget cap is breached
@@ -288,8 +299,11 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
             penalty = pages_processed / max(1, total_pages)
             confidence *= penalty
             
-        confidence = max(0.0, min(1.0, confidence))
-            
+        # Calculate granular signals for v2 confidence model
+        comp_ratio = pages_processed / max(1, total_pages)
+        ocr_sig = min(1.0, total_text_len / (max(1, pages_processed) * 500)) if pages_processed > 0 else 0.0
+        struct_sig = min(1.0, total_blocks / (max(1, pages_processed) * 10)) if pages_processed > 0 else 0.0
+
         kwargs = {
             "document": doc,
             "confidence": round(confidence, 6),
@@ -298,11 +312,19 @@ Return ONLY valid JSON. No conversational filler. Bounding boxes must be [x0, y0
             "model_name": self.model_name,
             "tokens_in": total_tokens_in,
             "tokens_out": total_tokens_out,
-            "pages_sent": pages_processed
+            "pages_sent": pages_processed,
+            "error_category": last_error_cat,
+            "error_message": last_error_msg,
+            "signals": {
+                "ocr_quality": round(ocr_sig, 4),
+                "layout_consistency": 0.7, # Vision assumes some layout ambiguity
+                "structural_fidelity": round(struct_sig, 4),
+                "completeness_ratio": round(comp_ratio, 4)
+            }
         }
         
         # Return Partial if we bailed out early to preserve the pipeline
-        if pages_processed < total_pages and len(all_extracted_pages) > 0:
+        if (pages_processed < total_pages or last_error_cat) and len(all_extracted_pages) > 0:
             return PartialExtractionResult(**kwargs)
 
         return ExtractionResult(**kwargs)

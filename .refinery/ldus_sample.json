@@ -1,0 +1,860 @@
+[
+  {
+    "content": "Import tax expenditure report: FY 2018/19 \u2013 2020/21",
+    "chunk_type": "text",
+    "page_refs": [
+      1
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.1
+    },
+    "parent_section": null,
+    "token_count": 8,
+    "content_hash": "22ece67538bf50e4c461bbf950820e0e3a3368f45b933e90d199b0951cb132f1",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Tax Policy Directorate, Ministry of Finance, Ethiopia",
+    "chunk_type": "text",
+    "page_refs": [
+      1
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.2,
+      "x1": 1.0,
+      "y1": 0.3
+    },
+    "parent_section": null,
+    "token_count": 7,
+    "content_hash": "cda8a29c87bb5f044d3c4aa31b7edc97837cd8cbd6dd8f002f6aa7f53dd0748b",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "September 2022",
+    "chunk_type": "header",
+    "page_refs": [
+      1
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.4,
+      "x1": 1.0,
+      "y1": 0.5
+    },
+    "parent_section": "section_2",
+    "token_count": 2,
+    "content_hash": "bcdb3e907a530a411deccd544734c8550bffb679ef7b242e7d70ba7307817325",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Import tax expenditure report: FY 2018/19 \u2013 2020/21",
+    "chunk_type": "text",
+    "page_refs": [
+      2
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.1
+    },
+    "parent_section": "section_2",
+    "token_count": 8,
+    "content_hash": "22ece67538bf50e4c461bbf950820e0e3a3368f45b933e90d199b0951cb132f1",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Preface",
+    "chunk_type": "header",
+    "page_refs": [
+      2
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.1,
+      "x1": 0.5,
+      "y1": 0.2
+    },
+    "parent_section": "section_4",
+    "token_count": 1,
+    "content_hash": "6cdf641e4cd809633516ca97455b74c53d0a900169c91e875f6a40f7ba116dce",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "This report has been prepared by the IFS Centre for Tax Analysis in Developing Countries (TaxDev) team (Daniel Prinz, Edris Seid and Ben Waltmann) in collaboration with the Ethiopian Ministry of Finance Tax Policy Directorate team (led by Mulay Weldu).",
+    "chunk_type": "text",
+    "page_refs": [
+      2
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.2,
+      "x1": 1.0,
+      "y1": 0.3
+    },
+    "parent_section": "section_4",
+    "token_count": 40,
+    "content_hash": "ff18463326698322f9404a4ae6b1bf3d41fad4583b79c51b2542d2f86ec20e62",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "The authors would like to thank David Phillips (IFS) for useful comments and feedback. They also thank the staff of the Ministry of Finance Tax Policy Directorate and the staff of the Ethiopian Customs Commission for providing access to data and clarifying certain data issues.",
+    "chunk_type": "text",
+    "page_refs": [
+      2
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.3,
+      "x1": 1.0,
+      "y1": 0.5
+    },
+    "parent_section": "section_4",
+    "token_count": 45,
+    "content_hash": "259d08a0f79b85c9f82f30f79fbaf8462795e0e69760d580ac9499f918601884",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "This report has been funded by UK aid from the UK government through a grant to TaxDev.",
+    "chunk_type": "text",
+    "page_refs": [
+      2
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.5,
+      "x1": 1.0,
+      "y1": 0.6
+    },
+    "parent_section": "section_4",
+    "token_count": 17,
+    "content_hash": "6427aea89909440d94b113effd06dda94ea3fe7bad4b1271185adf1c1293c751",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Import tax expenditure report: FY 2018/19 \u2013 2020/21",
+    "chunk_type": "text",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.1
+    },
+    "parent_section": "section_4",
+    "token_count": 8,
+    "content_hash": "22ece67538bf50e4c461bbf950820e0e3a3368f45b933e90d199b0951cb132f1",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Contents",
+    "chunk_type": "header",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.1,
+      "x1": 0.5,
+      "y1": 0.2
+    },
+    "parent_section": "section_9",
+    "token_count": 1,
+    "content_hash": "50e7081ba8bd19def23571c3a9d68905d111ab287a18bd578ad27bf60f01db15",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Executive summary ............. 4",
+    "chunk_type": "text",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.2,
+      "x1": 0.5,
+      "y1": 0.3
+    },
+    "parent_section": "section_9",
+    "token_count": 4,
+    "content_hash": "21d812dc5c5f01ba1f9c0293f3a8e9df431219357573f9f4a6511bc04f6bea36",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "1. Introduction ............................. 6",
+    "chunk_type": "list",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.3,
+      "x1": 0.5,
+      "y1": 0.4
+    },
+    "parent_section": "section_11",
+    "token_count": 4,
+    "content_hash": "191bd5f810e923c8156f2b9f2949cb4fe5a7792c6f65e242462482dc26d0e0dc",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "2. Policy rationale for and issues with tax expenditures ..... 7",
+    "chunk_type": "list",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.4,
+      "x1": 0.5,
+      "y1": 0.5
+    },
+    "parent_section": "section_11",
+    "token_count": 11,
+    "content_hash": "63940a1feaf4fff77ca625267cbe58c4c98a98deea3092dfe08d5fcc4399354a",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "3. Definitions and data ........... 9",
+    "chunk_type": "list",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.5,
+      "x1": 0.5,
+      "y1": 0.6
+    },
+    "parent_section": "section_11",
+    "token_count": 6,
+    "content_hash": "3bb67278b58b9884101c31485baaeac09d25f9ef079734cf585badc685b31689",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "4. Tax expenditure estimates ...... 16",
+    "chunk_type": "list",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.6,
+      "x1": 0.5,
+      "y1": 0.7
+    },
+    "parent_section": "section_11",
+    "token_count": 6,
+    "content_hash": "c44fa3f01165978eb88bf4b4d45ffe70f6898a9736dfb4471ae55c6807109e19",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "5. Conclusions and recommendations ............. 41",
+    "chunk_type": "list",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.7,
+      "x1": 0.5,
+      "y1": 0.8
+    },
+    "parent_section": "section_11",
+    "token_count": 6,
+    "content_hash": "92536d3532a8099c069f3a2f26576e6cc70c630bf9b589388e1bfcb67dc08f8c",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Appendices .......................................... 43",
+    "chunk_type": "header",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.8,
+      "x1": 0.5,
+      "y1": 0.9
+    },
+    "parent_section": "section_16",
+    "token_count": 3,
+    "content_hash": "55ba59e772c078a9dc366920133ae7aea29a39824d575aa73ec787c20cec559f",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "References ................................... 59",
+    "chunk_type": "header",
+    "page_refs": [
+      3
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.9,
+      "x1": 0.5,
+      "y1": 1.0
+    },
+    "parent_section": "section_17",
+    "token_count": 3,
+    "content_hash": "d4fa1c82e8137c485fdcb0c3aecbe7e555b08557c24b6d11e593e250816ba8a2",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Import tax expenditure report: FY 2018/19 \u2013 2020/21",
+    "chunk_type": "text",
+    "page_refs": [
+      4
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.1
+    },
+    "parent_section": "section_17",
+    "token_count": 8,
+    "content_hash": "22ece67538bf50e4c461bbf950820e0e3a3368f45b933e90d199b0951cb132f1",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Executive summary",
+    "chunk_type": "text",
+    "page_refs": [
+      4
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.1,
+      "x1": 0.5,
+      "y1": 0.2
+    },
+    "parent_section": "section_17",
+    "token_count": 2,
+    "content_hash": "e458f9ecee2225026bf1c7a712f168837a40a7dd04d7b8e884c7574cc1f24438",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Understanding, estimating and reporting on tax expenditures is an important exercise in public financial management. Tax expenditures \u2013 cases in which the tax liability of an individual, a firm or other entity is reduced below the liability under a benchmark tax system \u2013 use limited public financial resources. Ethiopia, like other countries, incurs significant tax expenditures each year. To understand whether these tax expenditures serve the government\u2019s development agenda, tax expenditures must first be measured.",
+    "chunk_type": "text",
+    "page_refs": [
+      4
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.2,
+      "x1": 1.0,
+      "y1": 0.5
+    },
+    "parent_section": "section_17",
+    "token_count": 75,
+    "content_hash": "df3478b438ea30199f436593b799643779c33ada53630485d290487259c7ffc9",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "This report uses shipment-level microdata from the Ethiopian Customs Commission to estimate import tax expenditures for fiscal years 2018/19, 2019/20 and 2020/21. It covers the four taxes levied on imports: customs duty, excise duty, VAT and surtax. (It does not cover withholding tax, which is not designed as a final tax.)",
+    "chunk_type": "text",
+    "page_refs": [
+      4
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.5,
+      "x1": 1.0,
+      "y1": 0.8
+    },
+    "parent_section": "section_17",
+    "token_count": 51,
+    "content_hash": "28fd00f0702a2c556f41746287a71994ea7c345b77c8088e49b7fe002692bfa6",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Where appropriate, exemptions and rate reductions are considered separately, and estimates are presented for different categories of commodities. In addition to estimating overall tax expenditures and tax expenditures for each type, it is useful to understand the source of tax expenditures. Estimates by categories of commodities can help the government assess whether expenditures are in line with development objectives.",
+    "chunk_type": "text",
+    "page_refs": [
+      4
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.8,
+      "x1": 1.0,
+      "y1": 1.0
+    },
+    "parent_section": "section_17",
+    "token_count": 59,
+    "content_hash": "71b9b0a36986f8680c2e2a324ed9be1d6f8e81cc81d457d620a9a1c503e4dac4",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Import tax expenditure report: FY 2018/19 \u2013 2020/21",
+    "chunk_type": "text",
+    "page_refs": [
+      5
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.1
+    },
+    "parent_section": "section_17",
+    "token_count": 8,
+    "content_hash": "22ece67538bf50e4c461bbf950820e0e3a3368f45b933e90d199b0951cb132f1",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Executive summary",
+    "chunk_type": "text",
+    "page_refs": [
+      5
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.1,
+      "x1": 0.5,
+      "y1": 0.2
+    },
+    "parent_section": "section_17",
+    "token_count": 2,
+    "content_hash": "e458f9ecee2225026bf1c7a712f168837a40a7dd04d7b8e884c7574cc1f24438",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "The report uses the revenue forgone method and does not attempt to incorporate the behavioural or compliance effects of tax expenditures. This implicitly assumes that if all tax expenditures were eliminated, the government would collect the full difference between what is currently collected and what would be collected under the benchmark system. This, however, need not be the case, as imports are potentially responsive to tax rates both on the real and the compliance margin. Furthermore, import tax expenditures likely lead to higher collection of domestic taxes, and especially domestic VAT. Thus, the cost of tax expenditures calculated in this report likely overstates their true fiscal cost.",
+    "chunk_type": "text",
+    "page_refs": [
+      5
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.2,
+      "x1": 1.0,
+      "y1": 0.5
+    },
+    "parent_section": "section_17",
+    "token_count": 107,
+    "content_hash": "536ab6b5b8f2dac2ce263265bdcf3d847c8b83ad4b13edc2aa22d089e319d481",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Import tax expenditures were ETB 120.7 billion in FY 2020/21, which represented around 2.8% of GDP, between ETB 76.4 billion and ETB 78.3 billion (or 2.3% of GDP) in FY 2019/20, and between ETB 68.7 billion and ETB 99.3 billion (2.6% to 3.7% of GDP) in FY 2018/19. Of total import tax expenditures in FY 2020/21, VAT expenditures constituted the largest share at 37% of the total (ETB 44.6 billion), followed by customs duty expenditures at 32% (ETB 38.9 billion), excise tax expenditures at around 16% (ETB 18.8 billion) and surtax expenditures at 15% (ETB 18.4 billion). On average, tax expenditures were worth 21.3% of the",
+    "chunk_type": "text",
+    "page_refs": [
+      5
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.5,
+      "x1": 1.0,
+      "y1": 1.0
+    },
+    "parent_section": "section_17",
+    "token_count": 106,
+    "content_hash": "a884a81bb25f9b953b87f4046418efafa921a21c641d20f5b61dac9b7addc444",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "1. Introduction\n\nThis report provides estimates of federal import tax expenditures during fiscal years 2018/19, 2019/20 and 2020/21. The report is based on shipment-level microdata on customs duty, excise duty, VAT and surtax collections on imports from the Ethiopian Customs Commission.1 It starts by defining a benchmark tax system and then compares actual collections with estimated collections under the benchmark tax system for each of the tax types and each shipment. Shipment-level differences between estimated benchmark collections and actual collections are aggregated to provide annual estimates overall and by various categories of goods, services and expenditures.\n\nThe report focuses on import taxes and does not report expenditures for other types of taxes. Exemptions and various other concessions that constitute tax expenditures exist for domestic direct taxes and domestic indirect taxes as well. However, the transaction-level microdata necessary for reliably estimating tax expenditures is currently readily available only for import taxes. Future iterations of this report should aim to incorporate all tax expenditures.\n\nThe current report on tax expenditures builds on previous estimates of tax expenditures in Ethiopia. The most recent tax expenditure report on import taxes was produced in April 2020 and covered fiscal years 2016/17, 2017/18 and 2018/19 (Ministry of Finance, 2020). It found that the estimated revenue forgone on imports as a share of GDP was 2.74% in FY 2018/19. (At 3.7%, our main estimate for FY 2018/19 tax expenditures is somewhat larger; however, it is likely that this estimate is inflated by up to 1.1 percentage points as a result of double-counting of shipments arising from the transition between two customs IT systems in that fiscal year.2)\n\nThe rest of this report proceeds as follows. Section 2 provides an overview of the policy rationales for and the drawbacks of tax expenditures. Section 3 describes how tax expenditures are defined and estimated. Section 4 provides estimates of tax expenditures by tax type. Section 5 concludes and offers recommendations.",
+    "chunk_type": "list",
+    "page_refs": [
+      6
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.9
+    },
+    "parent_section": "section_17",
+    "token_count": 320,
+    "content_hash": "7868afe3f9f5492b289ee5899ffc041e6d4d6cf8de4dce1892adc99ec1d78f09",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "2. Policy rationale for and issues with tax expenditures\n\nThe government of Ethiopia has been using tax policies such as tax holidays, tax credits and preferential tax treatments for certain sectors and producers to encourage and expand investment, especially in the manufacturing sector; to strengthen domestic production capacity; and to motivate investors engaged in export trade. The goal of this is to accelerate the economic development of the country and improve its people\u2019s living standards.\n\nVarious incentive packages for investors and exporters are currently in place. Investors enjoy a wide range of incentives as per Council of Ministers Regulation No. 270/2012, including duty-free (exempted from customs duty and tax) imports of capital/investment goods, construction materials, motor vehicles, and spare parts whose value is not more than 15% of the value of the capital goods (Ethiopian Revenue and Customs Authority, 2017). Exporters also enjoy various duty and tax privileges through duty draw-back, voucher and bonded warehouse schemes (as per Proclamation No. 768/2012).\n\nOn top of that, through its power and mandate, the Ministry of Finance grants ad hoc exemptions from the payment of import taxes. These exemptions are sometimes used to stabilise the domestic price of certain imported commodities such as cooking oil. Furthermore, ad hoc exemptions are granted to certain local producers. For example, the Ministry has granted automatic exemptions from customs duty and import taxes for the importation of spare parts by the textiles and leather industries.\n\nThe intended effects of such tax policy measures and incentives are mainly:\n\n- to promote investment, especially in the manufacturing sector;\n- to speed up technology transfer;\n- to improve the international competitiveness of domestic businesses;\n- to increase foreign exchange earnings; and\n- to enhance and promote equitable distribution of investment among regional states.",
+    "chunk_type": "list",
+    "page_refs": [
+      7
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.9
+    },
+    "parent_section": "section_17",
+    "token_count": 293,
+    "content_hash": "c3f08f65c613cbe712f62be1a03eacd158426e8e2d8171abc28fd816be76721d",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "Together, these effects are intended to help transform the Ethiopian economy into an industrial economy and improve living standards.3\n\nTax expenditures lack transparency in terms of how much the government is forgoing in tax revenue. Even though the law stipulates that businesses benefiting from tax incentives are to file tax returns, businesses with no tax liability do not usually file their returns, making a comprehensive tax expenditure report difficult. This could create opportunities for rent-seeking and corruption.",
+    "chunk_type": "text",
+    "page_refs": [
+      8
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.9
+    },
+    "parent_section": "section_17",
+    "token_count": 77,
+    "content_hash": "813ef3934d0ceea45b3560858c6250ebf8f2814ed79ed03a2ef791ed0f15a561",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "3. Definitions and data\n\n3.1 Defining the benchmark tax system\n\nTax expenditures are defined as deviations from a benchmark system. The first step in estimating tax expenditures is therefore the definition of a benchmark tax system. Defining the appropriate benchmark involves a number of judgement calls which affect the resulting estimates. Below, we discuss in detail the definition used in the report and - where appropriate - examine the robustness of estimates with respect to the exact definition used.\n\nIn this report, we focus on positive import tax expenditures - cases in which an importer is charged at a lower (possibly zero) customs duty/tax rate than the rate in the benchmark tax system. The benchmark tax system generally reflects the standard tax rates laid down in the relevant proclamations and regulations. When bilateral or multilateral agreements regulate tax rates for specific countries of origin, these tax rates enter the benchmark system and do not count as expenditures (International Monetary Fund, 2019). In addition, exemptions given to diplomats and international organisations in line with international law and the Vienna Conventions are considered part of the benchmark. In order to avoid negative tax expenditures, actual applied tax rates that are higher than the standard rates in the relevant proclamation or regulation are considered part of the benchmark tax system (the negative tax expenditures that arise when this adjustment is not made are discussed in Appendix A).\n\nOther deviations from standard rates are taken to give rise to tax expenditures. Lower rates and exemptions are examined in separate analyses for customs duty, where both are common. Second schedule customs duty and surtax rates are considered tax expenditures in our main analysis. Second schedule rates are preferential customs and surtax rates granted to local manufacturers importing raw materials. To be eligible for the scheme, manufacturers need to meet value-added requirements which vary by sector (Ministry of Finance, 2016).",
+    "chunk_type": "list",
+    "page_refs": [
+      9
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.9
+    },
+    "parent_section": "section_17",
+    "token_count": 314,
+    "content_hash": "db11b89dcfe859ac5c9bf6621438861738d2336164d2127beb6db3702f1423db",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "To estimate tax expenditures, the revenue forgone method is used; it assumes that the removal of tax expenditures would result in no changes in behaviour or compliance. This is a standard approach to tax expenditure analysis, but has important limitations (International Monetary Fund, 2019). In particular, this approach typically overestimates tax expenditures as it assumes individuals would continue to consume (or import in the case of import taxes) the same amount of goods and services (Kassim and Mansour, 2018) if full tax rates were charged.\n\nFurthermore, import tax expenditures likely lead to higher collection of domestic taxes. Import VAT exemptions likely lead to higher domestic VAT collection on final goods, as less input VAT can be reclaimed. All tax expenditures likely lead to higher income tax collection, as the lower cost of imported inputs leads to higher profits and earnings. Thus, the cost of tax expenditures calculated in this report likely overstates their true overall fiscal cost.\n\nIn the Ethiopian import tax system, customs duty, excise tax, VAT and surtax are charged sequentially, so that revenue from taxes early in the sequence enters the tax base of taxes later in the sequence. This means that tax expenditures relating to a given tax will indirectly affect the collection of other taxes later in the sequence. For the main estimates in this report, such indirect effects of tax expenditures are counted as expenditures on the origin tax even though they affect the collection of other taxes. (Results when indirect effects are counted as part of expenditures on the tax whose collection is affected are reported in Appendix C.)\n\nCustoms duty\n\nCustoms law is governed by Proclamation No. 859/2014. Customs duty is applied as the percentage of the duty-paying value. Duty-paying value is defined as the sum of the shipment value (cost of goods), transport charges paid to transport the goods from the port of the exporting country to their entry into Ethiopia, transport insurance paid and other charges such as loading and unloading charges, port charges, etc. The customs duty rate varies between 0% and 35% depending on the type and the level of processing of the imported goods. Final consumer goods are usually charged at higher rates, while raw materials and intermediate goods (including semi-knocked-down products) are charged at lower rates.",
+    "chunk_type": "text",
+    "page_refs": [
+      10
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.9
+    },
+    "parent_section": "section_17",
+    "token_count": 380,
+    "content_hash": "462ba0282e561ad2502c92af6473aff3834c89a5218352adf79bc3b9bfaa4ed5",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  },
+  {
+    "content": "The benchmark tax system for customs duty is defined as follows:\n\n- The unit of taxation for excise on imports is the importer, the business or the individual.\n- The customs duty tax base is the cost, insurance and freight (CIF) value of imports.\n- The benchmark customs duty rate is, in general, the standard customs duty rate for the item in question as specified in the 2017 tariff book (0%, 5%, 10%, 20%, 30% or 35%).\n- For items imported from countries with which Ethiopia has a multilateral, regional or bilateral trade deal, the benchmark rates are those specified under the relevant trade agreement.\n    - Ethiopia is a member of the Common Market for Eastern and Southern Africa (COMESA) Preferential Trade Agreement where it grants 10% rate reductions for goods originating in a COMESA country and complying with the COMESA\u2019s rule of origin. The benchmark customs duty rates for goods fulfilling COMESA rules of origin are 0%, 4.5%, 9%, 18%, 27% and 31.5%.",
+    "chunk_type": "text",
+    "page_refs": [
+      11
+    ],
+    "bounding_box": {
+      "x0": 0.0,
+      "y0": 0.0,
+      "x1": 1.0,
+      "y1": 0.9
+    },
+    "parent_section": "section_17",
+    "token_count": 164,
+    "content_hash": "915428d86b3e1d92cd8e204f49256d48c7b8a63d3b14b9ab7fbadeff35120251",
+    "metadata": {
+      "related_table_id": null,
+      "cross_reference": null,
+      "cross_reference_type": null,
+      "dangling_reference": null,
+      "chunk_relationships": [],
+      "image_bbox": null,
+      "caption": null,
+      "caption_bbox": null
+    }
+  }
+]

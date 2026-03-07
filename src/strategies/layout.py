@@ -146,6 +146,10 @@ class LayoutAwareExtractor(BaseExtractor):
             confidence = 0.8  # Edge case: Valid page of pure tables
             
         confidence = max(0.0, min(1.0, confidence))
+        
+        # Calculate granular signals for v2 confidence model
+        layout_sig = header_ratio if total_tables > 0 else 0.8
+        struct_sig = min(1.0, (total_blocks / (profile.page_count * 20))) if total_blocks > 0 else 0.0
                 
         return ExtractionResult(
             document=normalized_doc,
@@ -153,5 +157,11 @@ class LayoutAwareExtractor(BaseExtractor):
             cost=0.0,
             time_ms=self._timer_end_ms(start_time),
             model_name="docling (cpu)",
-            pages_sent=profile.page_count
+            pages_sent=profile.page_count,
+            signals={
+                "ocr_quality": 0.9, # Docling is native-first, so OCR is generally high quality
+                "layout_consistency": round(layout_sig, 4),
+                "structural_fidelity": round(struct_sig, 4),
+                "completeness_ratio": 1.0 # Scans all pages by default
+            }
         )

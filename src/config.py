@@ -81,3 +81,23 @@ class TriageConfig(BaseSettings):
         return self
 
     model_config = {"env_prefix": "TRIAGE_"}
+
+
+class PipelineConfig(BaseSettings):
+    """Global configuration for Extraction, Chunking, and Indexing stages."""
+
+    # ── Chunking ──────────────────────────────────────────────────────
+    MAX_LDU_TOKENS: int = 800
+
+    # ── Indexing ──────────────────────────────────────────────────────
+    EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
+    VECTOR_DB_PATH: str = "./.chromadb"
+    FACT_DB_PATH: str = "./.refinery/facts.db"
+
+    # ── Extraction Thresholds ──────────────────────────────────────────
+    MIN_CONFIDENCE_FAST_TEXT: float = 0.85
+    MIN_CONFIDENCE_LAYOUT: float = 0.70
+    MIN_CONFIDENCE_VISION: float = 0.60
+    VISION_BUDGET_LIMIT: float = 0.05  # USD per document
+
+    model_config = {"env_prefix": "PIPELINE_"}

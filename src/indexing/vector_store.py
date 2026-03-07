@@ -5,7 +5,9 @@ import chromadb
 from chromadb.utils import embedding_functions
 from typing import List, Dict, Any, Optional
 from models.ldu import LogicalDocumentUnit
-from models.page_index import PageIndexNode
+from agents.indexer import PageIndexNode
+
+from config import PipelineConfig
 
 logger = logging.getLogger(__name__)
 
@@ -13,9 +15,10 @@ logger = logging.getLogger(__name__)
 class RefineryVectorStore:
     """Manages ingestion and retrieval of LDUs and PageIndex nodes via ChromaDB."""
     
-    def __init__(self, db_path: str = "./.chromadb", embedding_model: str = "all-MiniLM-L6-v2"):
-        self.db_path = db_path
-        self.embedding_model = embedding_model
+    def __init__(self, config: Optional[PipelineConfig] = None):
+        cfg = config or PipelineConfig()
+        self.db_path = cfg.VECTOR_DB_PATH
+        self.embedding_model = cfg.EMBEDDING_MODEL
         
         # Initialize persistent client
         self.client = chromadb.PersistentClient(path=self.db_path)
@@ -62,15 +65,17 @@ class RefineryVectorStore:
             meta = {
                 "content_hash": ldu.content_hash,
                 "chunk_type": ldu.chunk_type,
-                "parent_section_id": ldu.parent_section_id if ldu.parent_section_id else "global",
+                "parent_section": ldu.parent_section if ldu.parent_section else "global",
+                "page_refs": str(ldu.page_refs),
                 "token_count": ldu.token_count,
+                "bounding_box": str([ldu.bounding_box.x0, ldu.bounding_box.y0, ldu.bounding_box.x1, ldu.bounding_box.y1])
             }
             # Include optional extracted metadata
             meta.update(ldu.metadata.model_dump(exclude_none=True))
             metadatas.append(self._sanitize_metadata(meta))
             
         # Chroma handles embedding automatically via the configured EF
-        self.chunks_collection.add(
+        self.chunks_collection.upsert(
             ids=ids,
             documents=documents,
             metadatas=metadatas
@@ -88,14 +93,14 @@ class RefineryVectorStore:
         
         # We embed a composite of the title and the summary
         for node in nodes:
-            composite_text = f"Section: {node.section_title}\nSummary: {node.summary}"
+            composite_text = f"Section: {node.title}\nSummary: {node.summary}"
             documents.append(composite_text)
             metadatas.append({
                 "section_id": node.section_id,
-                "section_title": node.section_title
+                "title": node.title
             })
             
-        self.page_index_collection.add(
+        self.page_index_collection.upsert(
             ids=ids,
             documents=documents,
             metadatas=metadatas
@@ -125,9 +130,9 @@ class RefineryVectorStore:
         where_filter = None
         if section_ids:
             if len(section_ids) == 1:
-                where_filter = {"parent_section_id": section_ids[0]}
+                where_filter = {"parent_section": section_ids[0]}
             else:
-                where_filter = {"parent_section_id": {"$in": section_ids}}
+                where_filter = {"parent_section": {"$in": section_ids}}
                 
         results = self.chunks_collection.query(
             query_texts=[query],
