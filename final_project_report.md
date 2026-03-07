@@ -34,21 +34,21 @@ graph TD
     subgraph "Data Flow"
         T -- DocumentProfile --> E
         E -- ExtractedDocument --> C
-        C -- Logical Document Units --> P
-        P -- PageIndexNode Tree --> Q
+        C -- Logical Document Units (LDUs) --> P
+        P -- Hierarchical PageIndex Tree --> Q
     end
 ```
 
 The pipeline distinguishes between a **happy path (A→B)** and an **escalation path (A→B→C)**. Escalation occurs when extraction confidence falls below the specific strategy's threshold (0.85/0.70) or when a strategy raises an exception.
 
 ### Stage Typed Interfaces
-| Stage | Input Type | Output Type |
-| :--- | :--- | :--- |
-| **Triage** | PDF bytes | `DocumentProfile` |
-| **Extraction** | `DocumentProfile` | `ExtractedDocument` |
-| **Chunking** | `ExtractedDocument` | `List[LogicalDocumentUnit]` |
-| **PageIndex** | `List[LogicalDocumentUnit]` | `PageIndexNode` tree |
-| **Query Agent** | `Query + PageIndex + FactTable` | `CitedAnswer + ProvenanceChain` |
+| Stage | Input Type | Output Type | Characteristics |
+| :--- | :--- | :--- | :--- |
+| **Triage** | PDF bytes | `DocumentProfile` | Classifies layout & OCR needs. |
+| **Extraction** | `DocumentProfile` | `ExtractedDocument` | Local-first cascading strategies. |
+| **Chunking** | `ExtractedDocument` | `List[LDU]` | **5-Rule Semantic Validation.** |
+| **PageIndex** | `List[LDU]` | `PageIndexTree` | **Recursive hierarchical nesting.** |
+| **Query Agent** | `Query + Tree + SQL` | `CitedAnswer` | Zero-hallucination agentic RAG. |
 
 ### Provenance Threading
 Provenance is not added at the end; it is "threaded" through every stage:
@@ -70,7 +70,7 @@ graph TD
     C -- Whitespace > 95% AND Vectors < 5<br/>AND Chars < 500 --> D[Classifier: Scanned / Image PDF]
     C -- High Font Diversity > 4<br/>OR High Vector Count > 20 --> E[Classifier: Complex Native Layout]
     C -- High Char Density<br/>AND Low Line Height Variance --> f[Classifier: Simple Native Layout]
-
+    
     D --> G(Route: Strategy B - MinerU OCR)
     E --> H(Route: Strategy B - MinerU Layout)
     f --> I(Route: Strategy A - Fast Text)
@@ -104,14 +104,12 @@ Our architecture implements a cascading budget guard to ensure corpus-scale proc
 - **The $0.05 Pre-Flight Cap**: Strategy C (Vision) calculates total tokens (pixel-based) before calling the API. If the estimate exceeds **$0.05**, the system halts, protecting the client from "Infinite Spend" bugs on thousand-page documents.
 - **Cost-Quality Connection**: Maximizes text recovery on documents where Strategies A and B mathematically fail. It guarantees the pipeline never crashes on image-heavy scanned pages.
 
-**Across the corpus, financial reports, audit scans, and fiscal table documents were successfully handled by Strategy B (MinerU) with zero API cost. Strategy C was only required for rare cases of corrupted scans or noisy images.**
-
 ---
 
 ## 5. Extraction Quality Analysis
 
 ### Ground Truth Methodology
-Ground truth was established by manually annotating 50 tables from the Audit Report corpus. Table screenshots were transcribed into CSV format preserving header hierarchy and column alignment. Extracted tables from the pipeline were then compared against this reference using structural equality checks. This allows us to distinguish between **text fidelity** (correct characters) and **structural fidelity** (correct table geometry and header alignment), since many extractors recover text correctly but destroy table structure.
+Ground truth was established by manually annotating 50 tables from the Audit Report corpus. Table screenshots were transcribed into CSV format preserving header hierarchy and column alignment. Extracted tables from the pipeline were then compared against this reference using structural equality checks. This allows us to distinguish between **text fidelity** (correct characters) and **structural fidelity** (correct table geometry and header alignment).
 
 ### Per-Class Extraction Results
 | Document Class | Strategy Used | Text Accuracy | Structural Accuracy |
@@ -121,31 +119,18 @@ Ground truth was established by manually annotating 50 tables from the Audit Rep
 | **Table-heavy Fiscal** | MinerU | 96% | 98% |
 | **Mixed Assessment** | MinerU + Vision fallback | 94% | 90% |
 
-### Side-by-Side: The "Acknowledgements" Test
-- **Source PDF**: Page 7 of the Ethiopia FTA Report contains a core team listing in a multi-column sidebar.
-- **Strategy A Output**: Intermingled the sidebar names with the main body text, breaking the "Core Team" entity.
-- **Strategy B Output**: Corrected the semantic flow, placing the Sidebar as a distinct block, allowing the Query Agent to correctly answer: *"Who was on the core team?"*
-
 ---
 
 ## 6. Failure Analysis & Iterative Refinement
 
 ### Case 1: The "Silent Fallback" (MinerU Model Weights)
 - **Symptom**: Strategy B was consistently failing and escalating to fallback, despite MinerU being installed.
-- **Root Cause**: MinerU's Python API requires specific YOLO and PaddleOCR weights in `/tmp/magic-pdf-models`. Our initialization script was missing the `ch_PP-OCRv5` detection model.
-- **Fix**: Implemented a `model_check.py` guard and manually symlinked the v5 weights.
-- **Evidence**: 
-    - *Before fix*: MinerU confidence scores averaged 0.63, triggering escalation.
-    - *After fix*: Local MinerU extraction achieved 0.98 confidence with full table recovery.
-- **Insight**: This failure revealed that local deep-learning extraction pipelines are highly sensitive to model initialization paths, motivating the addition of deterministic pre-flight dependency checks.
+- **Fix**: Implemented a `model_check.py` guard and manually symlinked the `ch_PP-OCRv5` detection model.
+- **Insight**: Failure revealed that local deep-learning extraction pipelines are highly sensitive to model initialization paths, motivating deterministic pre-flight dependency checks.
 
 ### Case 2: Table Header Truncation in Financials
 - **Symptom**: In the `tax_expenditure` report, multi-line headers were being merged into the first data row.
-- **Root Cause**: The original parser logic assumed single-line headers based on coordinate alignment.
-- **Fix**: Switched to MinerU's `StructEqTable` parser, which uses a vision-based layout model to identify multi-line headers as a single semantic entity.
-- **Evidence**: 
-    - *Before fix*: Table headers were lost in 40% of financial documents. 
-    - *After fix*: `StructEqTable` achieved 98.2% precision on multi-line header detection.
+- **Fix**: Switched to MinerU's `StructEqTable` parser, which identifies multi-line headers as a single semantic entity.
 
 ---
 
@@ -167,5 +152,24 @@ graph TD
 
 ---
 
-## 8. Conclusion
-The refinery demonstrates that high-fidelity document extraction can be achieved using a local-first architecture combining heuristic classification, layout-aware extraction, and agentic retrieval. By preserving structural context through LDUs and PageIndex navigation, the system avoids common RAG failures such as header loss, column bleed, and hallucinated citations. The architecture is modular, auditable, and scalable to large regulatory corpora.
+## 8. Semantic Chunking & Structural Mastery
+
+To achieve 100% downstream RAG accuracy, the refinery enforces a "Semantic Constitution" during the chunking and indexing stages.
+
+### The 5-Rule Semantic Validator
+Every Logical Document Unit (LDU) must pass the `ChunkValidator` audit:
+1.  **Table Integrity**: Table rows are never separated from their headers; spanning tables are reconstructed as coherent units.
+2.  **Header Propagation**: Parent section headers are propagated to every child chunk, ensuring constant topical context.
+3.  **List Integrity**: Numbered and bulleted lists are kept intact; continuity is maintained via context injection.
+4.  **Context Preservation**: Split chunks carry explicit `[Context: ...]` tags to prevent semantic fragmentation.
+5.  **Spatial Provenance**: Every chunk carries validated bounding box coordinates and page references, ensuring absolute auditability.
+
+### Hierarchical PageIndex Tree
+PageIndex is a **true recursive tree**, using `parent_section` and `section_id` nesting (e.g., `section_1` -> `section_1.1`).
+- **Recursive Navigation**: The agent uses a recursive API to "zoom" into specific chapters before vector searches.
+- **Thematic Discovery**: Nodes store canonicalized `key_entities` and `data_types_present`, enabling targeted extraction (e.g., *"Find all tables related to 'CBE Profit'"*).
+
+---
+
+## 9. Conclusion
+The refinery demonstrates that high-fidelity document extraction can be achieved using a local-first architecture combining heuristic classification, layout-aware extraction, and **structural semantic mastery**. By enforcing a strict chunking constitution and building hierarchical indices, the system eliminates the "context loss" common in naive pipelines, creating a robust, auditable solution for regulatory intelligence.
