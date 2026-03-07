@@ -2,54 +2,80 @@
 
 A robust, multi-strategy document intelligence system designed for precise triage, extraction, and semantic chunking of diverse PDF documents. 
 
-It intelligently routes documents to the most cost-effective extraction strategy based on deterministic triage heuristics.
+It intelligently routes documents to the most cost-effective extraction strategy and provides an agentic RAG system with mathematically verifiable provenance.
 
-## Architecture & Strategies
+## 🚀 Key Features
 
-**Triage Phase:** The Triage Agent analyzes documents to determine their origin (Digital vs. Scanned), Layout Complexity, Domain, and Language.
+*   **Intelligent Triage**: Automatically detects document types (Financial, Legal, Survey) and Layout Complexity.
+*   **Multi-Strategy Extraction**: Routes to Strategy A (pdfplumber), B (docling), or C (Vision VLMs) based on triage.
+*   **PageIndex Navigation**: High-level hierarchical indexing of document sections for efficient retrieval.
+*   **Agentic Query Interface**: A LangGraph agent that routes queries to either structured SQL (Quantitative) or semantic Vector (Conceptual) backends.
+*   **Audit Mode**: Third-party verification of agent claims using LLM-based auditing and deterministic fallback checks.
+*   **Provenance Enforcement**: Every answer is strictly cited with `document_name`, `page_number`, and `bounding_boxes`.
 
-**Extraction Phase:**
-- **Strategy A (Fast Text):** Uses `pdfplumber` for structured, single-column digital-native documents.
-- **Strategy B (Layout-Aware):** Uses `docling` to parse multi-column, table-heavy, and complex layouts.
-- **Strategy C (Vision-Augmented):** Uses Vision Language Models (VLMs) via OpenRouter for heavily visual, scanned, or fallback documents. It is protected by strict budget guards.
+## 🛠️ Architecture
 
-## Setup Instructions
+1.  **Triage Agent**: Determines the origin (Digital vs. Scanned) and Domain.
+2.  **Extraction Logic**: Implements 5 chunking rules (Text, Table, List, Figure, Header) via `ChunkingEngine`.
+3.  **Indexing Engine**: Builds the `PageIndex` tree and populates `RefineryVectorStore` (ChromaDB) and `FactTableStore` (SQLite).
+4.  **Query Agent**: Orchestrates retrieval and synthesis with mandatory source verification.
+
+## 📦 Setup Instructions
 
 ### 1. Prerequisites
 - **Python 3.11+**
-- **[uv](https://github.com/astral-sh/uv)** (Fast Python package manager)
+- **Virtual Environment** (e.g., `.venv`)
 
 ### 2. Installation
-Install the project dependencies and set up the virtual environment automatically using `uv`:
-
 ```bash
-uv sync
+python3.11 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
 ```
 
 ### 3. Environment Configuration
-Copy the provided environment example file to instantiate your local `.env`:
-
-```bash
-cp .env.example .env
-```
-
-Open your new `.env` file and insert your OpenRouter API key (mandatory for Strategy C Vision processing):
+Create a `.env` file with your OpenRouter credentials:
 ```env
-OPENROUTER_API_KEY="sk-or-v1-..."
+OPENROUTER_API_KEY="your-sk-or-v1-key-here"
 ```
 
-## Running the Pipeline
+## 🎮 How to Test
 
-You can run the Phase 2 extraction orchestrator script, which evaluates test PDFs and routes them accordingly:
-
+### 1. Extraction Pipeline (Phase 2 & 3)
+Run the orchestrator to process your PDFs and create LDUs:
 ```bash
-uv run scripts/run_phase2.py
+PYTHONPATH=src python scripts/run_phase2.py
 ```
 
-### Reviewing Telemetry & Output
-The application outputs deterministic artifacts for every extraction attempt:
+### 2. Manual Query Interface (Phase 4 & 5)
+Interactive manual testing via the terminal:
+```bash
+# Ask a conceptual question (Vector)
+PYTHONPATH=src python scripts/ask.py "Who prepared the report?"
 
-1. **Extracted Payloads:** Stored securely as JSON records governed by a strict internal schema.
-   - `Location:` `.refinery/extracted/<file_hash>.json`
-2. **Extraction Ledger:** An atomic JSONL file recording extraction metrics, latency, confidence scores (`[0.0, 1.0]`), fallback triggers, and total budget consumed per document.
-   - `Location:` `.refinery/extraction_ledger.jsonl`
+# Ask a quantitative question (SQL)
+PYTHONPATH=src python scripts/ask.py "What is the report_year?"
+```
+
+### 3. Automated Verification
+Run the end-to-end operational test and guardrail checks:
+```bash
+# Core operational test (SQL + Vector + Audit)
+PYTHONPATH=src python scripts/test_phase4_operational.py
+
+# Rubric Compliance: Anti-Hallucination Guardrail
+PYTHONPATH=src pytest tests/agents/test_provenance_enforcement.py -v
+
+# Rubric Compliance: SQL Injection Protection
+PYTHONPATH=src pytest tests/indexing/test_fact_table_queries.py -v
+```
+
+## 📂 Artifacts
+The application generates the following deterministic artifacts in the `.refinery/` directory:
+- `.refinery/extraction_ledger.jsonl`: Full performance and confidence logs.
+- `.refinery/pageindex/`: JSON representation of document hierarchies.
+- `.refinery/extracted/`: Structured JSON output of raw extractions.
+- `.refinery/facts.db`: Persistent SQLite store for quantitative data.
+- `.refinery/ldus_sample.json`: Exported Logical Document Units for rubric validation.
+
