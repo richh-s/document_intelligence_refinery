@@ -347,15 +347,18 @@ class TriageAgent:
 
     @staticmethod
     def _estimate_cost(origin: OriginType, layout: LayoutType) -> ExtractionCostEstimate:
+        """Estimate cost/strategy level based on doc profile."""
+        # Scanned or Mixed now favors MinerU (Layout Model level) over expensive Vision
         if origin in (OriginType.SCANNED, OriginType.MIXED):
-            return ExtractionCostEstimate.NEEDS_VISION_MODEL
+            return ExtractionCostEstimate.NEEDS_LAYOUT_MODEL
+            
         if origin == OriginType.FORM_FILLABLE:
             if layout == LayoutType.TABLE_HEAVY:
                 return ExtractionCostEstimate.NEEDS_LAYOUT_MODEL
             return ExtractionCostEstimate.FAST_TEXT_SUFFICIENT
         
         # DIGITAL_NATIVE
-        if layout in (LayoutType.MULTI_COLUMN, LayoutType.TABLE_HEAVY):
+        if layout in (LayoutType.MULTI_COLUMN, LayoutType.TABLE_HEAVY, LayoutType.MIXED):
             return ExtractionCostEstimate.NEEDS_LAYOUT_MODEL
         return ExtractionCostEstimate.FAST_TEXT_SUFFICIENT
 

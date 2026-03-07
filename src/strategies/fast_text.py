@@ -164,8 +164,14 @@ class FastTextExtractor(BaseExtractor):
         return ExtractionResult(
             document=doc,
             confidence=round(final_confidence, 6),
-            cost=0.0, # FastText is essentially free CPU time
+            cost=0.0,
             time_ms=self._timer_end_ms(start_time),
             model_name="pdfplumber",
-            pages_sent=len(pages)
+            pages_sent=len(pages),
+            signals={
+                "ocr_quality": round(sum(page_confidences)/len(page_confidences), 4) if page_confidences else 0.0,
+                "layout_consistency": 1.0, # Strategy A is only used for single-column
+                "structural_fidelity": 0.8 if any(p.metadata.get("has_fonts") for p in pages) else 0.5,
+                "completeness_ratio": 1.0 # Scans all pages by default
+            }
         )
