@@ -128,7 +128,7 @@ class FactTableStore:
     def query(self, sql_query: str) -> List[Dict]:
         """Executes a strictly READ-ONLY SELECT query against the facts table."""
         if not sql_query.strip().upper().startswith("SELECT"):
-            raise ValueError("Only SELECT queries are permitted on the FactTable.")
+            raise ValueError("QueryRejectedError: Only SELECT queries are permitted on the FactTable.")
             
         cursor = self.conn.cursor()
         cursor.execute(sql_query)

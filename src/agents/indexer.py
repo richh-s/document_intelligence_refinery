@@ -4,7 +4,7 @@ import json
 import logging
 import httpx
 from typing import List, Dict, Optional, Any
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from models.ldu import LogicalDocumentUnit
 
 logger = logging.getLogger(__name__)

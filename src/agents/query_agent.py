@@ -1,7 +1,7 @@
 """Multi-tier LangGraph agent orchestrating querying workflows."""
 
 import logging
-from typing import List, Dict, Any, Literal
+from typing import List, Dict, Any, Literal, Optional
 from langchain_core.tools import tool
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import ToolNode
@@ -45,8 +45,21 @@ def classify_query(state: AgentState) -> AgentState:
     state.classification = "quantitative" if is_quant else "conceptual"
     return state
 
+class ProvenanceMissingError(Exception):
+    """Raised natively if the system attempts synthesis without explicit citations."""
+    pass
+
+def synthesize_answer(state: AgentState) -> AgentState:
+    """Final LangGraph node that strictly enforces the Provenance requirement."""
+    if not state.provenance_links:
+        raise ProvenanceMissingError("Agent generated an answer without valid Provenance citations.")
+        
+    state.final_answer = "Synthesized contextually verified payload."
+    return state
+
 # Agent Graph Definition
 workflow = StateGraph(AgentState)
 workflow.add_node("classifier", classify_query)
+workflow.add_node("synthesize", synthesize_answer)
 
 # (Routing logic omitted for brevity in minimal scaffold, full LangGraph compile occurs here)

@@ -44,6 +44,7 @@ class Figure(BaseModel):
     page_number: int
     source_strategy: str
     caption: str | None = None
+    caption_bbox: tuple[float, float, float, float] | None = None
 
 
 class ExtractedPage(BaseModel):

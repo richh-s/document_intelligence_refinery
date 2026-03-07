@@ -42,12 +42,19 @@ class ChunkingEngine:
             # 1. Process Figures First
             for fig in page.figures:
                 content = fig.caption if fig.caption else "[Figure Content]"
+                
+                md = LDUMetadata()
+                md.image_bbox = list(fig.bbox)
+                md.caption = fig.caption
+                md.caption_bbox = list(fig.caption_bbox) if fig.caption_bbox else list(fig.bbox)
+                
                 ldus.append(self._create_ldu(
                     content=content,
                     chunk_type="figure",
                     page_refs=[page.page_number],
                     bbox=list(fig.bbox),
-                    parent_section=current_section_id
+                    parent_section=current_section_id,
+                    metadata=md
                 ))
                 
             # 2. Process Tables with Header-Injected Row Chunking

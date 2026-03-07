@@ -23,7 +23,6 @@ def generate_ldu_hash(
     signature_parts = [
         content.strip(),
         f"bbox:{rounded_bbox}",
-        f"pages:{sorted(page_refs)}",
         f"type:{chunk_type}"
     ]
     

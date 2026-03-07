@@ -6,7 +6,6 @@ This package transforms raw extracted documents into RAG-safe Logical Document U
 from models.ldu import LogicalDocumentUnit, LDUMetadata
 from chunking.hasher import generate_ldu_hash
 from chunking.validator import ChunkValidator, ChunkValidationError
-from agents.chunker import ChunkingEngine
 
 __all__ = [
     "LogicalDocumentUnit",
@@ -14,5 +13,4 @@ __all__ = [
     "generate_ldu_hash",
     "ChunkValidator",
     "ChunkValidationError",
-    "ChunkingEngine",
 ]
